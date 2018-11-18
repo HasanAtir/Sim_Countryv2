@@ -2,6 +2,7 @@
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
+//Workdate/time 4:19, 18-Nov-2018
 
 using namespace std;
 /*Options that should be available:
@@ -15,7 +16,7 @@ using namespace std;
  *
  * 4) random invention (Time span = 10years)
  *
- *
+ *  Starting work on neigbhours
  *
  *
  *
@@ -57,6 +58,25 @@ int main()
     //temp variable
     int next_year_option;
 
+
+
+    //Neighbour land values are inconsequential
+    int north_id=1;
+    string north_name="";
+    int north_population=100000;
+    int north_military=10000;
+    int north_commerce=10000000;
+    int north_gdp;
+    int north_military_factory=1;
+    //growth
+    double north_population_growth = 1.05;
+    double north_commerce_growth = 1.15;
+    double north_military_growth = military_factory*25;
+
+    int south_id=2;
+    int east_id =3;
+    int west_id =4;
+
     while(!game_over)
     {
         //growth factors:
@@ -76,6 +96,9 @@ int main()
         cout<<"Total number of wars:        "<<number_of_wars<<endl;
         cout<<"Total wars won:              "<<number_of_wars_won<<endl;
         cout<<"Happiness Level of Population: "<< happiness_factor<<"%"<<endl;
+
+        //North
+
 
         //growth
         pop_grow = 1+ ((double)food/population)/100;
@@ -146,6 +169,12 @@ int main()
                 military_factory++;
             }
         }
+
+        //Neighbour 1 simulation
+        north_population=north_population*north_population_growth;
+        north_military = north_military + north_military_growth;
+        north_commerce=north_commerce*north_commerce_growth;
+        gdp = north_commerce/north_population;
 
 
         year++;
