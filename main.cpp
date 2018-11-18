@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
-#include  <cstdlib>
+#include <cstdlib>
 
 using namespace std;
 /*Options that should be available:
