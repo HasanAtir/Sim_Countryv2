@@ -2,7 +2,9 @@
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
-//Workdate/time 6:22 pm, 18-Nov-2018
+#include <fstream>
+#include <string>
+//Workdate/time 10:05 pm, 18-Nov-2018
 
 using namespace std;
 /*Options that should be available:
@@ -21,11 +23,20 @@ using namespace std;
  *
  *
  * */
+/**To do list:
+ * 1) Fix random name generator array
+ * 2) Add description of the game(low prior)
+ * 
+ * */
+
+//Function prototypes. Called now to prevent 'not declared' errors.
 bool player_wins_war(int& player_pop, int& player_land, int& player_mili, int& neighbour_pop, int& neighbour_mili);
 bool win_war_Skirmish(int& population, int& land, int& military); //stub. Must be replaced!!!
 int d100_Random_Roll();
 int d10_Random_Roll();
 void player_Surrender(int& pop, int& land, int& military);
+void neighbour_Name_Allocation();
+
 
 void starvationFactor(int& population, int food_stores)
 {
@@ -63,6 +74,7 @@ int main()
 
 
     //Neighbour land values are inconsequential
+    //Northern neighbour. Will be used as prototype for all other neighbours
     int north_id=1;
     string north_name="";
     int north_population=100000;
@@ -76,7 +88,7 @@ int main()
     double north_commerce_growth = 1.15;
     double north_military_growth = military_factory*25;
 
-
+    //Other neighbours
     int south_id=2;
     int east_id =3;
     int west_id =4;
@@ -103,7 +115,7 @@ int main()
         cout<<"Total wars won:              "<<number_of_wars_won<<endl;
         cout<<"Happiness Level of Population: "<< happiness_factor<<"%"<<endl;
 
-        //North
+
 
 
         //growth
@@ -120,11 +132,11 @@ int main()
         if(food_stores<0)
         {
             food_stores = 0;
-            starvationFactor(population,food_stores);
+            starvationFactor(population,food_stores);   //Decreases population rapidly if food_stores are depleted
 
         }
 
-        //game time
+        //game time BASIC OPTIONS. Persistent for now, plans to be randomised
         cout<<"1) Go to war (skirmish)\n"
               "2) Build military factory\n"
               "3) Random invention\n"
@@ -152,8 +164,8 @@ int main()
         }
         else if(next_year_option==2)
         {
-            building_factory = true;
-            remaining_construction_time = 3;
+            building_factory = true;        //Boolean that starts construction of factory
+            remaining_construction_time = 3;//Estimated time until factory finishes construction
         }
         else if(next_year_option==4)
         {
@@ -190,6 +202,7 @@ int main()
         int north_random_options = d10_Random_Roll();
 
         if(north_random_options==1)
+        //Northern neighbour declares skirmish war on player
         {   bool player_defends = false;
             cout<<"\n"<<north_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
@@ -197,19 +210,20 @@ int main()
             if(player_defends)
             {
                 bool player_victory= player_wins_war(population,land,military,north_population,north_military);
+                //Calls the war boolean function if player chooses to defend.
                 if(player_victory)
                 {
-                        cout<<"You have won the war!\n\n";
-                        number_of_wars_won++;
-                        // Happiness Effects
-                        if (happiness_factor < 100)
-                        {
-                            happiness_factor = happiness_factor +10;
-                        }
-                        else
-                        {
-                            happiness_factor;
-                        }
+                    cout<<"You have won the war!\n\n";
+                    number_of_wars_won++;
+                    // Happiness Effects
+                    if (happiness_factor < 100)
+                    {
+                        happiness_factor = happiness_factor +10;
+                    }
+                    else
+                    {
+                        happiness_factor;
+                    }
                 }
                 else
                 {
@@ -220,7 +234,7 @@ int main()
             else
             {
                 cout<<"You surrendered\n";
-                player_Surrender(population, land, military);
+                player_Surrender(population, land, military);   //Calls the surrender function if Player decides not to defend
                 happiness_factor = happiness_factor - 10;
 
             }
@@ -228,9 +242,12 @@ int main()
 
 
 
-        year++;
+        year++;//Increments year
+        neighbour_Name_Allocation();//Added for testing purposes. Needs to be removed.
     }
 }
+
+//Diceroll functions
 /** Random roll program to generate a value between 0 and 100
  * @@Param = null
  * @Return = [0,100]*/
@@ -249,6 +266,8 @@ int d10_Random_Roll()
     int output = random%10;
     return output;
 }
+
+//Following function needs to be REMOVED>>>
 /**Function used to simulate skirmishes using chance.
  * TO BE ADDED: Slight weighted bias with populations and militar
  * @@Param population, land, and military
@@ -276,13 +295,18 @@ bool win_war_Skirmish(int& population, int& land, int& military)
         return false;
     }
 }
+
+/**Definite(?) version of the skirmish function which also takes into account the AI's stats
+ * @@PARAM: player's population, military, and land; AI's population, and military
+ * @Return: Boolean value indicating whether Player has won the war or not and edits parameters through reference*/
 bool player_wins_war(int& player_pop, int& player_land, int& player_mili, int& neighbour_pop, int& neighbour_mili)
 {
     int chance = d100_Random_Roll();
+    //Affect multipliers
     double win_pop = 0.90, win_land = 1.15, win_mil = 0.85;
     double loss_pop= 0.75, loss_land= 0.90, loss_mil= 0.70;
 
-    if(chance>50)
+    if(chance>50)   //Player has won the war
     {
         player_pop      =player_pop         *win_pop;
         player_land     =player_land        *win_land;
@@ -291,7 +315,7 @@ bool player_wins_war(int& player_pop, int& player_land, int& player_mili, int& n
         neighbour_mili  =neighbour_mili     *loss_mil;
         return true;
     }
-    else
+    else        //Player has lost the war
     {
         player_pop      =player_pop         *loss_pop;
         player_land     =player_land        *loss_land;
@@ -299,13 +323,39 @@ bool player_wins_war(int& player_pop, int& player_land, int& player_mili, int& n
         neighbour_pop   =neighbour_pop      *win_pop;
         neighbour_mili  =neighbour_mili     *win_mil;
         return false;
+        //Note AI's land is not included because it is inherently inconsequential
     }
 }
 
 void player_Surrender(int& pop, int& land, int& military)
 {
+    //Results if the player surrenders after AI initiates skirmish
     double poploss = 0.95, landloss=0.80, milloss=0.80;
     pop = pop*poploss;
     land = land*landloss;
     military = military*milloss;
 }
+
+void neighbour_Name_Allocation()
+{
+    string line;
+    string name_array[297];
+    ifstream namefile("country_name_list_297.txt");//Text file with names
+    if (namefile.is_open()) //Assigns country name to array indexes
+    {
+        int i = 0;
+        while(getline(namefile,line))
+        {
+            name_array[i]=line;
+            i++;
+        }
+        namefile.close();
+    }
+    else
+    {
+        cerr<<"ERROR OPENING NAME FILE\n\n";
+    }
+    //cout<<name_array[2]<<endl<<name_array[150]<<endl<<name_array[296]<<endl; //Testing stub
+}
+
+
