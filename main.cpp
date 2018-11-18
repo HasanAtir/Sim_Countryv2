@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
+#include  <cstdlib>
 
 using namespace std;
 /*Options that should be available:
@@ -32,13 +33,14 @@ int main()
 {
     //initial conditions;
 
-    int population, military, commerce, military_factory, land, food;
+    int population, military, commerce, military_factory, land, food, happiness_factor;
     population = 100000;
     military = 1000;
     commerce = 10000000;
     land = 1000;
     food = land*1000;
     military_factory=1;
+    happiness_factor = 100; // Happiness Level
     int year = 1921;
     int food_stores=food;
     double gdp;
@@ -73,6 +75,7 @@ int main()
         cout<<"Current GDP/Capita:          $"<<gdp<<endl;
         cout<<"Total number of wars:        "<<number_of_wars<<endl;
         cout<<"Total wars won:              "<<number_of_wars_won<<endl;
+        cout<<"Happiness Level of Population: "<< happiness_factor<<"%"<<endl;
 
         //growth
         pop_grow = 1+ ((double)food/population)/100;
@@ -106,10 +109,16 @@ int main()
             {
                 cout<<"You have won the war!\n\n";
                 number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
             }
             else
             {
                 cout<<"You have lost the war!\n\n";
+                happiness_factor = happiness_factor -10;
             }
         }
         else if(next_year_option==2)
