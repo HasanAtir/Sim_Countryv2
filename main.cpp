@@ -44,17 +44,13 @@ int main()
     double gdp;
     int number_of_wars=0;
     int number_of_wars_won=0;
-    int remaining_construction_time = 0;
 
     double pop_grow, comm_grow, mili_grow, gdp_grow, food_grow;
 
-    //bools
-    bool game_over = false;
-    bool building_factory = false;
 
     //temp variable
     int next_year_option;
-
+    bool game_over = false;
     while(!game_over)
     {
         //growth factors:
@@ -66,9 +62,6 @@ int main()
         cout<<"Current food stocks:         "<<food_stores<<endl;
         cout<<"Current owned land:          "<<land<<endl;
         cout<<"Current Military might:      "<<military<<endl;
-        cout<<"Current Military factories   "<<military_factory;
-        if(building_factory){cout<<"(1)"<<endl;}
-        else {cout<<endl;}
         cout<<"Current Commercial prowess:  "<<commerce<<endl;
         cout<<"Current GDP/Capita:          $"<<gdp<<endl;
         cout<<"Total number of wars:        "<<number_of_wars<<endl;
@@ -78,11 +71,9 @@ int main()
         pop_grow = 1+ ((double)food/population)/100;
         cout<<pop_grow<<endl;
         food_grow = land*1000;
-        mili_grow = military_factory*25;
 
         food_stores = (food_stores - population) + (food_grow);
         population = population*pop_grow;
-        military = military+mili_grow;
         cout<<"\nPopulation growth: "<<pop_grow<<endl;
 
         if(food_stores<0)
@@ -92,7 +83,6 @@ int main()
 
         }
 
-        //game time
         cout<<"1) Go to war (skirmish)\n"
               "2) Build military factory\n"
               "3) Random invention\n"
@@ -112,30 +102,9 @@ int main()
                 cout<<"You have lost the war!\n\n";
             }
         }
-        else if(next_year_option==2)
-        {
-            building_factory = true;
-            remaining_construction_time = 3;
-        }
-        else if(next_year_option==4)
+        if(next_year_option==4)
         {
             game_over = true;
-        }
-
-        //Military factory construction time counter
-        if(building_factory)
-        {
-            if(remaining_construction_time>0)
-            {
-                remaining_construction_time--;
-            }
-
-            if(remaining_construction_time == 0)
-            {
-                cout<<"\n -MILITARY FACTORY BUILT- \n";
-                building_factory = false;
-                military_factory++;
-            }
         }
 
 
