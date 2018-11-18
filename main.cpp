@@ -2,8 +2,7 @@
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
-#include "functions.cpp"
-//Workdate/time 4:19, 18-Nov-2018
+//Workdate/time 6:22 pm, 18-Nov-2018
 
 using namespace std;
 /*Options that should be available:
