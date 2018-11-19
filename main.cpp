@@ -26,7 +26,7 @@ using namespace std;
 /**To do list:
  * 1) Fix random name generator array
  * 2) Add description of the game(low prior)
- * 
+ *
  * */
 
 //Function prototypes. Called now to prevent 'not declared' errors.
@@ -36,6 +36,9 @@ int d100_Random_Roll();
 int d10_Random_Roll();
 void player_Surrender(int& pop, int& land, int& military);
 void neighbour_Name_Allocation();
+void name_Index_Allocate(int& a, int& b, int& c, int& d);
+
+
 
 
 void starvationFactor(int& population, int food_stores)
@@ -356,6 +359,29 @@ void neighbour_Name_Allocation()
         cerr<<"ERROR OPENING NAME FILE\n\n";
     }
     //cout<<name_array[2]<<endl<<name_array[150]<<endl<<name_array[296]<<endl; //Testing stub
+}
+
+void name_Index_Allocate(int& a, int& b, int& c, int& d)
+{
+    bool is_different = false;
+    srand(time(0));
+    while(!is_different) //Loop that generates 4 different random integers
+    {
+        a = rand()%297;
+        b = rand()%297;
+        c = rand()%297;
+        d = rand()%297;
+
+        if( a!=b && a!=c && a!=d &&
+            b!=a && b!=c && b!=d &&
+            c!=a && c!=b && c!=d &&
+            d!=a && d!=b && d!=c)
+        {
+            is_different = true;
+        }
+
+    }
+
 }
 
 
