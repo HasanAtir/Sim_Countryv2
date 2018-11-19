@@ -182,6 +182,25 @@ int main()
         {
             game_over = true;
         }
+      else if (next_year_option==5)
+        {
+            bool war_win = war_Room(air_military,north_air_military,infantry_military,north_infantry_military);
+            if(war_win)
+            {
+                cout<<"You have won the war!\n\n";
+                number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
+            }
+            else
+            {
+                cout<<"You have lost the war!\n\n";
+                happiness_factor = happiness_factor -10;
+            }
+        }
 
         //Military factory construction time counter
         if(building_factory)
@@ -615,14 +634,6 @@ bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &in
     }
     while(hp_player!=0 && hp_enemy!=0);
 
-    if (hp_player == 0)
-    {
-        cout << "You lost the war" << endl;
-    }
-    else if (hp_enemy == 0)
-    {
-        cout << "You won the war" << endl;
-    }
-
+   
 
 }
