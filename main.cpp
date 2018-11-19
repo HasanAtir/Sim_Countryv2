@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <string>
-//Workdate/time 10:05 pm, 18-Nov-2018
+//Workdate/time 6:30 pm, 19-Nov-2018
 
 using namespace std;
 /*Options that should be available:
@@ -26,18 +26,20 @@ using namespace std;
 /**To do list:
  * 1) Fix random name generator array
  * 2) Add description of the game(low prior)
+ * 3) Implement war room
  *
  * */
 
 //Function prototypes. Called now to prevent 'not declared' errors.
-bool player_wins_war(int& player_pop, int& player_land, int& player_mili, int& neighbour_pop, int& neighbour_mili);
+bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&player_airmili, int& neighbour_pop,
+                     int& neighbour_infmili, int& neighbour_airmili);
 bool win_war_Skirmish(int& population, int& land, int& military); //stub. Must be replaced!!!
 int d100_Random_Roll();
 int d10_Random_Roll();
-void player_Surrender(int& pop, int& land, int& military);
+void player_Surrender(int& pop, int& land, int& inf_military, int& air_military);
 void neighbour_Name_Allocation(string& nname, string& sname, string& wname, string& ename);
 void name_Index_Allocate(int& a, int& b, int& c, int& d);
-
+bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &infantry_computer);
 
 
 
@@ -50,9 +52,10 @@ int main()
 {
     //initial conditions;
 
-    int population, military, commerce, military_factory, land, food, happiness_factor;
+    int population, air_military, infantry_military, commerce, military_factory, land, food, happiness_factor;
     population = 100000;
-    military = 1000;
+    air_military = 100;
+    infantry_military = 1000;
     commerce = 10000000;
     land = 1000;
     food = land*1000;
@@ -83,7 +86,8 @@ int main()
     //Northern neighbour. Will be used as prototype for all other neighbours
     int north_id=1;
     int north_population=100000;
-    int north_military=10000;
+    int north_infantry_military=10000;
+    int north_air_military=1000;
     int north_commerce=10000000;
     int north_gdp;
     int north_military_factory=1;
@@ -110,7 +114,7 @@ int main()
         cout<<"Current population:          "<<population<<endl;
         cout<<"Current food stocks:         "<<food_stores<<endl;
         cout<<"Current owned land:          "<<land<<endl;
-        cout<<"Current Military might:      "<<military<<endl;
+        cout<<"Current Military might:      "<<air_military+infantry_military<<endl;
         cout<<"Current Military factories   "<<military_factory;
         if(building_factory){cout<<"(1)"<<endl;}
         else {cout<<endl;}
@@ -131,7 +135,8 @@ int main()
 
         food_stores = (food_stores - population) + (food_grow);
         population = population*pop_grow;
-        military = military+mili_grow;
+        air_military = air_military+mili_grow;
+        infantry_military = infantry_military+(2*mili_grow);
         cout<<"\nPopulation growth: "<<pop_grow<<endl;
 
         if(food_stores<0)
@@ -145,12 +150,13 @@ int main()
         cout<<"1) Go to war (skirmish)\n"
               "2) Build military factory\n"
               "3) Random invention\n"
-              "4) quit simulation\n";
+              "4) quit simulation\n"
+              "5) Go to all out war\n";  ///Needs to be implemented
         cin>>next_year_option;
         if(next_year_option==1)
         {
             number_of_wars++;
-            bool war_win = win_war_Skirmish(population, land, military);
+            bool war_win = win_war_Skirmish(population, land, infantry_military);
             if(war_win)
             {
                 cout<<"You have won the war!\n\n";
@@ -195,7 +201,8 @@ int main()
 
         //Neighbour 1 simulation
         north_population=north_population*north_population_growth;
-        north_military = north_military + north_military_growth;
+        north_infantry_military = north_infantry_military + (2*north_military_growth);
+        north_air_military = north_air_military + north_military_growth;
         north_commerce=north_commerce*north_commerce_growth;
         gdp = north_commerce/north_population;
         /*available options that should be available
@@ -214,7 +221,7 @@ int main()
             cin>>player_defends;
             if(player_defends)
             {
-                bool player_victory= player_wins_war(population,land,military,north_population,north_military);
+                bool player_victory= player_wins_war(population, land, infantry_military, air_military, north_population, north_infantry_military, north_air_military);
                 //Calls the war boolean function if player chooses to defend.
                 if(player_victory)
                 {
@@ -239,7 +246,7 @@ int main()
             else
             {
                 cout<<"You surrendered\n";
-                player_Surrender(population, land, military);   //Calls the surrender function if Player decides not to defend
+                player_Surrender(population, land, infantry_military, air_military);   //Calls the surrender function if Player decides not to defend
                 happiness_factor = happiness_factor - 10;
 
             }
@@ -305,7 +312,8 @@ bool win_war_Skirmish(int& population, int& land, int& military)
 /**Definite(?) version of the skirmish function which also takes into account the AI's stats
  * @@PARAM: player's population, military, and land; AI's population, and military
  * @Return: Boolean value indicating whether Player has won the war or not and edits parameters through reference*/
-bool player_wins_war(int& player_pop, int& player_land, int& player_mili, int& neighbour_pop, int& neighbour_mili)
+bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&player_airmili, int& neighbour_pop,
+        int& neighbour_infmili, int& neighbour_airmili)
 {
     int chance = d100_Random_Roll();
     //Affect multipliers
@@ -316,30 +324,35 @@ bool player_wins_war(int& player_pop, int& player_land, int& player_mili, int& n
     {
         player_pop      =player_pop         *win_pop;
         player_land     =player_land        *win_land;
-        player_mili     =player_mili        *win_mil;
+        player_infmili     =player_infmili  *win_mil;
+        player_airmili  =player_airmili     *win_mil;
         neighbour_pop   =neighbour_pop      *loss_pop;
-        neighbour_mili  =neighbour_mili     *loss_mil;
+        neighbour_infmili  =neighbour_infmili     *loss_mil;
+        neighbour_airmili = neighbour_airmili   *loss_mil;
         return true;
     }
     else        //Player has lost the war
     {
         player_pop      =player_pop         *loss_pop;
         player_land     =player_land        *loss_land;
-        player_mili     =player_mili        *loss_mil;
+        player_infmili     =player_infmili  *loss_mil;
+        player_airmili  =player_airmili     *loss_mil;
         neighbour_pop   =neighbour_pop      *win_pop;
-        neighbour_mili  =neighbour_mili     *win_mil;
+        neighbour_infmili  =neighbour_infmili     *win_pop;
+        neighbour_airmili = neighbour_airmili   *win_pop;
         return false;
         //Note AI's land is not included because it is inherently inconsequential
     }
 }
 
-void player_Surrender(int& pop, int& land, int& military)
+void player_Surrender(int& pop, int& land, int& inf_military, int& air_military)
 {
     //Results if the player surrenders after AI initiates skirmish
     double poploss = 0.95, landloss=0.80, milloss=0.80;
     pop = pop*poploss;
     land = land*landloss;
-    military = military*milloss;
+    inf_military = inf_military*milloss;
+    air_military = air_military*milloss;
 }
 
 void neighbour_Name_Allocation(string& nname, string& sname, string& wname, string& ename)
@@ -390,5 +403,226 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d)
         }
 
     }
+
+}
+
+bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &infantry_computer)
+{
+
+    int hp_enemy = 10;
+    int hp_player = 10;
+    int total_player = air_player+infantry_player;
+    int total_computer = air_computer+infantry_computer;
+    float const WIN = 0.9; // Win multiplier
+    float const LOSE = 0.75; // Loss multiplier
+
+    cout << "WELCOME TO THE WAR ROOM" << endl;
+    cout << "AIRFORCE = JETS. ANTI PLANE GUNS EXIST EXCLUSIVE OF AIRFORCE AND CANNOT BE DESTROYED" << endl;
+    cout << "INFANTRY = FOOTSOLDIERS. TANKS EXIST EXCLUSIVE OF INFANTRY AND CANNOT BE DESTROYED" << endl;
+    cout << "MAY THE BEST COUNTRY WIN" << endl;
+
+
+
+    do{
+        int chance = d10_Random_Roll(); // Chance of you winning
+        int chance_intel= d10_Random_Roll(); // Chance of receiving intel
+
+        cout<< "Player HP: " << hp_player << endl;
+        cout<< "Enemy HP: " << hp_enemy << endl;
+        cout<< "Your Airforce: " << air_player << endl;
+        cout << "Your Infantry: " << infantry_player << endl;
+        // Chance of getting intel
+        {
+            if( chance_intel <=5)
+            {
+                cout << "You just received Enemy Intel!" << endl;
+                cout << "Enemy Airforce: " <<air_computer << endl;;
+                cout << "Enemy Infantry: "<<infantry_computer << endl;
+            }
+            else
+            {
+                cout << "No enemy intel." << endl; ;
+            }
+        }
+        cout << "Do you choose to attack with infantry or air force or both? \n" ;
+        cout << "1: Air force \n" ;
+        cout << "2: Infantry \n" ;
+        cout<< "3: Both \n" << endl;
+        int choice;
+
+        cin >> choice;
+        // Game interaction
+        {
+
+            if (choice == 1)
+            {
+
+                {if (air_player > air_computer){
+                        {if ( chance >= 4)
+                            {
+                                cout << "You win the battle"<< endl;
+                                hp_enemy--;
+                                air_computer = air_computer*LOSE;
+                                air_player = air_player*WIN;
+                            }
+                            else
+                            {
+                                cout << "You lost the battle"<< endl;
+                                hp_player--;
+                                air_computer = air_computer*WIN;
+                                air_player = air_player*LOSE;
+                            }}
+
+                    }
+                    else if (air_player < air_computer)
+                    {if (chance < 4)
+                        {
+                            cout << "You win the battle"<< endl;
+                            hp_enemy--;
+                            air_computer = air_computer*LOSE;
+                            air_player = air_player*WIN;
+                        }
+                        else
+                        {
+                            cout << "You lost the battle" << endl;
+                            hp_player--;
+                            air_computer = air_computer*WIN;
+                            air_player = air_player*LOSE;
+                        }}
+                    else
+                    {if (chance < 5)
+                        {
+                            cout << "You win the battle" << endl;
+                            hp_enemy--;
+                            air_computer = air_computer*LOSE;
+                            air_player = air_player*WIN;
+                        }
+                        else
+                        {
+                            cout << "You lose the battle" << endl;
+                            hp_player--;
+                            air_computer = air_computer*WIN;
+                            air_player = air_player*LOSE;
+                        }}}
+            }
+            else if (choice == 2)
+            {
+                if (infantry_player > infantry_computer)
+                {if ( chance >= 4)
+                    {cout << "You win the battle"<< endl;
+                        hp_enemy--;
+                        infantry_computer = infantry_computer*LOSE;
+                        infantry_player = infantry_player*WIN;
+                    }
+                    else
+                    {
+                        cout << "You lost the battle"<< endl;
+                        hp_player--;
+                        infantry_computer = infantry_computer*WIN;
+                        infantry_player = infantry_player*LOSE;
+                    }}
+                else if (infantry_player < infantry_computer)
+                {if (chance < 4)
+                    {
+                        cout << "You win the battle"<< endl;
+                        hp_enemy--;
+                        infantry_computer = infantry_computer*LOSE;
+                        infantry_player = infantry_player*WIN;
+                    }
+                    else
+                    {
+                        cout << "You lost the battle" << endl;
+                        hp_player--;
+                        infantry_computer = infantry_computer*WIN;
+                        infantry_player = infantry_player*LOSE;
+                    }}
+                else
+                {if (chance < 5)
+                    {
+                        cout << "You win the battle" << endl;
+                        hp_enemy--;
+                        infantry_computer = infantry_computer*LOSE;
+                        infantry_player = infantry_player*WIN;
+                    }
+                    else
+                    {
+                        cout << "You lose the battle" << endl;
+                        hp_player--;
+                        infantry_computer = infantry_computer*WIN;
+                        infantry_player = infantry_player*LOSE;
+                    }}
+            }
+            else if (choice == 3)
+            {
+                {if (total_player > total_computer)
+                    {if ( chance >= 4)
+                        {
+                            cout << "You win the battle"<< endl;
+                            hp_enemy--;
+                            infantry_computer = infantry_computer*LOSE;
+                            infantry_player = infantry_player*WIN;
+                            air_computer = air_computer*LOSE;
+                            air_player = air_player*WIN;
+                        }
+                        else
+                        {
+                            cout << "You lost the battle"<< endl;
+                            hp_player--;
+                            infantry_computer = infantry_computer*LOSE;
+                            infantry_player = infantry_player*WIN;
+                            air_computer = air_computer*WIN;
+                            air_player = air_player*LOSE;                }}
+                    else if (total_player < total_computer)
+                    {if (chance < 4)
+                        {
+                            cout << "You win the battle"<< endl;
+                            hp_enemy--;
+                            infantry_computer = infantry_computer*LOSE;
+                            infantry_player = infantry_player*WIN;
+                            air_computer = air_computer*LOSE;
+                            air_player = air_player*WIN;
+                        }
+                        else
+                        {
+                            cout << "You lost the battle" << endl;
+                            hp_player--;
+                            infantry_computer = infantry_computer*WIN;
+                            infantry_player = infantry_player*LOSE;
+                            air_computer = air_computer*WIN;
+                            air_player = air_player*LOSE;
+                        }}
+                    else
+                    {if (chance < 5)
+                        {
+                            cout << "You win the battle" << endl;
+                            hp_enemy--;
+                            infantry_computer = infantry_computer*LOSE;
+                            infantry_player = infantry_player*WIN;
+                            air_computer = air_computer*LOSE;
+                            air_player = air_player*WIN;
+                        }
+                        else
+                        {
+                            cout << "You lose the battle" << endl;
+                            hp_player--;
+                            infantry_computer = infantry_computer*WIN;
+                            infantry_player = infantry_player*LOSE;
+                            air_computer = air_computer*WIN;
+                            air_player = air_player*LOSE;
+                        }}}
+            }
+        }
+    }
+    while(hp_player!=0 && hp_enemy!=0);
+
+    if (hp_player == 0)
+    {
+        cout << "You lost the war" << endl;
+    }
+    else if (hp_enemy == 0)
+    {
+        cout << "You won the war" << endl;
+    }
+
 
 }
