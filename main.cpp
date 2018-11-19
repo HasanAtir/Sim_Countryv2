@@ -35,7 +35,7 @@ bool win_war_Skirmish(int& population, int& land, int& military); //stub. Must b
 int d100_Random_Roll();
 int d10_Random_Roll();
 void player_Surrender(int& pop, int& land, int& military);
-void neighbour_Name_Allocation();
+void neighbour_Name_Allocation(string& nname, string& sname, string& wname, string& ename);
 void name_Index_Allocate(int& a, int& b, int& c, int& d);
 
 
@@ -74,12 +74,14 @@ int main()
     //temp variable
     int next_year_option;
 
+    string north_name, south_name, east_name, west_name;
+    neighbour_Name_Allocation(north_name, south_name, west_name, east_name);
+
 
 
     //Neighbour land values are inconsequential
     //Northern neighbour. Will be used as prototype for all other neighbours
     int north_id=1;
-    string north_name="";
     int north_population=100000;
     int north_military=10000;
     int north_commerce=10000000;
@@ -246,7 +248,8 @@ int main()
 
 
         year++;//Increments year
-        neighbour_Name_Allocation();//Added for testing purposes. Needs to be removed.
+        //Added for testing purposes. Needs to be removed.
+        cout<<north_name<<endl<<south_name<<endl<<west_name<<endl<<east_name<<endl;
     }
 }
 
@@ -339,7 +342,7 @@ void player_Surrender(int& pop, int& land, int& military)
     military = military*milloss;
 }
 
-void neighbour_Name_Allocation()
+void neighbour_Name_Allocation(string& nname, string& sname, string& wname, string& ename)
 {
     string line;
     string name_array[297];
@@ -359,6 +362,12 @@ void neighbour_Name_Allocation()
         cerr<<"ERROR OPENING NAME FILE\n\n";
     }
     //cout<<name_array[2]<<endl<<name_array[150]<<endl<<name_array[296]<<endl; //Testing stub
+    int n1, n2, n3, n4;
+    name_Index_Allocate(n1, n2, n3, n4);
+    nname = name_array[n1];
+    sname = name_array[n2];
+    wname = name_array[n3];
+    ename = name_array[n4];
 }
 
 void name_Index_Allocate(int& a, int& b, int& c, int& d)
@@ -383,5 +392,3 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d)
     }
 
 }
-
-
