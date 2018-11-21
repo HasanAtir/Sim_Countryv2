@@ -39,7 +39,9 @@ int d10_Random_Roll();
 void player_Surrender(int& pop, int& land, int& inf_military, int& air_military);
 void neighbour_Name_Allocation(string& nname, string& sname, string& wname, string& ename);
 void name_Index_Allocate(int& a, int& b, int& c, int& d);
-bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &infantry_computer);
+bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
+               int& infantry_computer, string& name, int &year);
+string toUpper (string str);
 
 
 
@@ -77,7 +79,7 @@ int main()
     //temp variable
     int next_year_option;
 
-    string north_name, south_name, east_name, west_name;
+    string north_name, south_name, east_name, west_name, player_name;
     neighbour_Name_Allocation(north_name, south_name, west_name, east_name);
 
 
@@ -101,6 +103,9 @@ int main()
     int south_id=2;
     int east_id =3;
     int west_id =4;
+  
+    cout << "Welcome to Sim Country player. Please enter your name: ";
+    cin >> player_name;
 
     while(!game_over)
     {
@@ -108,6 +113,9 @@ int main()
         int north_land = 1000;
         //growth factors:
         gdp = (commerce)/population;
+      
+      
+        cout << player_name << " these are your current country stats" << endl;
 
         //output
         cout<<"CURRENT YEAR:                "<<year<<endl<<endl;
@@ -425,19 +433,29 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d)
 
 }
 
-bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &infantry_computer)
+bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
+               int& infantry_computer, string &name, int &year)
 {
 
     int hp_enemy = 10;
     int hp_player = 10;
     int total_player = air_player+infantry_player;
     int total_computer = air_computer+infantry_computer;
-    float const WIN = 0.9; // Win multiplier
-    float const LOSE = 0.75; // Loss multiplier
+    float const WIN_INF = 0.9; // Win Infantry multiplier
+    float const LOSE_INF = 0.75; // Loss Infantry multiplier
+    float const WIN_AF= 0.99;
+    float const LOSE_AF= 0.93;
+    float const land_gain = 1.15; // %ge increase
+    float const land_loss = 0.90; // %ge decrese
+    float const win_land= 0.15; // Isolated increase
+    float const lose_land = 0.10; // isolated decrease
+    int turns=1;
+
 
     cout << "WELCOME TO THE WAR ROOM" << endl;
     cout << "AIRFORCE = JETS. ANTI PLANE GUNS EXIST EXCLUSIVE OF AIRFORCE AND CANNOT BE DESTROYED" << endl;
     cout << "INFANTRY = FOOTSOLDIERS. TANKS EXIST EXCLUSIVE OF INFANTRY AND CANNOT BE DESTROYED" << endl;
+    cout << "KEEP A LOOK OUT FOR ENEMY INTEL. IT MAY JUST SWAY THE TIDE OF WAR. GOOD LUCK " << name << "!" << endl;
     cout << "MAY THE BEST COUNTRY WIN" << endl;
 
 
@@ -445,6 +463,7 @@ bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &in
     do{
         int chance = d10_Random_Roll(); // Chance of you winning
         int chance_intel= d10_Random_Roll(); // Chance of receiving intel
+        turns++;
 
         cout<< "Player HP: " << hp_player << endl;
         cout<< "Enemy HP: " << hp_enemy << endl;
@@ -481,15 +500,19 @@ bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &in
                             {
                                 cout << "You win the battle"<< endl;
                                 hp_enemy--;
-                                air_computer = air_computer*LOSE;
-                                air_player = air_player*WIN;
+                                air_computer = air_computer*LOSE_AF;
+                                air_player = air_player*WIN_AF;
+                                land = land * land_gain;
+                                cout << "You now have " << land << " land"<< endl;
                             }
                             else
                             {
                                 cout << "You lost the battle"<< endl;
                                 hp_player--;
-                                air_computer = air_computer*WIN;
-                                air_player = air_player*LOSE;
+                                air_computer = air_computer*WIN_AF;
+                                air_player = air_player*LOSE_AF;
+                                land = land * land_loss;
+                                cout << "You now have " << land << " land"<< endl;
                             }}
 
                     }
@@ -498,30 +521,38 @@ bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &in
                         {
                             cout << "You win the battle"<< endl;
                             hp_enemy--;
-                            air_computer = air_computer*LOSE;
-                            air_player = air_player*WIN;
+                            air_computer = air_computer*LOSE_AF;
+                            air_player = air_player*WIN_AF;
+                            land = land * land_gain;
+                            cout << "You now have " << land << " land"<< endl;
                         }
                         else
                         {
                             cout << "You lost the battle" << endl;
                             hp_player--;
-                            air_computer = air_computer*WIN;
-                            air_player = air_player*LOSE;
+                            air_computer = air_computer*WIN_AF;
+                            air_player = air_player*LOSE_AF;
+                            land = land * land_loss;
+                            cout << "You now have " << land << " land"<< endl;
                         }}
                     else
                     {if (chance < 5)
                         {
                             cout << "You win the battle" << endl;
                             hp_enemy--;
-                            air_computer = air_computer*LOSE;
-                            air_player = air_player*WIN;
+                            air_computer = air_computer*LOSE_AF;
+                            air_player = air_player*WIN_AF;
+                            land = land *land_gain;
+                            cout << "You now have " << land << " land"<< endl;
                         }
                         else
                         {
                             cout << "You lose the battle" << endl;
                             hp_player--;
-                            air_computer = air_computer*WIN;
-                            air_player = air_player*LOSE;
+                            air_computer = air_computer*WIN_AF;
+                            air_player = air_player*LOSE_AF;
+                            land = land * land_loss;
+                            cout << "You now have " << land << " land"<< endl;
                         }}}
             }
             else if (choice == 2)
@@ -530,45 +561,57 @@ bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &in
                 {if ( chance >= 4)
                     {cout << "You win the battle"<< endl;
                         hp_enemy--;
-                        infantry_computer = infantry_computer*LOSE;
-                        infantry_player = infantry_player*WIN;
+                        infantry_computer = infantry_computer*LOSE_INF;
+                        infantry_player = infantry_player*WIN_INF;
+                        land = land * land_gain;
+                        cout << "You now have " << land << " land"<< endl;
                     }
                     else
                     {
                         cout << "You lost the battle"<< endl;
                         hp_player--;
-                        infantry_computer = infantry_computer*WIN;
-                        infantry_player = infantry_player*LOSE;
+                        infantry_computer = infantry_computer*WIN_INF;
+                        infantry_player = infantry_player*LOSE_INF;
+                        land = land *land_loss;
+                        cout << "You now have " << land << " land"<< endl;
                     }}
                 else if (infantry_player < infantry_computer)
                 {if (chance < 4)
                     {
                         cout << "You win the battle"<< endl;
                         hp_enemy--;
-                        infantry_computer = infantry_computer*LOSE;
-                        infantry_player = infantry_player*WIN;
+                        infantry_computer = infantry_computer*LOSE_INF;
+                        infantry_player = infantry_player*WIN_INF;
+                        land = land *land_gain;
+                        cout << "You now have " << land << " land"<< endl;
                     }
                     else
                     {
                         cout << "You lost the battle" << endl;
                         hp_player--;
-                        infantry_computer = infantry_computer*WIN;
-                        infantry_player = infantry_player*LOSE;
+                        infantry_computer = infantry_computer*WIN_INF;
+                        infantry_player = infantry_player*LOSE_INF;
+                        land = land * land_loss;
+                        cout << "You now have " << land << " land"<< endl;
                     }}
                 else
                 {if (chance < 5)
                     {
                         cout << "You win the battle" << endl;
                         hp_enemy--;
-                        infantry_computer = infantry_computer*LOSE;
-                        infantry_player = infantry_player*WIN;
+                        infantry_computer = infantry_computer*LOSE_INF;
+                        infantry_player = infantry_player*WIN_INF;
+                        land = land * land_gain;
+                        cout << "You now have " << land << " land"<< endl;
                     }
                     else
                     {
                         cout << "You lose the battle" << endl;
                         hp_player--;
-                        infantry_computer = infantry_computer*WIN;
-                        infantry_player = infantry_player*LOSE;
+                        infantry_computer = infantry_computer*WIN_INF;
+                        infantry_player = infantry_player*LOSE_INF;
+                        land = land * land_loss;
+                        cout << "You now have " << land << " land"<< endl;
                     }}
             }
             else if (choice == 3)
@@ -578,62 +621,105 @@ bool war_Room (int &air_player, int &air_computer, int &infantry_player, int &in
                         {
                             cout << "You win the battle"<< endl;
                             hp_enemy--;
-                            infantry_computer = infantry_computer*LOSE;
-                            infantry_player = infantry_player*WIN;
-                            air_computer = air_computer*LOSE;
-                            air_player = air_player*WIN;
+                            infantry_computer = infantry_computer*LOSE_INF;
+                            infantry_player = infantry_player*WIN_INF;
+                            air_computer = air_computer*LOSE_AF;
+                            air_player = air_player*WIN_AF;
+                            land = land * land_gain;
+                            cout << "You now have " << land << " land"<< endl;
                         }
                         else
                         {
                             cout << "You lost the battle"<< endl;
                             hp_player--;
-                            infantry_computer = infantry_computer*LOSE;
-                            infantry_player = infantry_player*WIN;
-                            air_computer = air_computer*WIN;
-                            air_player = air_player*LOSE;                }}
+                            infantry_computer = infantry_computer*WIN_INF;
+                            infantry_player = infantry_player*LOSE_INF;
+                            air_computer = air_computer*WIN_AF;
+                            air_player = air_player*LOSE_AF;
+                            land = land * land_loss;
+                            cout << "You now have " << land << " land"<< endl;
+                        }}
                     else if (total_player < total_computer)
                     {if (chance < 4)
                         {
                             cout << "You win the battle"<< endl;
                             hp_enemy--;
-                            infantry_computer = infantry_computer*LOSE;
-                            infantry_player = infantry_player*WIN;
-                            air_computer = air_computer*LOSE;
-                            air_player = air_player*WIN;
+                            infantry_computer = infantry_computer*LOSE_INF;
+                            infantry_player = infantry_player*WIN_INF;
+                            air_computer = air_computer*LOSE_AF;
+                            air_player = air_player*WIN_AF;
+                            land = land * land_gain;
+                            cout << "You now have " << land << " land"<< endl;
                         }
                         else
                         {
                             cout << "You lost the battle" << endl;
                             hp_player--;
-                            infantry_computer = infantry_computer*WIN;
-                            infantry_player = infantry_player*LOSE;
-                            air_computer = air_computer*WIN;
-                            air_player = air_player*LOSE;
+                            infantry_computer = infantry_computer*WIN_INF;
+                            infantry_player = infantry_player*LOSE_INF;
+                            air_computer = air_computer*WIN_AF;
+                            air_player = air_player*LOSE_AF;
+                            land = land * land_loss;
+                            cout << "You now have " << land << " land"<< endl;
                         }}
                     else
                     {if (chance < 5)
                         {
                             cout << "You win the battle" << endl;
                             hp_enemy--;
-                            infantry_computer = infantry_computer*LOSE;
-                            infantry_player = infantry_player*WIN;
-                            air_computer = air_computer*LOSE;
-                            air_player = air_player*WIN;
+                            infantry_computer = infantry_computer*LOSE_INF;
+                            infantry_player = infantry_player*WIN_INF;
+                            air_computer = air_computer*LOSE_AF;
+                            air_player = air_player*WIN_AF;
+                            land = land * land_gain;
+                            cout << "You now have " << land << " land" << endl;;
                         }
                         else
                         {
                             cout << "You lose the battle" << endl;
                             hp_player--;
-                            infantry_computer = infantry_computer*WIN;
-                            infantry_player = infantry_player*LOSE;
-                            air_computer = air_computer*WIN;
-                            air_player = air_player*LOSE;
+                            infantry_computer = infantry_computer*WIN_INF;
+                            infantry_player = infantry_player*LOSE_INF;
+                            air_computer = air_computer*WIN_AF;
+                            air_player = air_player*LOSE_AF;
+                            land = land * land_loss;
+                            cout << "You now have " << land << " land"<< endl;;
                         }}}
             }
         }
     }
     while(hp_player!=0 && hp_enemy!=0);
 
-   
+    int year_passed = turns/10;
+    year = year + year_passed;
 
+    if (hp_enemy==0 && hp_player > 0)
+    {
+        land = land *1.25;
+        cout << "Since you won, you gain more land as reparations. Total land is now: " << land << " acres" << endl;;
+        return true;
+    }
+    else if (hp_enemy >0 && hp_player==0)
+    {
+        land = land *0.7;
+        cout << "Since you lost, you lose more land as reparations. Total land is now: " << land << " acres" << endl;;
+        return false;
+    }
+  
 }
+
+string toUpper(string &str) // Needs to be implemented
+{
+    int a;
+    string c;
+    string d;
+    for(int i=0; i < str.length() ; i++)
+    {
+        a = int (str[i]);
+        int b = a-32;
+        char c = char (b);
+        d= d+c;
+    }
+    cout << d;
+}
+
