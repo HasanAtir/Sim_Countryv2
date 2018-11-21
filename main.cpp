@@ -163,6 +163,7 @@ int main()
         cin>>next_year_option;
         if(next_year_option==1)
         {
+            year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
             number_of_wars++;
             bool war_win = win_war_Skirmish(population, land, infantry_military);
             if(war_win)
@@ -183,6 +184,7 @@ int main()
         }
         else if(next_year_option==2)
         {
+            year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
             building_factory = true;        //Boolean that starts construction of factory
             remaining_construction_time = 3;//Estimated time until factory finishes construction
         }
@@ -192,10 +194,12 @@ int main()
         }
       else if (next_year_option==5)
         {
-            bool war_win = war_Room(air_military,north_air_military,infantry_military,north_infantry_military);
+            number_of_wars++;
+            bool war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
+                                    north_infantry_military,player_name, year);
             if(war_win)
             {
-                cout<<"You have won the war!\n\n";
+                
                 number_of_wars_won++;
                 // Happiness Effects
                 if (happiness_factor < 100)
@@ -205,7 +209,7 @@ int main()
             }
             else
             {
-                cout<<"You have lost the war!\n\n";
+                
                 happiness_factor = happiness_factor -10;
             }
         }
@@ -281,7 +285,7 @@ int main()
 
 
 
-        year++;//Increments year
+        
         //Added for testing purposes. Needs to be removed.
         cout<<north_name<<endl<<south_name<<endl<<west_name<<endl<<east_name<<endl;
     }
@@ -443,6 +447,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
     int total_computer = air_computer+infantry_computer;
     float const WIN_INF = 0.9; // Win Infantry multiplier
     float const LOSE_INF = 0.75; // Loss Infantry multiplier
+    int const afplayer =  air_player, ifplayer = infantry_player;
     float const WIN_AF= 0.99;
     float const LOSE_AF= 0.93;
     float const land_gain = 1.15; // %ge increase
@@ -696,13 +701,37 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
     if (hp_enemy==0 && hp_player > 0)
     {
         land = land *1.25;
-        cout << "Since you won, you gain more land as reparations. Total land is now: " << land << " acres" << endl;;
+        int updated_af = afplayer * 0.8;
+        int updated_if = ifplayer *0.75;
+        cout << "YOU WON THE WAR!" << endl;
+        cout << "Since you won, you gain resources as reparations." << endl;;
+        cout << "Total land is now  : " << land << " acres" << endl;
+        cout << "Air force is now   : " << updated_af << endl;
+        cout << "Infantry is now    : " << updated_if << endl;
+        population = population - updated_af - updated_if; ;
+        cout << "Population is now  : " << population << endl;
+        air_player = updated_af;
+        infantry_player = updated_if;
+        cout << "The war lasted " << year_passed << " year(s)!" << endl;
+      
         return true;
     }
     else if (hp_enemy >0 && hp_player==0)
     {
         land = land *0.7;
-        cout << "Since you lost, you lose more land as reparations. Total land is now: " << land << " acres" << endl;;
+        int updated_af= afplayer * 0.30;
+        int updated_if= ifplayer * 0.25;
+        cout << "YOU LOST THE WAR!" << endl;
+        cout << "Since you lost, you lose resources as reparations." << endl;;
+        cout << "Total land is now  : " << land << " acres" << endl;
+        cout << "Air force is now   : " << updated_af << endl;
+        cout << "Infantry is now    : " << updated_if << endl;
+        population = population - updated_af - updated_if;
+        cout << "Population is now  : " << population << endl;
+        air_player = updated_af;
+        infantry_player = updated_if;
+        cout << "The war lasted " << year_passed << " year(s)!" << endl;
+      
         return false;
     }
   
