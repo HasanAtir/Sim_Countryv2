@@ -703,12 +703,14 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         land = land *1.25;
         int updated_af = afplayer * 0.8;
         int updated_if = ifplayer *0.75;
+        int af_pop_lost = afplayer *0.2;
+        int inf_pop_lost = ifplayer *0.25;
         cout << "YOU WON THE WAR!" << endl;
         cout << "Since you won, you gain resources as reparations." << endl;;
         cout << "Total land is now  : " << land << " acres" << endl;
         cout << "Air force is now   : " << updated_af << endl;
         cout << "Infantry is now    : " << updated_if << endl;
-        population = population - updated_af - updated_if; ;
+        population = population - af_pop_lost - inf_pop_lost;
         cout << "Population is now  : " << population << endl;
         air_player = updated_af;
         infantry_player = updated_if;
@@ -719,14 +721,16 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
     else if (hp_enemy >0 && hp_player==0)
     {
         land = land *0.7;
-        int updated_af= afplayer * 0.30;
-        int updated_if= ifplayer * 0.25;
+        int updated_af= afplayer * 0.30; // No. of people remaining in AF 
+        int updated_if= ifplayer * 0.25; // No. of people remaining in inf
+        int af_pop_lost = afplayer *0.7; // No. of people lost from AF
+        int inf_pop_lost = ifplayer *0.75; // No. of people lost from inf
         cout << "YOU LOST THE WAR!" << endl;
         cout << "Since you lost, you lose resources as reparations." << endl;;
         cout << "Total land is now  : " << land << " acres" << endl;
         cout << "Air force is now   : " << updated_af << endl;
         cout << "Infantry is now    : " << updated_if << endl;
-        population = population - updated_af - updated_if;
+        population = population - af_pop_lost - inf_pop_lost;
         cout << "Population is now  : " << population << endl;
         air_player = updated_af;
         infantry_player = updated_if;
