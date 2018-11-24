@@ -42,6 +42,7 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d);
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
                int& infantry_computer, string& name, int &year);
 string toUpper (string str);
+void sentinelFunction(int from, int to, int& choice);
 
 
 
@@ -103,7 +104,7 @@ int main()
     int south_id=2;
     int east_id =3;
     int west_id =4;
-  
+
     cout << "Welcome to Sim Country player. Please enter your name: ";
     cin >> player_name;
 
@@ -113,8 +114,8 @@ int main()
         int north_land = 1000;
         //growth factors:
         gdp = (commerce)/population;
-      
-      
+
+
         cout << player_name << " these are your current country stats" << endl;
 
         //output
@@ -160,7 +161,8 @@ int main()
               "3) Random invention\n"
               "4) quit simulation\n"
               "5) Go to all out war\n";  ///Needs to be implemented
-        cin>>next_year_option;
+        sentinelFunction(1, 5, next_year_option);
+
         if(next_year_option==1)
         {
             year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
@@ -192,14 +194,14 @@ int main()
         {
             game_over = true;
         }
-      else if (next_year_option==5)
+        else if (next_year_option==5)
         {
             number_of_wars++;
             bool war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
                                     north_infantry_military,player_name, year);
             if(war_win)
             {
-                
+
                 number_of_wars_won++;
                 // Happiness Effects
                 if (happiness_factor < 100)
@@ -209,7 +211,7 @@ int main()
             }
             else
             {
-                
+
                 happiness_factor = happiness_factor -10;
             }
         }
@@ -245,7 +247,7 @@ int main()
         int north_random_options = d10_Random_Roll();
 
         if(north_random_options==1)
-        //Northern neighbour declares skirmish war on player
+            //Northern neighbour declares skirmish war on player
         {   bool player_defends = false;
             cout<<"\n"<<north_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
@@ -285,7 +287,7 @@ int main()
 
 
 
-        
+
         //Added for testing purposes. Needs to be removed.
         cout<<north_name<<endl<<south_name<<endl<<west_name<<endl<<east_name<<endl;
     }
@@ -344,7 +346,7 @@ bool win_war_Skirmish(int& population, int& land, int& military)
  * @@PARAM: player's population, military, and land; AI's population, and military
  * @Return: Boolean value indicating whether Player has won the war or not and edits parameters through reference*/
 bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&player_airmili, int& neighbour_pop,
-        int& neighbour_infmili, int& neighbour_airmili)
+                     int& neighbour_infmili, int& neighbour_airmili)
 {
     int chance = d100_Random_Roll();
     //Affect multipliers
@@ -493,7 +495,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         cout<< "3: Both \n" << endl;
         int choice;
 
-        cin >> choice;
+        sentinelFunction(1, 3, choice);
         // Game interaction
         {
 
@@ -715,13 +717,13 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         air_player = updated_af;
         infantry_player = updated_if;
         cout << "The war lasted " << year_passed << " year(s)!" << endl;
-      
+
         return true;
     }
     else if (hp_enemy >0 && hp_player==0)
     {
         land = land *0.7;
-        int updated_af= afplayer * 0.30; // No. of people remaining in AF 
+        int updated_af= afplayer * 0.30; // No. of people remaining in AF
         int updated_if= ifplayer * 0.25; // No. of people remaining in inf
         int af_pop_lost = afplayer *0.7; // No. of people lost from AF
         int inf_pop_lost = ifplayer *0.75; // No. of people lost from inf
@@ -735,24 +737,47 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         air_player = updated_af;
         infantry_player = updated_if;
         cout << "The war lasted " << year_passed << " year(s)!" << endl;
-      
+
         return false;
     }
-  
+
 }
 
 string toUpper(string &str) // Needs to be implemented
 {
     int a;
     string c;
-    string d;
+    string UCNAME;
     for(int i=0; i < str.length() ; i++)
     {
         a = int (str[i]);
-        int b = a-32;
-        char c = char (b);
-        d= d+c;
+        int uppercase1 = a-32;
+        char c = char (uppercase1);
+        UCNAME= UCNAME+c;
     }
-    cout << d;
+    cout << UCNAME;
 }
 
+void sentinelFunction(int from, int to, int& choice)
+{
+    string dummy;
+    bool validinput = false;
+    cout<<"Enter your choice\n";
+    while(!validinput) {
+        cin >> choice;
+        if (cin.fail()) {
+            cout << "invalid input detected cinfail";
+            validinput = false;
+            cin.clear();
+            cin.ignore(10000,'\n');
+            continue;
+        } else if (choice > to || choice < from) {
+            cout << "Invalid input detected out of range";
+            cin.clear();
+            continue;
+        } else {
+            cout << "You have selected: " << choice;
+            validinput=true;
+        }
+    }
+}
