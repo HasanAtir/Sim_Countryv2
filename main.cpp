@@ -41,7 +41,7 @@ void neighbour_Name_Allocation(string& nname, string& sname, string& wname, stri
 void name_Index_Allocate(int& a, int& b, int& c, int& d);
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
                int& infantry_computer, string& name, int &year);
-string toUpper (string str);
+string toUpper (string &str);
 void sentinelFunction(int from, int to, int& choice);
 
 
@@ -462,7 +462,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
     cout << "WELCOME TO THE WAR ROOM" << endl;
     cout << "AIRFORCE = JETS. ANTI PLANE GUNS EXIST EXCLUSIVE OF AIRFORCE AND CANNOT BE DESTROYED" << endl;
     cout << "INFANTRY = FOOTSOLDIERS. TANKS EXIST EXCLUSIVE OF INFANTRY AND CANNOT BE DESTROYED" << endl;
-    cout << "KEEP A LOOK OUT FOR ENEMY INTEL. IT MAY JUST SWAY THE TIDE OF WAR. GOOD LUCK " << name << "!" << endl;
+    cout << "KEEP A LOOK OUT FOR ENEMY INTEL. IT MAY JUST SWAY THE TIDE OF WAR. GOOD LUCK " << toUpper(name) << "!" << endl;
     cout << "MAY THE BEST COUNTRY WIN" << endl;
 
 
@@ -743,20 +743,6 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
 
 }
 
-string toUpper(string &str) // Needs to be implemented
-{
-    int a;
-    string c;
-    string UCNAME;
-    for(int i=0; i < str.length() ; i++)
-    {
-        a = int (str[i]);
-        int uppercase1 = a-32;
-        char c = char (uppercase1);
-        UCNAME= UCNAME+c;
-    }
-    cout << UCNAME;
-}
 
 void sentinelFunction(int from, int to, int& choice)
 {
@@ -766,18 +752,42 @@ void sentinelFunction(int from, int to, int& choice)
     while(!validinput) {
         cin >> choice;
         if (cin.fail()) {
-            cout << "invalid input detected cinfail";
+            cout << "invalid input detected cinfail" << endl;
             validinput = false;
             cin.clear();
             cin.ignore(10000,'\n');
             continue;
         } else if (choice > to || choice < from) {
-            cout << "Invalid input detected out of range";
+            cout << "Invalid input detected out of range" << endl;
             cin.clear();
             continue;
         } else {
-            cout << "You have selected: " << choice;
+            cout << "You have selected: " << choice << endl;
             validinput=true;
         }
     }
 }
+
+string toUpper(string &str) // Needs to be implemented
+{
+    int a;
+    string c;
+    string d = "";
+
+    for(int i=0; i < str.length() ; i++)
+    {
+        a = int (str[i]);
+        if (a < 90)
+        {
+            char c = char (a);
+            d = d + c;
+            continue;
+        }
+        else
+        {int b = a-32;
+        char c = char (b);
+        d= d+c;}
+    }
+    return d;
+}
+
