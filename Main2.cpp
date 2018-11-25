@@ -41,7 +41,7 @@ int main()
 
     //initial conditions;
 
-    int population, air_military, infantry_military, commerce, military_factory, land, food, happiness_factor;
+    int population, air_military, infantry_military, commerce, military_factory, land, food, happiness_factor, ospy, cspy, undercover_spy;
     population = 100000;
     air_military = 100;
     infantry_military = 1000;
@@ -50,12 +50,17 @@ int main()
     food = land*1000;
     military_factory=1;
     happiness_factor = 100; // Happiness Level
+    ospy = 0; // Offensive Spy
+    cspy = 0; // Counter Spy
+    undercover_spy =0;
+
     int year = 1921;
     int food_stores=food;
     double gdp;
     int number_of_wars=0;
     int number_of_wars_won=0;
     int remaining_construction_time = 0;
+
 
     double pop_grow, comm_grow, mili_grow, gdp_grow, food_grow;
 
@@ -68,6 +73,10 @@ int main()
 
     string north_name, south_name, east_name, west_name, player_name;
     neighbour_Name_Allocation(north_name, south_name, west_name, east_name);
+    string enemy_names [4] = {north_name, south_name, west_name, east_name}; // Array with enemy country names
+
+
+
 
 
 
@@ -105,19 +114,22 @@ int main()
         cout << player_name << " these are your current country stats" << endl;
 
         //output
-        cout<<"CURRENT YEAR:                "<<year<<endl<<endl;
-        cout<<"Current population:          "<<population<<endl;
-        cout<<"Current food stocks:         "<<food_stores<<endl;
-        cout<<"Current owned land:          "<<land<<endl;
-        cout<<"Current Military might:      "<<air_military+infantry_military<<endl;
-        cout<<"Current Military factories   "<<military_factory;
+        cout<<"CURRENT YEAR:                         "<<year<<endl<<endl;
+        cout<<"Current population:                   "<<population<<endl;
+        cout<<"Current food stocks:                  "<<food_stores<<endl;
+        cout<<"Current owned land:                   "<<land<<endl;
+        cout<<"Current Military might:               "<<air_military+infantry_military<<endl;
+        cout<<"Current Military factories            "<<military_factory;
         if(building_factory){cout<<"(1)"<<endl;}
         else {cout<<endl;}
-        cout<<"Current Commercial prowess:  "<<commerce<<endl;
-        cout<<"Current GDP/Capita:          $"<<gdp<<endl;
-        cout<<"Total number of wars:        "<<number_of_wars<<endl;
-        cout<<"Total wars won:              "<<number_of_wars_won<<endl;
-        cout<<"Happiness Level of Population: "<< happiness_factor<<"%"<<endl;
+        cout<<"Current Commercial prowess:           "<<commerce<<endl;
+        cout<<"Current GDP/Capita:                  $"<<gdp<<endl;
+        cout<<"Current Available Spy Count:          " << ospy << endl;
+        cout<<"Current Available Counter Spy Count:  " << cspy << endl;
+        cout<<"Spys who are undercover:              " << undercover_spy << endl;
+        cout<<"Total number of wars:                 "<<number_of_wars<<endl;
+        cout<<"Total wars won:                       "<<number_of_wars_won<<endl;
+        cout<<"Happiness Level of Population:        "<< happiness_factor<<"%"<<endl;
 
 
 
@@ -142,14 +154,15 @@ int main()
         }
 
         //game time BASIC OPTIONS. Persistent for now, plans to be randomised
-        cout<<"1) Go to war (skirmish)\n"
+        if (ospy == 0)
+        {cout<<"1) Go to war (skirmish)\n"
               "2) Build military factory\n"
               "3) Random invention\n"
-              "4) quit simulation\n"
-              "5) Go to all out war\n";  ///Needs to be implemented
-        sentinelFunction(1, 5, next_year_option);
-
-        if(next_year_option==1)
+              "4) Go to all out war\n"
+              "5) Train a type of Spy \n"
+              "6) quit simulation\n";
+        sentinelFunction(1, 6, next_year_option);
+                if(next_year_option==1)
         {
             year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
             number_of_wars++;
@@ -176,11 +189,8 @@ int main()
             building_factory = true;        //Boolean that starts construction of factory
             remaining_construction_time = 3;//Estimated time until factory finishes construction
         }
-        else if(next_year_option==4)
-        {
-            game_over = true;
-        }
-        else if (next_year_option==5)
+
+        else if (next_year_option==4)
         {
             number_of_wars++;
             bool war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
@@ -201,6 +211,93 @@ int main()
                 happiness_factor = happiness_factor -10;
             }
         }
+        else if(next_year_option==5)
+        {
+            year++;
+            spy(ospy,cspy);
+        }
+         else if(next_year_option==6)
+        {
+            game_over = true;
+        }
+        }
+        else
+        {cout<<"1) Go to war (skirmish)\n"
+              "2) Build military factory\n"
+              "3) Random invention\n"
+              "4) Go to all out war\n"
+              "5) Train a type of Spy \n"
+              "6) Send Spy Undercover \n"
+              "7) quit simulation\n";
+        sentinelFunction(1, 7, next_year_option);
+                        if(next_year_option==1)
+        {
+            year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
+            number_of_wars++;
+            bool war_win = win_war_Skirmish(population, land, infantry_military);
+            if(war_win)
+            {
+                cout<<"You have won the war!\n\n";
+                number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
+            }
+            else
+            {
+                cout<<"You have lost the war!\n\n";
+                happiness_factor = happiness_factor -10;
+            }
+        }
+        else if(next_year_option==2)
+        {
+            year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
+            building_factory = true;        //Boolean that starts construction of factory
+            remaining_construction_time = 3;//Estimated time until factory finishes construction
+        }
+
+        else if (next_year_option==4)
+        {
+            number_of_wars++;
+            bool war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
+                                    north_infantry_military,player_name, year);
+            if(war_win)
+            {
+
+                number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
+            }
+            else
+            {
+
+                happiness_factor = happiness_factor -10;
+            }
+        }
+        else if(next_year_option==5)
+        {
+            year++;
+            spy(ospy,cspy);
+        }
+        else if (next_year_option==6)
+        {
+            year++;
+            player_attack_spy(north_name, south_name, east_name, west_name,  ospy, undercover_spy);
+        }
+         else if(next_year_option==7)
+        {
+            game_over = true;
+        }
+
+
+         }
+
+
 
         //Military factory construction time counter
         if(building_factory)
@@ -217,6 +314,11 @@ int main()
                 military_factory++;
             }
         }
+
+        // Eenemy Game stuff
+        int e_spyattack = d100_Random_Roll();
+        int enemy_name_choice = d4_Random_Roll();
+        string attacking_enemy = enemy_names[enemy_name_choice]; // Random Country name given
 
         //Neighbour 1 simulation
         north_population=north_population*north_population_growth;
@@ -271,6 +373,9 @@ int main()
             }
         }
 
+
+
+        enemyspyattack(e_spyattack, attacking_enemy, cspy, air_military, infantry_military);
 
 
 

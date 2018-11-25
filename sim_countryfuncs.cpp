@@ -31,6 +31,15 @@ int d10_Random_Roll()
     return output;
 }
 
+int d4_Random_Roll() // For enemy country selection
+{
+    srand(time(0));
+    int random = rand();
+    int output = random%4;
+    return output;
+}
+
+
 bool win_war_Skirmish(int& population, int& land, int& military)
 {
     int chance = d100_Random_Roll();
@@ -504,4 +513,157 @@ string toUpper(string &str) // Needs to be implemented
     return d;
 }
 
+int spy(int &ospy, int& cspy)
+{
+    cout << "Do you want to train \n"
+            "1 : Spy (Will infiltrate other countries) \n"
+            "2 : Counter Spy (Will defend against enemy spies) \n";
+    int choice;
+    sentinelFunction(1, 2, choice);
+    if (choice == 1)
+    {
+        ospy++;
+        if (ospy ==1)
+        {
+            cout << "You now have " << ospy << " spy" << endl;
+        }
+        else
+        {
+            cout << "You now have " << ospy << " spies" << endl;
+        }
 
+    }
+    else
+    {
+        cspy++;
+        if (cspy ==1)
+        {
+            cout << "You now have " << cspy << " counter spy" << endl;
+        }
+        else
+        {
+            cout << "You now have " << cspy << " counter spies" << endl;
+        }
+    }
+
+}
+
+void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int& inf )
+{
+    float const afloss = 0.05, infloss = 0.1;
+    int def_chance = d100_Random_Roll();
+    if (s_chance < 61) // 60% chance of spy attack
+    {
+        if (def_chance < 61 && cspy > 0 )
+        {
+            cout << "You were attacked by " << e_s_country<< " but your Counter Spy defeated the " << e_s_country << " spy" << endl;
+        }
+        else if (cspy < 1)
+        {
+            cout << e_s_country << " spy has attacked our barracks, poisoning our infantry and airforce! \n";
+
+            inf = inf - (inf * infloss);
+            af = af - (af*afloss);
+
+
+            cout << "Your current Airforce count is now: " << af << endl;
+            cout << "Your current Infantry count is now: " << inf << endl;
+        }
+        else if (cspy > 0 && def_chance > 61 )
+        {
+            cout << e_s_country << " spy has attacked our barracks, poisoning our infantry and airforce! \n";
+            cout << e_s_country << " spy has also killed your counter spy \n";
+
+            inf = inf - (inf * infloss);
+            af = af - (af*afloss);
+            cspy--;
+
+
+            cout << "Your current Airforce count is now: " << af << endl;
+            cout << "Your current Infantry count is now: " << inf << endl;
+        }
+    }
+
+
+}
+
+void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w_name,  int &ospy, int &undercoverspy)
+
+{
+
+    cout << "Who do you wish to send your spy to?" << endl;
+    cout << "1: " << n_name << endl;
+    cout << "2: " << s_name << endl;
+    cout << "3: " << w_name << endl;
+    cout << "4: " << e_name<< endl;
+    int input;
+    cin >> input;
+    int p_s_chance = d100_Random_Roll(); // Player spy odds
+    int e_s_chance = d100_Random_Roll(); // Enemy spy odds
+
+    if (input == 1)
+    {
+        if (p_s_chance > 60)
+        {
+            cout << "Your Spy has successfully infiltrated " << n_name
+            << " HQ! You will receive Intel on them before the next battle!" << endl;
+            undercoverspy++;
+            ospy--;
+
+        }
+        else
+        {
+            cout << " Your spy has been caught by " << n_name << " ." << endl;
+            ospy--;
+        }
+
+    }
+    else if (input == 2)
+    {
+        if (p_s_chance > 60)
+        {
+            cout << "Your Spy has successfully infiltrated " << s_name
+            << " HQ! You will receive Intel on them before the next battle!" << endl;
+            undercoverspy++;
+            ospy--;
+        }
+        else
+        {
+            cout << " Your spy has been caught by " << s_name << " ." << endl;
+            ospy--;
+        }
+
+    }
+     else if (input == 3)
+    {
+        if (p_s_chance > 60)
+        {
+            cout << "Your Spy has successfully infiltrated " << w_name
+            << " HQ! You will receive Intel on them before the next battle!" << endl;
+            undercoverspy ++;
+            ospy--;
+        }
+        else
+        {
+            cout << " Your spy has been caught by " << w_name << " ." << endl;
+            ospy--;
+        }
+
+    }
+     else if (input == 4)
+    {
+        if (p_s_chance > 60)
+        {
+            cout << "Your Spy has successfully infiltrated " << e_name
+            << " HQ! You will receive Intel on them before the next battle!" << endl;
+            undercoverspy++;
+            ospy--;
+        }
+        else
+        {
+            cout << " Your spy has been caught by " << e_name << " ." << endl;
+            ospy--;
+        }
+
+    }
+}
