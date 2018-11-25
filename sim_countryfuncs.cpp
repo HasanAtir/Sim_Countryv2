@@ -556,7 +556,7 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
     {
         if (def_chance < 61 && cspy > 0 )
         {
-            cout << "You were attacked by " << e_s_country<< " but your Counter Spy defeated the " << e_s_country << " spy" << endl;
+            cout << "You were attacked by a " << e_s_country<< " spy but your Counter Spy defeated the " << e_s_country << " spy!" << endl;
         }
         else if (cspy < 1)
         {
@@ -571,8 +571,9 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
         }
         else if (cspy > 0 && def_chance > 61 )
         {
+            cout << e_s_country << " spy has killed your counter spy \n";
             cout << e_s_country << " spy has attacked our barracks, poisoning our infantry and airforce! \n";
-            cout << e_s_country << " spy has also killed your counter spy \n";
+
 
             inf = inf - (inf * infloss);
             af = af - (af*afloss);
@@ -597,7 +598,7 @@ void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w
     cout << "3: " << w_name << endl;
     cout << "4: " << e_name<< endl;
     int input;
-    cin >> input;
+    sentinelFunction(1,4, input);
     int p_s_chance = d100_Random_Roll(); // Player spy odds
     int e_s_chance = d100_Random_Roll(); // Enemy spy odds
 

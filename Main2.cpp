@@ -123,7 +123,7 @@ int main()
         if(building_factory){cout<<"(1)"<<endl;}
         else {cout<<endl;}
         cout<<"Current Commercial prowess:           "<<commerce<<endl;
-        cout<<"Current GDP/Capita:                  $"<<gdp<<endl;
+        cout<<"Current GDP/Capita:                   $"<<gdp<<endl;
         cout<<"Current Available Spy Count:          " << ospy << endl;
         cout<<"Current Available Counter Spy Count:  " << cspy << endl;
         cout<<"Spys who are undercover:              " << undercover_spy << endl;
@@ -340,6 +340,7 @@ int main()
             cout<<"\n"<<north_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
             cin>>player_defends;
+            number_of_wars++;
             if(player_defends)
             {
                 bool player_victory= player_wins_war(population, land, infantry_military, air_military, north_population, north_infantry_military, north_air_military);
