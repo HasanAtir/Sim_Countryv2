@@ -556,11 +556,11 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
     {
         if (def_chance < 61 && cspy > 0 )
         {
-            cout << "You were attacked by a " << e_s_country<< " spy but your Counter Spy defeated the " << e_s_country << " spy!" << endl;
+            cout << "You were attacked by " << e_s_country<< "'s spy but your Counter Spy defeated the " << e_s_country << " spy!" << endl;
         }
         else if (cspy < 1)
         {
-            cout << e_s_country << " spy has attacked our barracks, poisoning our infantry and airforce! \n";
+            cout << e_s_country << "'s spy has attacked our barracks, poisoning our infantry and airforce! \n";
 
             inf = inf - (inf * infloss);
             af = af - (af*afloss);
@@ -571,8 +571,8 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
         }
         else if (cspy > 0 && def_chance > 61 )
         {
-            cout << e_s_country << " spy has killed your counter spy \n";
-            cout << e_s_country << " spy has attacked our barracks, poisoning our infantry and airforce! \n";
+            cout << e_s_country << "'s spy has killed your counter spy \n";
+            cout << e_s_country << "'s spy has attacked our barracks, poisoning our infantry and airforce! \n";
 
 
             inf = inf - (inf * infloss);
@@ -667,4 +667,14 @@ void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w
         }
 
     }
+}
+bool happiness_loss(int &happy)
+{
+    if (happy > 40 )
+    {
+        return false;
+    }
+    else
+        return true;
+
 }

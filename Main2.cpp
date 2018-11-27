@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <string>
+#include "Windows.h"
 #include "sim_countryfuncs.cpp"
 //Workdate/time 6:30 pm, 19-Nov-2018
 
@@ -162,6 +163,7 @@ int main()
               "5) Train a type of Spy \n"
               "6) quit simulation\n";
         sentinelFunction(1, 6, next_year_option);
+
                 if(next_year_option==1)
         {
             year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
@@ -377,6 +379,11 @@ int main()
 
 
         enemyspyattack(e_spyattack, attacking_enemy, cspy, air_military, infantry_military);
+        system("pause");
+
+
+
+
 
 
 
