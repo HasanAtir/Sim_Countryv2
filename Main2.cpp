@@ -102,7 +102,7 @@ int main()
     int west_id =4;
 
     cout << "Welcome to Sim Country player. Please enter your name: ";
-    cin >> player_name;
+    getline(cin, player_name);
 
     instructions(player_name);
     system("pause");
