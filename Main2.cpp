@@ -104,6 +104,9 @@ int main()
     cout << "Welcome to Sim Country player. Please enter your name: ";
     cin >> player_name;
 
+    instructions(player_name);
+    system("pause");
+
     while(!game_over)
     {
         //resetting AI values

@@ -29,6 +29,8 @@ int spy (int &ospy, int &cspy);
 void enemyspyattack(int &s_chance, std::string& e_s_country, int& cspy, int& af, int& inf );
 void player_attack_spy(std::string &n_name, std::string &s_name, std::string &e_name, std::string &w_name,
                         int &ospy, int &undercoverspy);
+bool happiness_loss (int &happy);
+void instructions (std::string& name);
 
 
 

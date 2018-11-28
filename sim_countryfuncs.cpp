@@ -678,3 +678,16 @@ bool happiness_loss(int &happy)
         return true;
 
 }
+
+void instructions(string& name)
+{
+    cout << "*Hello " << name<< " the objective of this game is to get your GDP to x per Capita." << endl;
+    cout<< "*You are landlocked by 4 other countries who can attack you at anytime with spies or their armies." << endl;
+    cout << "*You have a dedicated Military and Airforce dedicated to protecting your border " << endl;
+    cout << " which you must grow through the use of Military factories" << endl;
+    cout << "*You must also continue gaining land in order to grow food to accommodate your ever increasing population." << endl;
+    cout << "*Keep an eye on your population count, you do not want them to starve!" << endl;
+    cout << "*Take caution in entering the War Room, the rewards are great, but so are the punishments." <<endl;
+    cout << "*Good luck " << name << "!" << endl;
+
+}
