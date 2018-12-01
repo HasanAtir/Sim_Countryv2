@@ -460,9 +460,10 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
             else if (choice == 4)
             {
                 cout << "You send a peace treaty to the enemy" << endl;
-                int accept = d10_Random_Roll();
-                if ( accept  > 8)
+                int accept = d100_Random_Roll();
+                if ( accept  > f)
                 {
+
                     cout << "The enemy has accepted your peace treaty" << endl;
                     cout << "You will now lose 50% of your land but keep your airforce and infantry intact" << endl;
                     land = land * 0.5;
@@ -476,29 +477,31 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                     cout << "The enemy reject your offer" << endl;
                 }
             }
-            int enemy_surrender = d10_Random_Roll();
-            if (enemy_surrender > 8 )
-            {
+            int enemy_surrender = d100_Random_Roll();
+                {
+                    if (enemy_surrender < e  )
+                    {
 
-                cout << "The Enemy has raised a white flag" << endl;
-                cout << "If you accept you will receive a 25% increment in land" << endl;
-                int decision;
-                cout << "Press 1 to accept, 0 to deny" << endl;
-                sentinelFunction(0,1,decision);
-                if (decision == 1)
-                {
-                    cout << "You have accepted the white flag" << endl;
-                    land = land * 1.25;
-                    cout << "You now have: " << land << " land" << endl;
-                    int year_passed = turns/10;
-                    year = year + year_passed;
-                    break;
+                        cout << "The Enemy has raised a white flag" << endl;
+                        cout << "If you accept you will receive a 25% increment in land" << endl;
+                        int decision;
+                        cout << "Press 1 to accept, 0 to deny" << endl;
+                        sentinelFunction(0,1,decision);
+                        if (decision == 1)
+                        {
+                            cout << "You have accepted the white flag" << endl;
+                            land = land * 1.25;
+                            cout << "You now have: " << land << " land" << endl;
+                            int year_passed = turns/10;
+                            year = year + year_passed;
+                            break;
+                        }
+                        else
+                        {
+                            cout << "You have rejected the enemy's offer, the war continues!" << endl;
+                        }
+                    }
                 }
-                else
-                {
-                    cout << "You have rejected the enemy's offer, the war continues!" << endl;
-                }
-            }
         }
     }
     while(hp_player!=0 && hp_enemy!=0);
