@@ -42,7 +42,7 @@ int main()
 
     //initial conditions;
 
-    int population, air_military, infantry_military, commerce, military_factory, land, food, happiness_factor, ospy, cspy, undercover_spy;
+    int population, air_military, infantry_military, commerce, military_factory, land, food, happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west;
     population = 100000;
     air_military = 100;
     infantry_military = 1000;
@@ -54,6 +54,10 @@ int main()
     ospy = 0; // Offensive Spy
     cspy = 0; // Counter Spy
     undercover_spy =0;
+    ucs_north = 0;
+    ucs_south = 0;
+    ucs_east = 0;
+    ucs_west = 0;
 
     int year = 1921;
     int food_stores=food;
@@ -101,6 +105,7 @@ int main()
     int east_id =3;
     int west_id =4;
 
+    int turn_count =0; // Helps count to five turns, at which happiness automatically increases by 10.
     cout << "Welcome to Sim Country player. Please enter your name: ";
     getline(cin, player_name);
 
@@ -109,6 +114,10 @@ int main()
 
     while(!game_over)
     {
+
+
+
+
         //resetting AI values
         int north_land = 1000;
         //growth factors:
@@ -171,7 +180,7 @@ int main()
         {
             year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
             number_of_wars++;
-            bool war_win = win_war_Skirmish(population, land, infantry_military);
+            bool war_win = win_war_Skirmish(population, land, infantry_military/*, north_name, south_name, east_name, west_name */);
             if(war_win)
             {
                 cout<<"You have won the war!\n\n";
@@ -239,7 +248,7 @@ int main()
         {
             year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
             number_of_wars++;
-            bool war_win = win_war_Skirmish(population, land, infantry_military);
+            bool war_win = win_war_Skirmish(population, land, infantry_military/*, north_name, south_name, east_name, west_name*/);
             if(war_win)
             {
                 cout<<"You have won the war!\n\n";
@@ -320,7 +329,7 @@ int main()
             }
         }
 
-        // Eenemy Game stuff
+        // Enemy Game stuff
         int e_spyattack = d100_Random_Roll();
         int enemy_name_choice = d4_Random_Roll();
         string attacking_enemy = enemy_names[enemy_name_choice]; // Random Country name given
@@ -348,7 +357,8 @@ int main()
             number_of_wars++;
             if(player_defends)
             {
-                bool player_victory= player_wins_war(population, land, infantry_military, air_military, north_population, north_infantry_military, north_air_military);
+                bool player_victory= player_wins_war(population, land, infantry_military, air_military,
+                                                     north_population, north_infantry_military, north_air_military);
                 //Calls the war boolean function if player chooses to defend.
                 if(player_victory)
                 {
@@ -382,7 +392,24 @@ int main()
 
 
         enemyspyattack(e_spyattack, attacking_enemy, cspy, air_military, infantry_military);
+        turn_count++;
+        if(turn_count%5 == 0) // Every 5 turns, Happiness increase!
+        {
+            if(happiness_factor!=100)
+            {
+                happiness_factor= happiness_factor+10;
+            }
+
+        }
         system("pause");
+        if(happiness_factor < 21)
+            {
+                cout << "Your people are only " << happiness_factor << "% happy!" << endl;
+                cout << "Your people have revolted!" << endl;
+                cout << "GAME OVER!" << endl;
+                game_over= true;
+
+            }
 
 
 

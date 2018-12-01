@@ -40,7 +40,9 @@ int d4_Random_Roll() // For enemy country selection
 }
 
 
-bool win_war_Skirmish(int& population, int& land, int& military)
+bool win_war_Skirmish(int& population, int& land, int& military/*, string& n_name,
+                      string& s_name,string& e_name,string& w_name, int&ucs_north, int& ucs_south,
+                        int& ucs_east, int& ucs_west */)
 {
     int chance = d100_Random_Roll();
     double win_pop = 0.90, win_land = 1.15, win_mil = 0.85;
@@ -48,6 +50,23 @@ bool win_war_Skirmish(int& population, int& land, int& military)
     //If lose= -25% pop, -10% land, -30%military
     //If win= -10%pop, +15%land, -15% military
     //weight = military based
+    /*cout << "Who do you wish to attack? \n";
+    cout << "1) " << n_name << endl;
+    cout << "2) " << s_name << endl;
+    cout << "3) " << e_name << endl;
+    cout << "4) " << w_name << endl;
+    int choice;
+    sentinelFunction(1,4,choice);
+
+    if (choice == 1)
+    {
+        if(ucs_north == 0)
+        {
+            cout << "No intel"
+        }
+    }
+*/
+
     if(chance>50)
     {
         population  = population* win_pop;
@@ -178,6 +197,15 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
     float const land_loss = 0.90; // %ge decrese
     float const win_land= 0.15; // Isolated increase
     float const lose_land = 0.10; // isolated decrease
+    float a = ((float(air_player)/(float(air_player+ air_computer)))*100); // Player > comp
+    float b = ((float (air_computer)/(float(air_player+ air_computer)))*100); // Comp > player
+    float c = ((float(infantry_player)/(float(infantry_player+ infantry_computer)))*100);// Player > comp
+    float d = ((float(infantry_computer)/(float(infantry_player+ infantry_computer)))*100);// Comp > player
+    float e = ((float(total_player)/(float(total_player+ total_computer)))*100); // Player > comp
+    float f = ((float(total_computer)/(float(total_player+ total_computer)))*100); // Comp > player
+
+    //cout << a << endl << b << endl << c << endl << d << endl << e << endl << f << endl; // TESTING PROB
+
     int turns=1;
 
 
@@ -190,7 +218,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
 
 
     do{
-        int chance = d10_Random_Roll(); // Chance of you winning
+        int chance = d100_Random_Roll(); // Chance of you winning
         int chance_intel= d10_Random_Roll(); // Chance of receiving intel
         turns++;
 
@@ -225,7 +253,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
             {
 
                 {if (air_player > air_computer){
-                        {if ( chance >= 4)
+                        {if ( chance <= a)
                             {
                                 cout << "You win the battle"<< endl;
                                 hp_enemy--;
@@ -246,8 +274,9 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
 
                     }
                     else if (air_player < air_computer)
-                    {if (chance < 4)
+                    {if (chance > b )
                         {
+
                             cout << "You win the battle"<< endl;
                             hp_enemy--;
                             air_computer = air_computer*LOSE_AF;
@@ -257,6 +286,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         }
                         else
                         {
+
                             cout << "You lost the battle" << endl;
                             hp_player--;
                             air_computer = air_computer*WIN_AF;
@@ -287,8 +317,10 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
             else if (choice == 2)
             {
                 if (infantry_player > infantry_computer)
-                {if ( chance >= 4)
-                    {cout << "You win the battle"<< endl;
+                {if ( chance <= c)
+                    {
+
+                        cout << "You win the battle"<< endl;
                         hp_enemy--;
                         infantry_computer = infantry_computer*LOSE_INF;
                         infantry_player = infantry_player*WIN_INF;
@@ -297,6 +329,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                     }
                     else
                     {
+
                         cout << "You lost the battle"<< endl;
                         hp_player--;
                         infantry_computer = infantry_computer*WIN_INF;
@@ -305,8 +338,9 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         cout << "You now have " << land << " land"<< endl;
                     }}
                 else if (infantry_player < infantry_computer)
-                {if (chance < 4)
+                {if (chance > d)
                     {
+
                         cout << "You win the battle"<< endl;
                         hp_enemy--;
                         infantry_computer = infantry_computer*LOSE_INF;
@@ -316,6 +350,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                     }
                     else
                     {
+
                         cout << "You lost the battle" << endl;
                         hp_player--;
                         infantry_computer = infantry_computer*WIN_INF;
@@ -346,8 +381,9 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
             else if (choice == 3)
             {
                 {if (total_player > total_computer)
-                    {if ( chance >= 4)
+                    {if ( chance <= e)
                         {
+
                             cout << "You win the battle"<< endl;
                             hp_enemy--;
                             infantry_computer = infantry_computer*LOSE_INF;
@@ -359,7 +395,8 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         }
                         else
                         {
-                            cout << "You lost the battle"<< endl;
+
+                            cout << "You lost the battle" << endl;
                             hp_player--;
                             infantry_computer = infantry_computer*WIN_INF;
                             infantry_player = infantry_player*LOSE_INF;
@@ -369,8 +406,9 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             cout << "You now have " << land << " land"<< endl;
                         }}
                     else if (total_player < total_computer)
-                    {if (chance < 4)
+                    {if (chance > f)
                         {
+
                             cout << "You win the battle"<< endl;
                             hp_enemy--;
                             infantry_computer = infantry_computer*LOSE_INF;
@@ -382,6 +420,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         }
                         else
                         {
+
                             cout << "You lost the battle" << endl;
                             hp_player--;
                             infantry_computer = infantry_computer*WIN_INF;
@@ -588,7 +627,9 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 
 }
 
-void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w_name,  int &ospy, int &undercoverspy)
+void player_attack_spy(string &n_name,string &s_name,  string &e_name,
+                        string &w_name,   int &ospy, int &undercoverspy /*, int&ucs_north, int& ucs_south,
+                        int& ucs_east, int& ucs_west*/)
 
 {
 
@@ -610,6 +651,8 @@ void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy++;
             ospy--;
+            //ucs_north++;
+
 
         }
         else
@@ -627,6 +670,7 @@ void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy++;
             ospy--;
+            //ucs_south++;
         }
         else
         {
@@ -643,6 +687,7 @@ void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy ++;
             ospy--;
+            //ucs_west++;
         }
         else
         {
@@ -659,6 +704,7 @@ void player_attack_spy(string &n_name, string &s_name, string &e_name, string &w
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy++;
             ospy--;
+            //ucs_east++;
         }
         else
         {
@@ -681,13 +727,15 @@ bool happiness_loss(int &happy)
 
 void instructions(string& name)
 {
-    cout << "*Hello " << name<< " the objective of this game is to get your GDP to x per Capita." << endl;
-    cout<< "*You are landlocked by 4 other countries who can attack you at anytime with spies or their armies." << endl;
-    cout << "*You have a dedicated Military and Airforce dedicated to protecting your border " << endl;
-    cout << " which you must grow through the use of Military factories" << endl;
-    cout << "*You must also continue gaining land in order to grow food to accommodate your ever increasing population." << endl;
-    cout << "*Keep an eye on your population count, you do not want them to starve!" << endl;
-    cout << "*Take caution in entering the War Room, the rewards are great, but so are the punishments." <<endl;
+    cout << "*Hello " << name<< " the objective of this game is to get your GDP to x per Capita." << endl << endl;
+    cout<< "*You are landlocked by 4 other countries who can attack you at anytime with spies or their armies." << endl << endl;
+    cout << "*You have a dedicated Military and Air force dedicated to protecting your border " << endl ;;
+    cout << " which you must grow through the use of Military factories" << endl << endl;
+    cout << "*Train Spys to gain intel on others and defend yourself against espionage!" << endl<< endl;
+    cout << "*You must also continue gaining land in order to grow food to accommodate your ever increasing population." << endl << endl;;
+    cout << "*Keep an eye on your population count, you do not want them to starve!" << endl << endl;
+    cout << "*Take caution in entering the War Room, the rewards are great, but so are the punishments." <<endl << endl;
+
     cout << "*Good luck " << name << "!" << endl;
 
 }
