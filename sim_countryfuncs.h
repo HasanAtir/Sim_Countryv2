@@ -1,15 +1,9 @@
 #pragma once
-
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
 #include <fstream>
 #include <string>
-
-
-//namespace N
-
-
 
 bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&player_airmili, int& neighbour_pop,
                      int& neighbour_infmili, int& neighbour_airmili);
@@ -34,8 +28,3 @@ void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_
                         int& ucs_east, int& ucs_west */);
 bool happiness_loss (int &happy);
 void instructions (std::string& name);
-
-
-
-
-
