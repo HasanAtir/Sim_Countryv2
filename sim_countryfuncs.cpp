@@ -75,7 +75,7 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
         land        = land      * win_land;
         military    = military  * win_mil;
         money = money *0.95; // Commerce loss
-        city = city++;
+        city = city + 1;;
         return true;
     }
     else if(chance<51)
@@ -84,7 +84,7 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
         land        =land       * loss_land;
         military    =military   * loss_mil;
         money = money * 0.85; // Commerce Loss
-        city = city--;
+        city = city- 1;;
 
         return false;
     }
@@ -234,6 +234,12 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         int chance_intel= d10_Random_Roll(); // Chance of receiving intel
         turns++;
 
+        if (city == 0)
+        {
+            cout << "You lost the country!" << endl;
+            break;
+        }
+
         if (city < 2)
         {
             cout << "Your city count is too low, if you continue, you risk losing your country altogether!" << endl;
@@ -295,7 +301,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                                 air_player = air_player*WIN_AF;
                                 land = land * land_gain;
                                 cout << "You now have " << land << " land"<< endl;
-                                city++;
+                                city= city +1;
                                 cout << "City Count: " << city << endl;
                              }
                             else
@@ -306,7 +312,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                                 air_player = air_player*LOSE_AF;
                                 land = land * land_loss;
                                 cout << "You now have " << land << " land"<< endl;
-                                city--;
+                                city = city -1;
                                 cout << "City Count: " << city << endl;
                             }}
 
@@ -321,7 +327,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*WIN_AF;
                             land = land * land_gain;
                             cout << "You now have " << land << " land"<< endl;
-                            city++;
+                            city = city +1;
                             cout << "City Count: " << city << endl;
                         }
                         else
@@ -333,7 +339,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*LOSE_AF;
                             land = land * land_loss;
                             cout << "You now have " << land << " land"<< endl;
-                            city--;
+                            city = city -1;
                             cout << "City Count: " << city << endl;
                         }}
                     else
@@ -345,7 +351,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*WIN_AF;
                             land = land *land_gain;
                             cout << "You now have " << land << " land"<< endl;
-                            city++;
+                            city = city +1;
                             cout << "City Count: " << city << endl;
                         }
                         else
@@ -356,7 +362,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*LOSE_AF;
                             land = land * land_loss;
                             cout << "You now have " << land << " land"<< endl;
-                            city--;
+                            city = city -1;;
                             cout << "City Count: " << city << endl;
                         }}}
             }
@@ -372,7 +378,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         infantry_player = infantry_player*WIN_INF;
                         land = land * land_gain;
                         cout << "You now have " << land << " land"<< endl;
-                        city++;
+                        city = city +1;;
                         cout << "City Count: " << city << endl;
                     }
                     else
@@ -384,7 +390,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         infantry_player = infantry_player*LOSE_INF;
                         land = land *land_loss;
                         cout << "You now have " << land << " land"<< endl;
-                        city--;
+                        city = city -1;;
                         cout << "City Count: " << city << endl;
                     }}
                 else if (infantry_player < infantry_computer)
@@ -397,7 +403,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         infantry_player = infantry_player*WIN_INF;
                         land = land *land_gain;
                         cout << "You now have " << land << " land"<< endl;
-                        city++;
+                        city = city +1;;
                         cout << "City Count: " << city << endl;
                     }
                     else
@@ -409,7 +415,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         infantry_player = infantry_player*LOSE_INF;
                         land = land * land_loss;
                         cout << "You now have " << land << " land"<< endl;
-                        city--;
+                        city = city -1;;
                         cout << "City Count: " << city << endl;
                     }}
                 else
@@ -421,7 +427,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         infantry_player = infantry_player*WIN_INF;
                         land = land * land_gain;
                         cout << "You now have " << land << " land"<< endl;
-                        city++;
+                        city = city +1;;
                         cout << "City Count: " << city << endl;
                     }
                     else
@@ -432,7 +438,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                         infantry_player = infantry_player*LOSE_INF;
                         land = land * land_loss;
                         cout << "You now have " << land << " land"<< endl;
-                        city--;
+                        city = city +1;;
                         cout << "City Count: " << city << endl;
                     }}
             }
@@ -450,7 +456,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*WIN_AF;
                             land = land * land_gain;
                             cout << "You now have " << land << " land"<< endl;
-                            city++;
+                            city = city +1;;
                             cout << "City Count: " << city << endl;
                         }
                         else
@@ -464,7 +470,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*LOSE_AF;
                             land = land * land_loss;
                             cout << "You now have " << land << " land"<< endl;
-                            city--;
+                            city = city -1;
                             cout << "City Count: " << city << endl;
                         }}
                     else if (total_player < total_computer)
@@ -479,7 +485,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*WIN_AF;
                             land = land * land_gain;
                             cout << "You now have " << land << " land"<< endl;
-                            city++;
+                            city = city +1;
                             cout << "City Count: " << city << endl;
                         }
                         else
@@ -493,7 +499,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*LOSE_AF;
                             land = land * land_loss;
                             cout << "You now have " << land << " land"<< endl;
-                            city--;
+                           city = city -1;
                             cout << "City Count: " << city << endl;
                         }}
                     else
@@ -507,7 +513,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*WIN_AF;
                             land = land * land_gain;
                             cout << "You now have " << land << " land" << endl;;
-                            city++;
+                            city = city +1;
                             cout << "City Count: " << city << endl;
                         }
                         else
@@ -520,7 +526,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             air_player = air_player*LOSE_AF;
                             land = land * land_loss;
                             cout << "You now have " << land << " land"<< endl;;
-                            city--;
+                            city = city -1;
                             cout << "City Count: " << city << endl;
                         }}}
             }
@@ -553,7 +559,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                     {
 
                         cout << "The Enemy has raised a white flag" << endl;
-                        cout << "If you accept you will receive a 25% increment in land" << endl;
+                        cout << "If you accept you will receive a 25% increment in land and 10% increase in city" << endl;
                         int decision;
                         cout << "Press 1 to accept, 0 to deny" << endl;
                         sentinelFunction(0,1,decision);
@@ -562,6 +568,8 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             cout << "You have accepted the white flag" << endl;
                             land = land * 1.25;
                             cout << "You now have: " << land << " land" << endl;
+                            city = city *1.1;
+                            cout << "New City Count: " << city << endl;
                             int year_passed = turns/10;
                             year = year + year_passed;
                             cout << "The war lasted " << year_passed << " year(s)!" << endl;
@@ -588,12 +596,14 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         int af_pop_lost = afplayer *0.2;
         int inf_pop_lost = ifplayer *0.25;
         money = money * 0.9;
+        city = city *1.2;
         cout << "YOU WON THE WAR!" << endl;
         cout << "Since you won, you gain resources as reparations." << endl;;
         cout << "Total land is now      : " << land << " acres" << endl;
         cout << "Air force is now       : " << updated_af << endl;
         cout << "Infantry is now        : " << updated_if << endl;
         cout << "Commerce levels are now: " << money << endl;
+        cout << "City Count is now      : " << city << endl;
         population = population - af_pop_lost - inf_pop_lost;
         cout << "Population is now  : " << population << endl;
         air_player = updated_af;
@@ -610,12 +620,14 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         int af_pop_lost = afplayer *0.7; // No. of people lost from AF
         int inf_pop_lost = ifplayer *0.75; // No. of people lost from inf
         money = money * 0.4;
+        city = city *0.4;
         cout << "YOU LOST THE WAR!" << endl;
         cout << "Since you lost, you lose resources as reparations." << endl;;
         cout << "Total land is now      : " << land << " acres" << endl;
         cout << "Air force is now       : " << updated_af << endl;
         cout << "Infantry is now        : " << updated_if << endl;
         cout << "Commerce levels are now: " << money << endl;
+        cout << "City count is now      : " << city << endl;
         population = population - af_pop_lost - inf_pop_lost;
         cout << "Population is now  : " << population << endl;
         air_player = updated_af;
