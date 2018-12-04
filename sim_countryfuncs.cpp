@@ -23,6 +23,13 @@ int d100_Random_Roll()
     return output;
 }
 
+int d50_Random_Roll()
+{
+    int random = rand();
+    int output = random%50;
+    return output;
+}
+
 int d10_Random_Roll()
 {
 

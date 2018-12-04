@@ -11,6 +11,7 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
                       string& s_name,string& e_name,string& w_name, int&ucs_north, int& ucs_south,
                         int& ucs_east, int& ucs_west*/); //stub. Must be replaced!!!
 int d100_Random_Roll();
+int d50_Random_Roll();
 int d10_Random_Roll();
 int d4_Random_Roll();
 void player_Surrender(int& pop, int& land, int& inf_military, int& air_military, int& money);

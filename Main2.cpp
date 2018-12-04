@@ -504,9 +504,12 @@ int main()
          * 3) do nothing
          * 4)
          * */
-        int north_random_options = d10_Random_Roll();
+        int north_random_options = d50_Random_Roll();
+        int south_random_options = d50_Random_Roll();
+        int east_random_options = d50_Random_Roll();
+        int west_random_options = d50_Random_Roll();
 
-        if(north_random_options==1)
+        if(north_random_options<=7)
             //Northern neighbour declares skirmish war on player
         {   bool player_defends = false;
             cout<<"\n"<<north_name<<" has declared war on you!\n";
@@ -546,6 +549,237 @@ int main()
 
             }
         }
+
+        if(west_random_options<=7)
+            //Northern neighbour declares skirmish war on player
+        {   bool player_defends = false;
+            cout<<"\n"<<west_name<<" has declared war on you!\n";
+            cout<<"Press 1 to defend, or 0 to concede:\n";
+            cin>>player_defends;
+            number_of_wars++;
+            if(player_defends)
+            {
+                bool player_victory= player_wins_war(population, land, infantry_military, air_military,
+                                                     west_population, west_infantry_military, west_air_military);
+                //Calls the war boolean function if player chooses to defend.
+                if(player_victory)
+                {
+                    cout<<"You have won the war!\n\n";
+                    number_of_wars_won++;
+                    // Happiness Effects
+                    if (happiness_factor < 100)
+                    {
+                        happiness_factor = happiness_factor +10;
+                    }
+                    else
+                    {
+                        happiness_factor;
+                    }
+                }
+                else
+                {
+                    cout<<"You have lost the war!\n\n";
+                    happiness_factor = happiness_factor -10;
+                }
+            }
+            else
+            {
+                cout<<"You surrendered\n";
+                player_Surrender(population, land, infantry_military, air_military, commerce);   //Calls the surrender function if Player decides not to defend
+                happiness_factor = happiness_factor - 10;
+
+            }
+        }
+
+        if(south_random_options<=7)
+            //Northern neighbour declares skirmish war on player
+        {   bool player_defends = false;
+            cout<<"\n"<<south_name<<" has declared war on you!\n";
+            cout<<"Press 1 to defend, or 0 to concede:\n";
+            cin>>player_defends;
+            number_of_wars++;
+            if(player_defends)
+            {
+                bool player_victory= player_wins_war(population, land, infantry_military, air_military,
+                                                     south_population, south_infantry_military, south_air_military);
+                //Calls the war boolean function if player chooses to defend.
+                if(player_victory)
+                {
+                    cout<<"You have won the war!\n\n";
+                    number_of_wars_won++;
+                    // Happiness Effects
+                    if (happiness_factor < 100)
+                    {
+                        happiness_factor = happiness_factor +10;
+                    }
+                    else
+                    {
+                        happiness_factor;
+                    }
+                }
+                else
+                {
+                    cout<<"You have lost the war!\n\n";
+                    happiness_factor = happiness_factor -10;
+                }
+            }
+            else
+            {
+                cout<<"You surrendered\n";
+                player_Surrender(population, land, infantry_military, air_military, commerce);   //Calls the surrender function if Player decides not to defend
+                happiness_factor = happiness_factor - 10;
+
+            }
+        }
+
+        if(east_random_options<=7)
+            //Northern neighbour declares skirmish war on player
+        {   bool player_defends = false;
+            cout<<"\n"<<east_name<<" has declared war on you!\n";
+            cout<<"Press 1 to defend, or 0 to concede:\n";
+            cin>>player_defends;
+            number_of_wars++;
+            if(player_defends)
+            {
+                bool player_victory= player_wins_war(population, land, infantry_military, air_military,
+                                                     east_population, east_infantry_military, east_air_military);
+                //Calls the war boolean function if player chooses to defend.
+                if(player_victory)
+                {
+                    cout<<"You have won the war!\n\n";
+                    number_of_wars_won++;
+                    // Happiness Effects
+                    if (happiness_factor < 100)
+                    {
+                        happiness_factor = happiness_factor +10;
+                    }
+                    else
+                    {
+                        happiness_factor;
+                    }
+                }
+                else
+                {
+                    cout<<"You have lost the war!\n\n";
+                    happiness_factor = happiness_factor -10;
+                }
+            }
+            else
+            {
+                cout<<"You surrendered\n";
+                player_Surrender(population, land, infantry_military, air_military, commerce);   //Calls the surrender function if Player decides not to defend
+                happiness_factor = happiness_factor - 10;
+
+            }
+        }
+        //If random choice happens to be greater than 45, the countries build a new military factory
+        if(north_random_options>44)
+        {
+            cout<<"It seems "<<north_name<<" may have invested in their military, perhaps we should too?\n";
+            north_military_factory= north_military_factory+1;
+        }
+        if(south_random_options>44)
+        {
+            cout<<"It seems "<<south_name<<" may have invested in their military, perhaps we should too?\n";
+            south_military_factory= south_military_factory+1;
+        }
+        if(east_random_options>44)
+        {
+            cout<<"It seems "<<east_name<<" may have invested in their military, perhaps we should too?\n";
+            east_military_factory= east_military_factory+1;
+        }
+        if(west_random_options>44)
+        {
+            cout<<"It seems "<<west_name<<" may have invested in their military, perhaps we should too?\n";
+            west_military_factory= west_military_factory+1;
+        }
+//Theres a 2% chance that a nation will declare all out war on the player
+        if(north_random_options==25)
+        {
+            cout<<north_name<<" is declaring all-out war on you! This is not a drill!\n";
+            bool war_win = war_Room(air_military, infantry_military, land, population, north_air_military,
+                                    north_infantry_military, player_name, year, commerce, city, military_factory);
+            if(war_win)
+            {
+
+                number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
+            }
+            else
+            {
+
+                happiness_factor = happiness_factor -10;
+            }
+        }
+        if(south_random_options==25)
+        {
+            cout<<south_name<<" is declaring all-out war on you! This is not a drill!\n";
+            bool war_win = war_Room(air_military, infantry_military, land, population, south_air_military,
+                                    south_infantry_military, player_name, year, commerce, city, military_factory);
+            if(war_win)
+            {
+
+                number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
+            }
+            else
+            {
+
+                happiness_factor = happiness_factor -10;
+            }
+        }
+        if(east_random_options==25)
+        {
+            cout<<east_name<<" is declaring all-out war on you! This is not a drill!\n";
+            bool war_win = war_Room(air_military, infantry_military, land, population, east_air_military,
+                                    east_infantry_military, player_name, year, commerce, city, military_factory);
+            if(war_win)
+            {
+
+                number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
+            }
+            else
+            {
+
+                happiness_factor = happiness_factor -10;
+            }
+        }
+        if(west_random_options==25)
+        {
+            cout<<west_name<<" is declaring all-out war on you! This is not a drill!\n";
+            bool war_win = war_Room(air_military, infantry_military, land, population, west_air_military,
+                                    west_infantry_military, player_name, year, commerce, city, military_factory);
+            if(war_win)
+            {
+
+                number_of_wars_won++;
+                // Happiness Effects
+                if (happiness_factor < 100)
+                    happiness_factor = happiness_factor +10;
+                else
+                    happiness_factor;
+            }
+            else
+            {
+
+                happiness_factor = happiness_factor -10;
+            }
+        }
+
+
 
 
 
