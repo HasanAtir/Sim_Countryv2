@@ -210,7 +210,7 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d)
 }
 
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
-               int& infantry_computer, string &name, int &year, int& money, int& city, int& m_factory)
+               int& infantry_computer, string &name, int &year, int& money, int& city, int& m_factory, int& check)
 {
 
     int hp_enemy = 10;
@@ -579,6 +579,8 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                     int year_passed = turns/10;
                     year = year + year_passed;
                     cout << "The war lasted " << year_passed << " year(s)!" << endl;
+                    check++;
+                    return true;
                     break;
                 }
                 else
@@ -760,7 +762,7 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 {
     float const afloss = 0.05, infloss = 0.1;
     int def_chance = d100_Random_Roll();
-    if (s_chance < 81) // 60% chance of spy attack
+    if (s_chance == 81) // 60% chance of spy attack
     {
         if (def_chance < 61 && cspy > 0 )
         {
@@ -798,7 +800,8 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 
 void player_attack_spy(string &n_name,string &s_name,  string &e_name,
                         string &w_name,   int &ospy, int &undercoverspy , int&ucs_north, int& ucs_south,
-                        int& ucs_east, int& ucs_west)
+                        int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af,
+                        int& s_inf, int& e_af, int& e_inf ,int& w_af, int& w_inf )
 
 {
 
@@ -818,6 +821,10 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         {
             cout << "Your Spy has successfully infiltrated " << n_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* n_af << " and " << 0.1*n_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* n_inf << " and " << 0.1*n_inf << " soldiers" << endl;
+            n_af= n_af*0.95;
+            n_inf = n_inf*0.95;
             undercoverspy++;
             ospy--;
             ucs_north++;
@@ -837,6 +844,10 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         {
             cout << "Your Spy has successfully infiltrated " << s_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* s_af << " and " << 0.1*s_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* s_inf <<  " and " << 0.1*s_inf << " soldiers" << endl;
+            s_af= s_af*0.95;
+            s_inf = s_inf*0.95;
             undercoverspy++;
             ospy--;
             ucs_south++;
@@ -854,6 +865,10 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         {
             cout << "Your Spy has successfully infiltrated " << w_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* w_af << " and " << 0.1*w_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* w_inf <<  " and " << 0.1*w_inf << " soldiers" << endl;
+            w_af= w_af*0.95;
+            w_inf = w_inf*0.95;
             undercoverspy ++;
             ospy--;
             ucs_west++;
@@ -871,6 +886,10 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         {
             cout << "Your Spy has successfully infiltrated " << e_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* e_af << " and " << 0.1*e_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << 0.05* e_inf <<  " and " << 0.1*e_inf << " soldiers" << endl;
+            e_af= e_af*0.95;
+            e_inf = e_inf*0.95;
             undercoverspy++;
             ospy--;
             ucs_east++;

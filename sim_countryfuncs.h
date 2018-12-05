@@ -17,7 +17,7 @@ void player_Surrender(int& pop, int& land, int& inf_military, int& air_military,
 void neighbour_Name_Allocation(std::string& nname, std::string& sname, std::string& wname, std::string& ename);
 void name_Index_Allocate(int& a, int& b, int& c, int& d);
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
-               int& infantry_computer, std::string& name, int &year, int& money, int& city, int& m_factory);
+               int& infantry_computer, std::string& name, int &year, int& money, int& city, int& m_factory, int& check);
 std::string toUpper (std::string &str);
 void sentinelFunction(int from, int to, int& choice);
 void starvationFactor(int& population, int food_stores);
@@ -25,7 +25,7 @@ int spy (int &ospy, int &cspy);
 void enemyspyattack(int &s_chance, std::string& e_s_country, int& cspy, int& af, int& inf );
 void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_name,
                         std::string &w_name,   int &ospy, int &undercoverspy , int&ucs_north, int& ucs_south,
-                        int& ucs_east, int& ucs_west );
+                        int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af, int& s_inf, int& e_af, int& e_inf ,int& w_af, int& w_inf );
 bool happiness_loss (int &happy);
 void instructions (std::string& name);
 void cities(int &money);

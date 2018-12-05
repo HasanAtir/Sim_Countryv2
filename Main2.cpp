@@ -43,7 +43,7 @@ int main()
     //initial conditions;
 
     int population, air_military, infantry_military, commerce, military_factory, land, food,
-            happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west, city, check;
+            happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west, city, check, check_war_room;
     population = 100000;
     air_military = 100;
     infantry_military = 1000;
@@ -61,6 +61,7 @@ int main()
     ucs_west = 0;
     city = 1;
     check = 0;
+    check_war_room = 0;
 
 
     int year = 1921;
@@ -151,6 +152,13 @@ int main()
 
 
     int turn_count =0; // Helps count to five turns, at which happiness automatically increases by 10.
+    cout << " ______    _                   ______                            _                    " << endl;
+    cout << ".' ____ \  (_)                .' ___  |                          / |_                 " << endl;
+    cout << "| (___ \_| __   _ .--..--.   / .'   \_|  .--.   __   _   _ .--. `| |-'_ .--.  _   __  " << endl;
+    cout << " _.____`. [  | [ `.-. .-. |  | |       / .'`\ \[  | | | [ `.-. | | | [ `/'`\][ \ [  ] " << endl;
+    cout << "| \____) | | |  | | | | | |  \ `.___.'\| \__. | | \_/ |, | | | | | |, | |     \ '/ /  " << endl;
+    cout << " \______.'[___][___||__||__]  `.____ .' '.__.'  '.__.'_/[___||__]\__/[___]  [\_:  /   " << endl;
+    cout << "                                                                             \__.'    " << endl;
     cout << "Welcome to Sim Country player. Please enter your name: ";
     getline(cin, player_name);
     //Prints the name of the opponents;
@@ -329,33 +337,35 @@ int main()
             if(all_out_war_choice==1)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
-                                    north_infantry_military,player_name, year, commerce, city, military_factory);
+                                    north_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
             else if(all_out_war_choice==2)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,south_air_military,
-                                    south_infantry_military,player_name, year, commerce, city, military_factory);
+                                    south_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
             else if(all_out_war_choice==3)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,east_air_military,
-                                    east_infantry_military,player_name, year, commerce, city, military_factory);
+                                    east_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
             else if(all_out_war_choice==4)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,west_air_military,
-                                    west_infantry_military,player_name, year, commerce, city, military_factory);
+                                    west_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
 
             if(war_win)
             {
 
-                number_of_wars_won++;
+                if (check_war_room == 0)
+                {number_of_wars_won++;
                 // Happiness Effects
                 if (happiness_factor < 100)
-                    happiness_factor = happiness_factor +10;
+                    {happiness_factor = happiness_factor +10;}
                 else
-                    happiness_factor;
+                    {happiness_factor;}}
+                else{check_war_room--;}
             }
             else
             {
@@ -472,33 +482,43 @@ int main()
             if(all_out_war_choice==1)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
-                                    north_infantry_military,player_name, year, commerce, city, military_factory);
+                                    north_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
             else if(all_out_war_choice==2)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,south_air_military,
-                                    south_infantry_military,player_name, year, commerce, city, military_factory);
+                                    south_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
             else if(all_out_war_choice==3)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,east_air_military,
-                                    east_infantry_military,player_name, year, commerce, city, military_factory);
+                                    east_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
             else if(all_out_war_choice==4)
             {
                 war_win = war_Room(air_military,infantry_military,land,population,west_air_military,
-                                    west_infantry_military,player_name, year, commerce, city, military_factory);
+                                    west_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
             }
 
             if(war_win)
             {
-
-                number_of_wars_won++;
+                if (check_war_room == 0)
+                {number_of_wars_won++;
                 // Happiness Effects
                 if (happiness_factor < 100)
-                    happiness_factor = happiness_factor +10;
+                    {
+                        happiness_factor = happiness_factor +10;
+                    }
                 else
-                    happiness_factor;
+                    {
+                        happiness_factor;
+                    }
+                }
+                else
+                {
+                    check_war_room--;
+                    number_of_wars++;
+                }
             }
             else
             {
@@ -514,7 +534,7 @@ int main()
         else if (next_year_option==7)
         {
             year++;
-            player_attack_spy(north_name, south_name, east_name, west_name,  ospy, undercover_spy,ucs_north,ucs_south,ucs_east,ucs_west);
+            player_attack_spy(north_name, south_name, east_name, west_name,  ospy, undercover_spy,ucs_north,ucs_south,ucs_east,ucs_west, north_air_military, north_infantry_military, south_air_military, south_infantry_military, east_air_military, east_infantry_military, west_air_military, west_infantry_military);
         }
          else if(next_year_option==8)
         {
@@ -768,7 +788,7 @@ int main()
         {
             cout<<north_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, north_air_military,
-                                    north_infantry_military, player_name, year, commerce, city, military_factory);
+                                    north_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
             if(war_win)
             {
 
@@ -789,7 +809,7 @@ int main()
         {
             cout<<south_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, south_air_military,
-                                    south_infantry_military, player_name, year, commerce, city, military_factory);
+                                    south_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
             if(war_win)
             {
 
@@ -810,7 +830,7 @@ int main()
         {
             cout<<east_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, east_air_military,
-                                    east_infantry_military, player_name, year, commerce, city, military_factory);
+                                    east_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
             if(war_win)
             {
 
@@ -831,7 +851,7 @@ int main()
         {
             cout<<west_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, west_air_military,
-                                    west_infantry_military, player_name, year, commerce, city, military_factory);
+                                    west_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
             if(war_win)
             {
 
