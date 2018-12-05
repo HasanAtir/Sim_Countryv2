@@ -47,9 +47,8 @@ int d4_Random_Roll() // For enemy country selection
 }
 
 
-bool win_war_Skirmish(int& population, int& land, int& military, int& money, int& city/*, string& n_name,
-                      string& s_name,string& e_name,string& w_name, int&ucs_north, int& ucs_south,
-                        int& ucs_east, int& ucs_west */)
+bool win_war_Skirmish(int& population, int& land, int& military, int& money, int& city,
+                      string& enemy, int& ucs, int& e_af, int& e_inf, int&ospy, int& check)
 {
     int chance = d100_Random_Roll();
     double win_pop = 0.90, win_land = 1.15, win_mil = 0.85;
@@ -57,44 +56,57 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
     //If lose= -25% pop, -10% land, -30%military
     //If win= -10%pop, +15%land, -15% military
     //weight = military based
-    /*cout << "Who do you wish to attack? \n";
-    cout << "1) " << n_name << endl;
-    cout << "2) " << s_name << endl;
-    cout << "3) " << e_name << endl;
-    cout << "4) " << w_name << endl;
     int choice;
-    sentinelFunction(1,4,choice);
-
-    if (choice == 1)
+    if (ucs !=0)
     {
-        if(ucs_north == 0)
+        cout << "Intel on " << enemy << " is as follows: \n";
+        cout << "Air Force count is between " << 0.9* e_af << " and " << 1.1 * e_af << endl;
+        cout << "Infantry count is between " << 0.9* e_inf << " and " << 1.1 * e_inf << endl;
+        ucs--;
+        ospy++;
+    }
+    else
+    {
+        cout << "There is no intel on " << enemy << endl;
+    }
+
+    cout << "Do you still wish to attack?" << endl;
+    cout << "Enter 1 for Yes. 0 for No" << endl;
+    sentinelFunction(0,1,choice);
+    if (choice ==1)
+    {
+           if(chance>50)
         {
-            cout << "No intel"
+            population  = population* win_pop;
+            land        = land      * win_land;
+            military    = military  * win_mil;
+            money = money *0.95; // Commerce loss
+            city = city + 1;;
+            return true;
         }
-    }
-*/
+        else if(chance<51)
+        {
+            population  =population * loss_pop;
+            land        =land       * loss_land;
+            military    =military   * loss_mil;
+            money = money * 0.85; // Commerce Loss
+            city = city- 1;;
+
+            return false;
+        }
+        }
+    else
+        {
+            check++;;
+        }
 
 
 
-    if(chance>50)
-    {
-        population  = population* win_pop;
-        land        = land      * win_land;
-        military    = military  * win_mil;
-        money = money *0.95; // Commerce loss
-        city = city + 1;;
-        return true;
-    }
-    else if(chance<51)
-    {
-        population  =population * loss_pop;
-        land        =land       * loss_land;
-        military    =military   * loss_mil;
-        money = money * 0.85; // Commerce Loss
-        city = city- 1;;
 
-        return false;
-    }
+
+
+
+
 }
 
 /**Definite(?) version of the skirmish function which also takes into account the AI's stats
@@ -289,10 +301,11 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         cout << "1: Air force \n" ;
         cout << "2: Infantry \n" ;
         cout<< "3: Both \n" ;
-        cout << "4: Send White Flag \n" << endl;
+        cout << "4: Surrender \n";
+        cout << "5: Send White Flag \n" << endl;
         int choice;
 
-        sentinelFunction(1, 4, choice);
+        sentinelFunction(1, 5, choice);
         // Game interaction
         {
 
@@ -537,19 +550,32 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             cout << "City Count: " << city << endl;
                         }}}
             }
-            else if (choice == 4)
+            else if (choice ==4)
             {
-                cout << "You send a peace treaty to the enemy" << endl;
+                    cout << "If you surrender you will lose 50% of your land and cities!" << endl;
+                    cout << "Do you wish to continue? \n";
+                    cout << "Press 1 for Yes. 0 for no \n";
+                    int x;
+                    sentinelFunction(0,1,x);
+                    if( x ==1)
+                    {
+                        cout << "The enemy has accepted your surrender" << endl;
+                        cout << "You will now lose 50% of your land and cities but keep your airforce and infantry intact" << endl;
+                        land = land * 0.5;
+                        city = city * 0.5;
+                        cout << "You now have: " << land << " land" << endl;
+                        cout << "City Count: " << city << endl;
+                    }
+
+            }
+            else if (choice == 5)
+            {
+                cout << "You send a white flag to the enemy" << endl;
                 int accept = d100_Random_Roll();
                 if ( accept  > f)
                 {
 
-                    cout << "The enemy has accepted your peace treaty" << endl;
-                    cout << "You will now lose 50% of your land and cities but keep your airforce and infantry intact" << endl;
-                    land = land * 0.5;
-                    city = city * 0.5;
-                    cout << "You now have: " << land << " land" << endl;
-                    cout << "City Count: " << city << endl;
+                    cout << "The enemy agrees to a ceasefire" << endl;
                     int year_passed = turns/10;
                     year = year + year_passed;
                     cout << "The war lasted " << year_passed << " year(s)!" << endl;
@@ -557,8 +583,9 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                 }
                 else
                 {
-                    cout << "The enemy reject your offer" << endl;
+                    cout << "The enemy rejects your ceasefire" << endl;
                 }
+
             }
             int enemy_surrender = d100_Random_Roll();
                 {
@@ -694,7 +721,7 @@ string toUpper(string &str) // Needs to be implemented
     return d;
 }
 
-int spy(int &ospy, int& cspy)
+int spy (int &ospy, int& cspy)
 {
     cout << "Do you want to train \n"
             "1 : Spy (Will infiltrate other countries) \n"
@@ -733,7 +760,7 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 {
     float const afloss = 0.05, infloss = 0.1;
     int def_chance = d100_Random_Roll();
-    if (s_chance < 61) // 60% chance of spy attack
+    if (s_chance < 81) // 60% chance of spy attack
     {
         if (def_chance < 61 && cspy > 0 )
         {
@@ -770,8 +797,8 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 }
 
 void player_attack_spy(string &n_name,string &s_name,  string &e_name,
-                        string &w_name,   int &ospy, int &undercoverspy /*, int&ucs_north, int& ucs_south,
-                        int& ucs_east, int& ucs_west*/)
+                        string &w_name,   int &ospy, int &undercoverspy , int&ucs_north, int& ucs_south,
+                        int& ucs_east, int& ucs_west)
 
 {
 
@@ -793,7 +820,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy++;
             ospy--;
-            //ucs_north++;
+            ucs_north++;
 
 
         }
@@ -812,7 +839,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy++;
             ospy--;
-            //ucs_south++;
+            ucs_south++;
         }
         else
         {
@@ -829,7 +856,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy ++;
             ospy--;
-            //ucs_west++;
+            ucs_west++;
         }
         else
         {
@@ -846,7 +873,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             << " HQ! You will receive Intel on them before the next battle!" << endl;
             undercoverspy++;
             ospy--;
-            //ucs_east++;
+            ucs_east++;
         }
         else
         {
@@ -894,7 +921,6 @@ void country_war_room (int &air_player, int &infantry_player,  int &land, int& p
     cout << "4) " << w_name << endl;
     int choice;
     sentinelFunction(1,4,choice);
-
     if (choice ==1)
     {
         bool war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
@@ -905,7 +931,5 @@ void country_war_room (int &air_player, int &infantry_player,  int &land, int& p
         bool war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
                                     south_infantry_military,player_name, year);
     }
-
-
 }
 */

@@ -43,7 +43,7 @@ int main()
     //initial conditions;
 
     int population, air_military, infantry_military, commerce, military_factory, land, food,
-            happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west, city;
+            happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west, city, check;
     population = 100000;
     air_military = 100;
     infantry_military = 1000;
@@ -60,6 +60,8 @@ int main()
     ucs_east = 0;
     ucs_west = 0;
     city = 1;
+    check = 0;
+
 
     int year = 1921;
     int food_stores=food;
@@ -242,12 +244,36 @@ int main()
                 if(next_year_option==1)
         {
             year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
+            int skirmish_choice;
+            cout<<"Who do you want to go to skirmish against?\n";
+            cout<<"1) "<<north_name<<endl;
+            cout<<"2) "<<south_name<<endl;
+            cout<<"3) "<<east_name<<endl;
+            cout<<"4) "<<west_name<<endl;
+            sentinelFunction(1,4,skirmish_choice);
             number_of_wars++;
-            bool war_win = win_war_Skirmish(population, land, infantry_military, commerce, city/*, north_name, south_name, east_name, west_name */);
+            bool war_win = false;
+            if (skirmish_choice ==1)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, check);
+            }
+            else if (skirmish_choice ==2)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, south_name, ucs_south, south_air_military, south_infantry_military, ospy, check);
+            }
+            else if (skirmish_choice ==3)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, check);
+            }
+            else if (skirmish_choice ==4)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, west_name, ucs_west, west_air_military, west_infantry_military, ospy, check);
+            }
             if(war_win)
             {
                 cout<<"You have won the war!\n\n";
                 number_of_wars_won++;
+
                 // Happiness Effects
                 if (happiness_factor < 100)
                     happiness_factor = happiness_factor +10;
@@ -256,8 +282,17 @@ int main()
             }
             else
             {
-                cout<<"You have lost the war!\n\n";
-                happiness_factor = happiness_factor -10;
+                if(check == 0)
+                {cout<<"You have lost the war!\n\n";
+
+                happiness_factor = happiness_factor -10;}
+                else
+                {
+                    check--;
+                    number_of_wars--;
+                    year--;
+                }
+
 
             }
         }
@@ -352,8 +387,31 @@ int main()
         if(next_year_option==1)
         {
             year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
+            int skirmish_choice;
+            cout<<"Who do you want to go to skirmish against?\n";
+            cout<<"1) "<<north_name<<endl;
+            cout<<"2) "<<south_name<<endl;
+            cout<<"3) "<<east_name<<endl;
+            cout<<"4) "<<west_name<<endl;
+            sentinelFunction(1,4,skirmish_choice);
             number_of_wars++;
-            bool war_win = win_war_Skirmish(population, land, infantry_military, commerce, city/*, north_name, south_name, east_name, west_name*/);
+            bool war_win = false;
+            if (skirmish_choice ==1)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, check);
+            }
+            else if (skirmish_choice ==2)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, south_name, ucs_south, south_air_military, south_infantry_military, ospy, check);
+            }
+            else if (skirmish_choice ==3)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, check);
+            }
+            else if (skirmish_choice ==4)
+            {
+                win_war_Skirmish(population, land, infantry_military, commerce, city, west_name, ucs_west, west_air_military, west_infantry_military, ospy, check);
+            }
             if(war_win)
             {
                 cout<<"You have won the war!\n\n";
@@ -367,9 +425,20 @@ int main()
             }
             else
             {
-                cout<<"You have lost the war!\n\n";
+                if ( check ==0)
+                {
+                    cout<<"You have lost the war!\n\n";
 
                 happiness_factor = happiness_factor -10;
+                }
+                else
+                {
+                    check--;
+                    number_of_wars--;
+                    year--;
+                }
+
+
             }
         }
         else if(next_year_option==2)
@@ -383,6 +452,7 @@ int main()
          else if (next_year_option ==4)
         {
             year++;
+            cout<<"\nConstructing city. Est wait time: 5 years\n";
             building_city = true;
             commerce = commerce - 15000; // City building takes 15000 units of commerces
             remaining_time_city_construction = 5;
@@ -444,7 +514,7 @@ int main()
         else if (next_year_option==7)
         {
             year++;
-            player_attack_spy(north_name, south_name, east_name, west_name,  ospy, undercover_spy);
+            player_attack_spy(north_name, south_name, east_name, west_name,  ospy, undercover_spy,ucs_north,ucs_south,ucs_east,ucs_west);
         }
          else if(next_year_option==8)
         {
@@ -817,5 +887,5 @@ int main()
 
     }
 
-
 }
+

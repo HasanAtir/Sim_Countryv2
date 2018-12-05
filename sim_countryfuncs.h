@@ -7,9 +7,8 @@
 
 bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&player_airmili, int& neighbour_pop,
                      int& neighbour_infmili, int& neighbour_airmili);
-bool win_war_Skirmish(int& population, int& land, int& military, int& money, int& city /*, string& n_name,
-                      string& s_name,string& e_name,string& w_name, int&ucs_north, int& ucs_south,
-                        int& ucs_east, int& ucs_west*/); //stub. Must be replaced!!!
+bool win_war_Skirmish(int& population, int& land, int& military, int& money,
+                       int& city, int& ucs, int& e_af, int& e_inf, int& ospy, int& check); //stub. Must be replaced!!!
 int d100_Random_Roll();
 int d50_Random_Roll();
 int d10_Random_Roll();
@@ -25,8 +24,8 @@ void starvationFactor(int& population, int food_stores);
 int spy (int &ospy, int &cspy);
 void enemyspyattack(int &s_chance, std::string& e_s_country, int& cspy, int& af, int& inf );
 void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_name,
-                        std::string &w_name,   int &ospy, int &undercoverspy /*, int&ucs_north, int& ucs_south,
-                        int& ucs_east, int& ucs_west */);
+                        std::string &w_name,   int &ospy, int &undercoverspy , int&ucs_north, int& ucs_south,
+                        int& ucs_east, int& ucs_west );
 bool happiness_loss (int &happy);
 void instructions (std::string& name);
 void cities(int &money);
