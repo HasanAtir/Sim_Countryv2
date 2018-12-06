@@ -826,8 +826,8 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             upper_af = 0.1*n_af;
             lower_inf = 0.05* n_inf;
             upper_inf = 0.1*n_inf;
-            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             n_af= n_af*0.95;
             n_inf = n_inf*0.95;
             undercoverspy++;
@@ -854,8 +854,8 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             upper_af = 0.1*n_af;
             lower_inf = 0.05* n_inf;
             upper_inf = 0.1*n_inf;
-            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             s_af= s_af*0.95;
             s_inf = s_inf*0.95;
             undercoverspy++;
@@ -880,8 +880,8 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             upper_af = 0.1*n_af;
             lower_inf = 0.05* n_inf;
             upper_inf = 0.1*n_inf;
-            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             w_af= w_af*0.95;
             w_inf = w_inf*0.95;
             undercoverspy ++;
@@ -906,8 +906,8 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             upper_af = 0.1*n_af;
             lower_inf = 0.05* n_inf;
             upper_inf = 0.1*n_inf;
-            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             e_af= e_af*0.95;
             e_inf = e_inf*0.95;
             undercoverspy++;
