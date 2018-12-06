@@ -762,9 +762,9 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 {
     float const afloss = 0.05, infloss = 0.1;
     int def_chance = d100_Random_Roll();
-    if (s_chance == 81) // 60% chance of spy attack
+    if (s_chance < 89) // 60% chance of spy attack
     {
-        if (def_chance < 61 && cspy > 0 )
+        if (def_chance < 81 && cspy > 0 )
         {
             cout << "You were attacked by " << e_s_country<< "'s spy but your Counter Spy defeated the " << e_s_country << " spy!" << endl;
         }
@@ -808,8 +808,8 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
     cout << "Who do you wish to send your spy to?" << endl;
     cout << "1: " << n_name << endl;
     cout << "2: " << s_name << endl;
-    cout << "3: " << w_name << endl;
-    cout << "4: " << e_name<< endl;
+    cout << "3: " << e_name << endl;
+    cout << "4: " << w_name<< endl;
     int input;
     sentinelFunction(1,4, input);
     int p_s_chance = d100_Random_Roll(); // Player spy odds
@@ -821,8 +821,13 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         {
             cout << "Your Spy has successfully infiltrated " << n_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* n_af << " and " << 0.1*n_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* n_inf << " and " << 0.1*n_inf << " soldiers" << endl;
+            int lower_af, lower_inf, upper_af, upper_inf;
+            lower_af= 0.05* n_af;
+            upper_af = 0.1*n_af;
+            lower_inf = 0.05* n_inf;
+            upper_inf = 0.1*n_inf;
+            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             n_af= n_af*0.95;
             n_inf = n_inf*0.95;
             undercoverspy++;
@@ -844,8 +849,13 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         {
             cout << "Your Spy has successfully infiltrated " << s_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* s_af << " and " << 0.1*s_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* s_inf <<  " and " << 0.1*s_inf << " soldiers" << endl;
+            int lower_af, lower_inf, upper_af, upper_inf;
+            lower_af= 0.05* n_af;
+            upper_af = 0.1*n_af;
+            lower_inf = 0.05* n_inf;
+            upper_inf = 0.1*n_inf;
+            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             s_af= s_af*0.95;
             s_inf = s_inf*0.95;
             undercoverspy++;
@@ -859,14 +869,19 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         }
 
     }
-     else if (input == 3)
+     else if (input == 4)
     {
         if (p_s_chance > 60)
         {
             cout << "Your Spy has successfully infiltrated " << w_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* w_af << " and " << 0.1*w_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* w_inf <<  " and " << 0.1*w_inf << " soldiers" << endl;
+            int lower_af, lower_inf, upper_af, upper_inf;
+            lower_af= 0.05* n_af;
+            upper_af = 0.1*n_af;
+            lower_inf = 0.05* n_inf;
+            upper_inf = 0.1*n_inf;
+            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             w_af= w_af*0.95;
             w_inf = w_inf*0.95;
             undercoverspy ++;
@@ -880,14 +895,19 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         }
 
     }
-     else if (input == 4)
+     else if (input == 3)
     {
         if (p_s_chance > 60)
         {
             cout << "Your Spy has successfully infiltrated " << e_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* e_af << " and " << 0.1*e_af<< " pilots" << endl;
-            cout << "Your Spy has also successfully poisoned between" << 0.05* e_inf <<  " and " << 0.1*e_inf << " soldiers" << endl;
+            int lower_af, lower_inf, upper_af, upper_inf;
+            lower_af= 0.05* n_af;
+            upper_af = 0.1*n_af;
+            lower_inf = 0.05* n_inf;
+            upper_inf = 0.1*n_inf;
+            cout << "Your Spy has also successfully poisoned between" << lower_af << " and " << upper_af<< " pilots" << endl;
+            cout << "Your Spy has also successfully poisoned between" << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             e_af= e_af*0.95;
             e_inf = e_inf*0.95;
             undercoverspy++;

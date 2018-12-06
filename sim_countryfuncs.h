@@ -33,3 +33,9 @@ void country_war_room (int &air_player, int &infantry_player,  int &land, int& p
                int& infantry_computer, std::string& name, int &year, int& n_af, int& n_inf, int& s_af, int& s_inf,
                int& e_af, int& e_inf, int& w_af, int& w_inf,std::string &n_name,std::string &s_name,  std::string &e_name,
                         std::string &w_name);
+
+
+// protest( miltary, commerce, happiness, population)
+// Genocide, 50% pop loss, with 20% happiness increase
+// 25% miltary increase
+// commerce drop by 10% as long as happiness < 40 && > 20
