@@ -41,7 +41,7 @@ int main()
 
 
     //initial conditions;
-
+    int cumulative_score=0;//Final score to when winning the game
     int population, air_military, infantry_military, commerce, military_factory, land, food,
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west, city, check, check_war_room;
     population = 100000;
@@ -97,8 +97,8 @@ int main()
     //Northern neighbour. Will be used as prototype for all other neighbours
     int north_id=1;
     int north_population=100000;
-    int north_infantry_military=10000;
-    int north_air_military=10000;
+    int north_infantry_military=2000;
+    int north_air_military=500;
     int north_commerce=10000000;
     int north_gdp;
     int north_military_factory=1;
@@ -111,8 +111,8 @@ int main()
     //Other neighbours
     int south_id=2;
     int south_population=100000;
-    int south_infantry_military=10000;
-    int south_air_military=10000;
+    int south_infantry_military=2000;
+    int south_air_military=500;
     int south_commerce=10000000;
     int south_gdp;
     int south_military_factory=1;
@@ -124,8 +124,8 @@ int main()
 
     int east_id =3;
     int east_population=100000;
-    int east_infantry_military=10000;
-    int east_air_military=10000;
+    int east_infantry_military=1000;
+    int east_air_military=500;
     int east_commerce=10000000;
     int east_gdp;
     int east_military_factory=1;
@@ -137,8 +137,8 @@ int main()
 
     int west_id =4;
     int west_population=100000;
-    int west_infantry_military=10000;
-    int west_air_military=10000;
+    int west_infantry_military=1000;
+    int west_air_military=500;
     int west_commerce=10000000;
     int west_gdp;
     int west_military_factory=1;
@@ -157,7 +157,7 @@ int main()
     cout << "| (___ \_| __   _ .--..--.   / .'   \_|  .--.   __   _   _ .--. `| |-'_ .--.  _   __  " << endl;
     cout << " _.____`. [  | [ `.-. .-. |  | |       / .'`\ \[  | | | [ `.-. | | | [ `/'`\][ \ [  ] " << endl;
     cout << "| \____) | | |  | | | | | |  \ `.___.'\| \__. | | \_/ |, | | | | | |, | |     \ '/ /  " << endl;
-    cout << " \______.'[___][___||__||__]  `.____ .' '.__.'  '.__.'_/[___||__]\__/[___]  [\_:  /   " << endl;
+    cout << " \\______.'[___][___||__||__]  `.____ .' '.__.'  '.__.'_/[___||__]\\__/[___]  [\\_:  /   " << endl;
     cout << "                                                                             \__.'    " << endl;
     cout << "Welcome to Sim Country player. Please enter your name: ";
     getline(cin, player_name);
@@ -218,10 +218,10 @@ int main()
 
 
         //growth
-        pop_grow = 1+ ((double)food/population)/100;
+        pop_grow = 1+ city*((double)food/population)/100;
         cout<<pop_grow<<endl;
-        food_grow = land*1000;
-        mili_grow = military_factory*25;
+        food_grow = land*100;
+        mili_grow = military_factory*100;
 
 
         food_stores = (food_stores - population*2) + (food_grow*city);// Food growth increases with city count CHANGED 4th DEC, muliplied by 2
@@ -908,4 +908,3 @@ int main()
     }
 
 }
-
