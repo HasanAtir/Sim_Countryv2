@@ -4,7 +4,9 @@
 #include <cstdlib>
 #include <fstream>
 #include <string>
+#include <windows.h>
 #include "sim_countryfuncs.h"
+
 
 //using namespace N;
 using namespace std;
@@ -936,17 +938,32 @@ bool happiness_loss(int &happy)
 void instructions(string& name)
 {
     cout << "*Hello " << name<< " the objective of this game is to get your GDP to x per Capita." << endl << endl;
+    Sleep(250);
     cout<< "*You are landlocked by 4 other countries who can attack you at anytime with spies or their armies." << endl << endl;
+    Sleep(250);
     cout << "*You have a dedicated Military and Air force dedicated to protecting your border " << endl ;;
+    Sleep(250);
     cout << " which you must grow through the use of Military factories" << endl << endl;
-    cout << "*Train Spys to gain intel on others and defend yourself against espionage!" << endl<< endl;
+    Sleep(250);
+    cout << "*Cities will add to your commerce,  and help grow your population \n\n";
+    Sleep(250);
+    cout << "*Train Spys to gain intel, poison your enemies and defend yourself against espionage!" << endl<< endl;
+    Sleep(250);
     cout << "*You must also continue gaining land in order to grow food to accommodate your ever increasing population." << endl << endl;;
-    cout << "*Keep an eye on your population count, you do not want them to starve!" << endl << endl;
+    Sleep(250);
+    cout << "*Keep an eye on your population count and food stocks, you do not want them to starve!" << endl << endl;
+    Sleep(250);
+    cout << "*Keep your cities intact, lose them all, and you lose the country! \n\n";
+    Sleep(250);
+    cout << "*Every Skirmish will help you gain cities, but lose a skirmish, and you lose a city! \n\n";
+    Sleep(250);
     cout << "*Take caution in entering the War Room, the rewards are great, but so are the punishments." <<endl << endl;
-
+    Sleep(250);
     cout << "*Good luck " << name << "!" << endl;
 
 }
+
+
 /*
 void country_war_room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
                int& infantry_computer, string& name, int &year, int& n_af, int& n_inf, int& s_af, int& s_inf,

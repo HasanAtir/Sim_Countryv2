@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
+#include <cstdio>
 #include <cstdlib>
 #include <fstream>
 #include <string>
@@ -152,13 +153,21 @@ int main()
 
 
     int turn_count =0; // Helps count to five turns, at which happiness automatically increases by 10.
-    cout << " ______    _                   ______                            _                    " << endl;
-    cout << ".' ____ \  (_)                .' ___  |                          / |_                 " << endl;
-    cout << "| (___ \_| __   _ .--..--.   / .'   \_|  .--.   __   _   _ .--. `| |-'_ .--.  _   __  " << endl;
-    cout << " _.____`. [  | [ `.-. .-. |  | |       / .'`\ \[  | | | [ `.-. | | | [ `/'`\][ \ [  ] " << endl;
-    cout << "| \____) | | |  | | | | | |  \ `.___.'\| \__. | | \_/ |, | | | | | |, | |     \ '/ /  " << endl;
-    cout << " \\______.'[___][___||__||__]  `.____ .' '.__.'  '.__.'_/[___||__]\\__/[___]  [\\_:  /   " << endl;
-    cout << "                                                                             \__.'    " << endl;
+
+    cout << "@@@@@@  @@, @@%    @@,     @@@@@   @@@@@@  @@%  @@  @@   @@ @@@@@@@ @@@@@@  @@  %@@\n";
+    Sleep(300);
+    cout << "@@  &@% @@, @@@   %@@,    @@   @@ ,@@  %@@ @@%  @@  @@@  @@   @@    @@  &@@ &@, @@ \n";
+    Sleep(300);
+    cout << "@@      @@, @@@@  @@@,    @@      ,@@  ,@@ @@%  @@  @@@  @@   @@    @@  %@@  @@%@  \n";
+    Sleep(300);
+    cout << " &@@@@  @@, @@ @.@@%@,    @@      ,@@  ,@@ @@%  @@  @@%@ @@   @@    @@@@@@    @@@  \n";
+    Sleep(300);
+    cout << "    @@@ @@, @@ @@@ %@,    @@      ,@@  ,@@ @@%  @@  @@ @@@@   @@    @@ @@     @@   \n";
+    Sleep(300);
+    cout << "@@  #@@ @@, @@  @@ %@,    @@   @@ ,@@  %@@ @@%  @@  @@  @@@   @@    @@  @@    @@   \n";
+    Sleep(300);
+    cout << "@@@@@@  @@, @@     %@,     @@@@@   @@@@@@   @@@@@   @@   @@   @@    @@  @@@   @@   \n\n\n";
+    Sleep(300);
     cout << "Welcome to Sim Country player. Please enter your name: ";
     getline(cin, player_name);
     //Prints the name of the opponents;
@@ -175,10 +184,6 @@ int main()
 
     while(!game_over)
     {
-
-
-
-        cout << d100_Random_Roll() << endl;
 
         //resetting AI values
         north_land = 13000;
