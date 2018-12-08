@@ -389,7 +389,7 @@ int main()
         }
         }
         else
-        {cout<<"1) Engage in a skirmish)\n"
+        {cout<<"1) Engage in a skirmish\n"
               "2) Build military factory\n"
               "3) Random invention\n"
               "4) Build a city\n"
@@ -911,7 +911,7 @@ int main()
             game_over = true;
             }
 
-        if( happiness_factor < 91)
+        if( happiness_factor < 41)
         {
             protest(total_mili,commerce,happiness_factor,population);
         }
