@@ -34,6 +34,7 @@ void country_war_room (int &air_player, int &infantry_player,  int &land, int& p
                int& e_af, int& e_inf, int& w_af, int& w_inf,std::string &n_name,std::string &s_name,  std::string &e_name,
                         std::string &w_name);
 
+void protest (int& military, int& commerce, int& happiness, int& population);
 
 // protest( miltary, commerce, happiness, population)
 // Genocide, 50% pop loss, with 20% happiness increase
