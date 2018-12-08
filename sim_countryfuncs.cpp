@@ -59,11 +59,20 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
     //If win= -10%pop, +15%land, -15% military
     //weight = military based
     int choice;
+    int lower_af, lower_inf, upper_af, upper_inf;
+    float win_player, win_enemy;
+    lower_af= 0.05* e_af;
+    upper_af = 0.1*e_af;
+    lower_inf = 0.05* e_inf;
+    upper_inf = 0.1*e_inf;
+    win_player = (((float(military))/(float(military+e_inf)))*100);
+    win_enemy = (((float(e_inf))/(float(military+e_inf)))*100);
+
+
     if (ucs !=0)
     {
         cout << "Intel on " << enemy << " is as follows: \n";
-        cout << "Air Force count is between " << 0.9* e_af << " and " << 1.1 * e_af << endl;
-        cout << "Infantry count is between " << 0.9* e_inf << " and " << 1.1 * e_inf << endl;
+        cout << "Infantry count is between " << lower_inf << " and " << upper_inf << endl;
         ucs--;
         ospy++;
     }
@@ -77,29 +86,60 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
     sentinelFunction(0,1,choice);
     if (choice ==1)
     {
-           if(chance>50)
+        if (win_player > win_enemy)
         {
-            population  = population* win_pop;
-            land        = land      * win_land;
-            military    = military  * win_mil;
-            money = money *0.95; // Commerce loss
-            city = city + 1;;
-            return true;
+               if(chance<win_player)
+            {
+                population  = population* win_pop;
+                land        = land      * win_land;
+                military    = military  * win_mil;
+                money = money *0.95; // Commerce loss
+                city++;;
+                cout << "You have won the battle! " << endl;
+                return true;
+            }
+                else
+            {
+                population  =population * loss_pop;
+                land        =land       * loss_land;
+                military    =military   * loss_mil;
+                money = money * 0.85; // Commerce Loss
+                city--;;
+                cout << "You have lost the battle!" << endl;
+                return false;
+            }
         }
-        else if(chance<51)
+        else if (win_enemy > win_player)
         {
-            population  =population * loss_pop;
-            land        =land       * loss_land;
-            military    =military   * loss_mil;
-            money = money * 0.85; // Commerce Loss
-            city = city- 1;;
+            if(chance < win_enemy)
+            {
 
-            return false;
+                population  =population * loss_pop;
+                land        =land       * loss_land;
+                military    =military   * loss_mil;
+                money = money * 0.85; // Commerce Loss
+                city = city--;;
+                cout << "You have lost the battle!" << endl;
+                return false;
+            }
+            else
+            {
+                population  = population* win_pop;
+                land        = land      * win_land;
+                military    = military  * win_mil;
+                money = money *0.95; // Commerce loss
+                city = city++;;
+                cout << "You have won the battle!" << endl;
+                return true;
+            }
+
         }
-        }
+
+    }
     else
         {
             check++;;
+
         }
 
 

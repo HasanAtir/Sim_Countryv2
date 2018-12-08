@@ -245,7 +245,7 @@ int main()
 
         //game time BASIC OPTIONS. Persistent for now, plans to be randomised
         if (ospy == 0)
-        {cout<<"1) Go to war (skirmish)\n"
+        {cout<<"1) Engage in a skirmish\n"
               "2) Build military factory\n"
               "3) Random invention\n"
               "4) Build a city\n"
@@ -268,37 +268,35 @@ int main()
             bool war_win = false;
             if (skirmish_choice ==1)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, check);
+                war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, check);
             }
             else if (skirmish_choice ==2)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, south_name, ucs_south, south_air_military, south_infantry_military, ospy, check);
+                war_win =win_war_Skirmish(population, land, infantry_military, commerce, city, south_name, ucs_south, south_air_military, south_infantry_military, ospy, check);
             }
             else if (skirmish_choice ==3)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, check);
+                war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, check);
             }
             else if (skirmish_choice ==4)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, west_name, ucs_west, west_air_military, west_infantry_military, ospy, check);
+                war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, west_name, ucs_west, west_air_military, west_infantry_military, ospy, check);
             }
             if(war_win)
             {
-                cout<<"You have won the war!\n\n";
+
                 number_of_wars_won++;
 
                 // Happiness Effects
                 if (happiness_factor < 100)
-                    happiness_factor = happiness_factor +10;
+                    {happiness_factor = happiness_factor +10;}
                 else
-                    happiness_factor;
+                    {happiness_factor;}
             }
             else
             {
                 if(check == 0)
-                {cout<<"You have lost the war!\n\n";
-
-                happiness_factor = happiness_factor -10;}
+                {  happiness_factor = happiness_factor -10;}
                 else
                 {
                     check--;
@@ -389,7 +387,7 @@ int main()
         }
         }
         else
-        {cout<<"1) Go to war (skirmish)\n"
+        {cout<<"1) Engage in a skirmish)\n"
               "2) Build military factory\n"
               "3) Random invention\n"
               "4) Build a city\n"
@@ -413,23 +411,23 @@ int main()
             bool war_win = false;
             if (skirmish_choice ==1)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, check);
+                war_win= win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, check);
             }
             else if (skirmish_choice ==2)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, south_name, ucs_south, south_air_military, south_infantry_military, ospy, check);
+                war_win=win_war_Skirmish(population, land, infantry_military, commerce, city, south_name, ucs_south, south_air_military, south_infantry_military, ospy, check);
             }
             else if (skirmish_choice ==3)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, check);
+                war_win=win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, check);
             }
             else if (skirmish_choice ==4)
             {
-                win_war_Skirmish(population, land, infantry_military, commerce, city, west_name, ucs_west, west_air_military, west_infantry_military, ospy, check);
+                war_win=win_war_Skirmish(population, land, infantry_military, commerce, city, west_name, ucs_west, west_air_military, west_infantry_military, ospy, check);
             }
             if(war_win)
             {
-                cout<<"You have won the war!\n\n";
+
                 number_of_wars_won++;
 
                 // Happiness Effects
@@ -442,7 +440,6 @@ int main()
             {
                 if ( check ==0)
                 {
-                    cout<<"You have lost the war!\n\n";
 
                 happiness_factor = happiness_factor -10;
                 }
