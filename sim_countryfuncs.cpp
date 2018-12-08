@@ -883,7 +883,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         }
         else
         {
-            cout << " Your spy has been caught by " << n_name << " ." << endl;
+            cout << "Your spy has been caught by " << n_name << " ." << endl;
             ospy--;
         }
 
@@ -909,7 +909,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         }
         else
         {
-            cout << " Your spy has been caught by " << s_name << " ." << endl;
+            cout << "Your spy has been caught by " << s_name << " ." << endl;
             ospy--;
         }
 
@@ -935,7 +935,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         }
         else
         {
-            cout << " Your spy has been caught by " << w_name << " ." << endl;
+            cout << "Your spy has been caught by " << w_name << " ." << endl;
             ospy--;
         }
 
@@ -961,7 +961,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
         }
         else
         {
-            cout << " Your spy has been caught by " << e_name << " ." << endl;
+            cout << "Your spy has been caught by " << e_name << " ." << endl;
             ospy--;
         }
 
@@ -1116,16 +1116,15 @@ void protest (int& military, int& commerce, int& happiness, int& population, dou
             cout << endl << endl;
             population = population *0.5;
             military = military *0.4;
-            happiness = happiness + 40;
             cout << "It is done.\n";
             Sleep(180);
             cout << "Your new population count is  : " << population << endl;
             Sleep(180);
             cout << "Your new military count is    : " << military << endl;
             Sleep(180);
-            cout << "Happiness levels are not full quite yet Supreme Leader \n" ;
+            cout << "GDP levels have not been restored quite yet Supreme Leader \n" ;
             Sleep(180);
-            cout << "Happiness level: " << happiness << endl;
+            cout << "GDP level: " << gdp << endl;
 
             system("pause");
 
