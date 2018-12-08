@@ -911,9 +911,26 @@ int main()
             game_over = true;
             }
 
-        if( happiness_factor < 41)
+        if( happiness_factor < 41 )
         {
-            protest(total_mili,commerce,happiness_factor,population);
+            protest(total_mili,commerce,happiness_factor,population, gdp);
+        }
+
+        if (gdp < 30)
+        {
+            protest(total_mili,commerce,happiness_factor,population, gdp);
+        }
+
+        if (gdp < 10)
+        {
+            cout << "GDP PER CAPITA TOO LOW\n"
+            cout << "GAME OVER" << endl;
+            game_over=true;
+        }
+        if (gdp > 499)
+        {
+            cout << "YOU WIN THE GAME! \n";
+            game_over = true;
         }
 
 

@@ -1006,7 +1006,7 @@ void instructions(string& name)
 
 }
 
-void protest (int& military, int& commerce, int& happiness, int& population)
+void protest (int& military, int& commerce, int& happiness, int& population, double& gdp)
 {
     cout << "Your people are revolting! Their happiness is dwindling, they have engaged in country wide protests! \n";
     cout << "Your Economy is leaking money and automatic emergency measures have been put in place to control the protests! \n";
@@ -1014,7 +1014,7 @@ void protest (int& military, int& commerce, int& happiness, int& population)
     commerce = commerce *0.7;
     cout << "Your Military count is now: " << military << endl;
     cout << "Your Commerce is now: " << commerce << endl;
-    if (happiness < 31)
+    if (happiness < 31 )
     {
         cout << endl << endl;
         cout << "*Supreme Leader, times are dire. Your council is advising you to commit genocide against the people \n";
@@ -1073,6 +1073,68 @@ void protest (int& military, int& commerce, int& happiness, int& population)
         {
             cout << "Very well Supreme Leader. As you wish \n";
             system("pause");
+        }}
+
+        if (gdp < 15)
+        {
+             cout << endl << endl;
+        cout << "*Supreme Leader, times are dire. Your council is advising you to commit genocide against the people \n";
+        cout << "*If you choose to commit genocide you will lose 50% of your population, silencing protests \n";
+        cout << "*Yet, this genocide will also result in a loss of 60% of your military \n";
+        cout << "*A preventative measure your COAS assures you will ensure no military revolt \n";
+        cout << "*The remaining population will be happy for only your loyal supporters will be left alive \n";
+        cout << "*Do you choose to commit genocide?\n";
+        int choice;
+        cout << "Press 1 to engage in genocide, 0 to continue as you are \n";
+        sentinelFunction(0,1,choice);
+        if (choice == 1)
+        {
+            cout << "\"History is rarely made by reasonable men\" \n";
+
+            cout << "   _.-^^---....,,--                \n";
+            Sleep(180);
+            cout << " _--                  --_          \n";
+            Sleep(180);
+            cout << "<                        >)        \n";
+            Sleep(180);
+            cout << "|                         |        \n";
+            Sleep(180);
+            cout << "\\._                   _.//          \n";
+            Sleep(180);
+            cout << "    ```--. . , ; .--'''            \n";
+            Sleep(180);
+            cout << "         | |   |                   \n";
+            Sleep(180);
+            cout << "      .-=||  | |=-.                \n";
+            Sleep(180);
+            cout << "       `-=#$%&%$#=-'               \n";
+            Sleep(180);
+            cout << "         | ;  :|                   \n";
+            Sleep(180);
+            cout << "_____.,-#%&$@%#&#~,._____          \n";
+            Sleep(180);
+            cout << endl << endl;
+            population = population *0.5;
+            military = military *0.4;
+            happiness = happiness + 40;
+            cout << "It is done.\n";
+            Sleep(180);
+            cout << "Your new population count is  : " << population << endl;
+            Sleep(180);
+            cout << "Your new military count is    : " << military << endl;
+            Sleep(180);
+            cout << "Happiness levels are not full quite yet Supreme Leader \n" ;
+            Sleep(180);
+            cout << "Happiness level: " << happiness << endl;
+
+            system("pause");
+
         }
-    }
+        else
+        {
+            cout << "Very well Supreme Leader. As you wish \n";
+            system("pause");
+        }
+        }
+
 }
