@@ -44,7 +44,8 @@ int main()
     //initial conditions;
     int cumulative_score=0;//Final score to when winning the game
     int population, air_military, infantry_military, commerce, military_factory, land, food,
-            happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west, city, check, check_war_room;
+            happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
+             city, check, check_war_room, total_mili;
     population = 100000;
     air_military = 100;
     infantry_military = 1000;
@@ -63,6 +64,7 @@ int main()
     city = 1;
     check = 0;
     check_war_room = 0;
+    total_mili = air_military+ infantry_military;
 
 
     int year = 1921;
@@ -788,6 +790,7 @@ int main()
 //Theres a 2% chance that a nation will declare all out war on the player
         if(north_random_options==25)
         {
+            number_of_wars++;
             cout<<north_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, north_air_military,
                                     north_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
@@ -809,6 +812,7 @@ int main()
         }
         if(south_random_options==25)
         {
+            number_of_wars++;
             cout<<south_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, south_air_military,
                                     south_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
@@ -830,6 +834,7 @@ int main()
         }
         if(east_random_options==25)
         {
+            number_of_wars++;
             cout<<east_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, east_air_military,
                                     east_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
@@ -851,6 +856,7 @@ int main()
         }
         if(west_random_options==25)
         {
+            number_of_wars++;
             cout<<west_name<<" is declaring all-out war on you! This is not a drill!\n";
             bool war_win = war_Room(air_military, infantry_military, land, population, west_air_military,
                                     west_infantry_military, player_name, year, commerce, city, military_factory, check_war_room);
@@ -896,14 +902,20 @@ int main()
             }
 
 
-    commerce = commerce + (2000*city) -(500*military_factory); // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
+        commerce = commerce + (2000*city) -(500*military_factory); // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
 
-    if (city < 1)
+        if (city < 1)
+            {
+            cout << "You have lost all your cities!" << endl;
+            cout << "GAME OVER" << endl;
+            game_over = true;
+            }
+
+        if( happiness_factor < 91)
         {
-        cout << "You have lost all your cities!" << endl;
-        cout << "GAME OVER" << endl;
-        game_over = true;
+            protest(total_mili,commerce,happiness_factor,population);
         }
+
 
 
 
