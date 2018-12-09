@@ -47,6 +47,15 @@ int main()
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, check, check_war_room, total_mili;
     int const FOOD_MAX = 100000000; //Max food to prevent stack overflow
+    struct Endscore //data type for final score;
+    {
+        string name;
+        int score;
+        int wars_won;
+        int genocides_committed;
+        int land;
+    };
+
 
 
     population = 100000;
@@ -159,10 +168,10 @@ int main()
     bool game_won_gdp = false;
 
     //lose conditions:
-    bool game_lost_city=false;
-    bool game_lost_overthrown=false;
-    bool game_lost_gdp=false;
-    bool game_quit=false;
+    bool lost_game_city = false;
+    bool lost_game_overthrown = false;
+    bool lost_game_gdp = false;
+    bool lost_game_quit = false;
 
     srand(time(0)); // RANDOM INTIALISATION
 
@@ -266,11 +275,10 @@ int main()
         if (ospy == 0)
         {cout<<"1) Engage in a skirmish\n"
               "2) Build military factory\n"
-              "3) Random invention\n"
-              "4) Build a city\n"
-              "5) Go to all out war\n"
-              "6) Train a type of Spy \n"
-              "7) quit simulation\n";
+              "3) Build a city\n"
+              "4) Go to all out war\n"
+              "5) Train a type of Spy \n"
+              "6) Quit simulation\n";
         sentinelFunction(1, 7, next_year_option);
 
                 if(next_year_option==1)
@@ -333,7 +341,7 @@ int main()
             commerce = commerce - 5000;
             remaining_construction_time = 3;//Estimated time until factory finishes construction
         }
-        else if (next_year_option ==4)
+        else if (next_year_option ==3)
         {
             year++;
             building_city = true;
@@ -341,7 +349,7 @@ int main()
             remaining_time_city_construction = 5;
         }
 
-        else if (next_year_option==5)
+        else if (next_year_option==4)
         {
             int all_out_war_choice;
             cout<<"Who do you want to go to war against?\n";
@@ -395,25 +403,72 @@ int main()
                 happiness_factor = happiness_factor -10;
             }
         }
-        else if(next_year_option==6)
+        else if(next_year_option==5)
         {
             year++;
             spy(ospy,cspy);
         }
-         else if(next_year_option==7)
+         else if(next_year_option==6)
         {
             game_over = true;
+            lost_game_quit = true;
+
+        }
+        else if(next_year_option == 7)
+        {
+            int testoptions;
+            cout<<"TESTING ONLY!"<<endl;
+            cout<<"1)Happiness\n"
+                    "2) population\n"
+                    "3) military facotries\n"
+                    "4) cities\n"
+                    "5)commerce\n"
+                    "6) win game\n";
+            cin>>testoptions;
+            if(testoptions == 1)
+            {
+                cout<<"Happiness = ";
+                cin>>happiness_factor;
+            }
+            else if(testoptions == 2)
+            {
+                cout<<"population = ";
+                cin>>population;
+            }
+            else if(testoptions == 3)
+            {
+                cout<<"Military factories = ";
+                cin>>military_factory;
+            }
+            else if(testoptions == 4)
+            {
+                cout<<"Cities = ";
+                cin>>city;
+            }
+            else if(testoptions = 5)
+            {
+                cout<<"commerce =";
+                cin>>commerce;
+            }
+            else if(testoptions = 6)
+            {
+                cout<<"Game won";
+                game_over = true;
+                game_won_gdp = true;
+                continue;
+            }
+
+
         }
         }
         else
         {cout<<"1) Engage in a skirmish\n"
               "2) Build military factory\n"
-              "3) Random invention\n"
-              "4) Build a city\n"
-              "5) Go to all out war\n"
-              "6) Train a type of Spy \n"
-              "7) Send Spy Undercover \n"
-              "8) quit simulation\n";
+              "3) Build a city\n"
+              "4) Go to all out war\n"
+              "5) Train a type of Spy \n"
+              "6) Send Spy Undercover \n"
+              "7) quit simulation\n";
         sentinelFunction(1, 8, next_year_option);
 
         if(next_year_option==1)
@@ -480,7 +535,7 @@ int main()
             commerce = commerce - 5000;
             remaining_construction_time = 3;//Estimated time until factory finishes construction
         }
-         else if (next_year_option ==4)
+         else if (next_year_option ==3)
         {
             year++;
             cout<<"\nConstructing city. Est wait time: 5 years\n";
@@ -489,7 +544,7 @@ int main()
             remaining_time_city_construction = 5;
         }
 
-        else if (next_year_option==5)
+        else if (next_year_option==4)
         {
             int all_out_war_choice;
             cout<<"Who do you want to go to war against?\n";
@@ -547,19 +602,65 @@ int main()
                 happiness_factor = happiness_factor -10;
             }
         }
-        else if(next_year_option==6)
+        else if(next_year_option==5)
         {
             year++;
             spy(ospy,cspy);
         }
-        else if (next_year_option==7)
+        else if (next_year_option==6)
         {
             year++;
             player_attack_spy(north_name, south_name, east_name, west_name,  ospy, undercover_spy,ucs_north,ucs_south,ucs_east,ucs_west, north_air_military, north_infantry_military, south_air_military, south_infantry_military, east_air_military, east_infantry_military, west_air_military, west_infantry_military);
         }
-         else if(next_year_option==8)
+         else if(next_year_option==7)
         {
             game_over = true;
+        }
+        else if(next_year_option == 8)
+        {
+            int testoptions = 0;
+            cout<<"TESTING ONLY!"<<endl;
+            cout<<"1)Happiness\n"
+                    "2) population\n"
+                    "3) military facotries\n"
+                    "4) cities\n"
+                    "5)commerce\n"
+                    "6) win game\n";
+            cin>>testoptions;
+            if(testoptions == 1)
+            {
+                cout<<"Happiness = ";
+                cin>>happiness_factor;
+            }
+            else if(testoptions == 2)
+            {
+                cout<<"population = ";
+                cin>>population;
+            }
+            else if(testoptions == 3)
+            {
+                cout<<"Military factories = ";
+                cin>>military_factory;
+            }
+            else if(testoptions == 4)
+            {
+                cout<<"Cities = ";
+                cin>>city;
+            }
+            else if(testoptions = 5)
+            {
+                cout<<"commerce =";
+                cin>>commerce;
+            }
+            else if(testoptions = 6)
+            {
+                cout<<"Game won";
+                game_over = true;
+                game_won_gdp = true;
+                continue;
+            }
+
+
         }
 
 
@@ -915,6 +1016,7 @@ int main()
                 cout << "Your people have revolted!" << endl;
                 cout << "GAME OVER!" << endl;
                 game_over= true;
+                lost_game_overthrown = true;
 
             }
 
@@ -926,6 +1028,7 @@ int main()
             cout << "You have lost all your cities!" << endl;
             cout << "GAME OVER" << endl;
             game_over = true;
+            lost_game_city = true;
             }
 
         if( happiness_factor < 41 )
@@ -949,11 +1052,46 @@ int main()
             cout << "YOU WIN THE GAME! \n";
             cout << "Your GDP is: " << gdp <<endl;
             game_over = true;
+            game_won_gdp = true;
         }
 
 
 
 
     }
+    //End game condition verification
+
+
+
+    cumulative_score = (gdp*population)/(1921-year);
+    Endscore score;
+    score.name = player_name;
+    score.score = cumulative_score;
+    score.wars_won = number_of_wars_won;
+    score.land = land;
+    if(game_over && lost_game_quit)
+    {
+        cout<<"YOU QUIT THE GAME"<<endl;
+    }
+    else if(game_over && lost_game_city)
+    {
+        cout<<"YOU'VE LOST ALL YOUR CITIES"<<endl;
+    }
+    else if(game_over && lost_game_overthrown)
+    {
+        cout<<"YOU'VE BEEN OVERTHROWN BECAUSE YOU'RE PEOPLE WERE TOO UNHAPPY"<<endl;
+    }
+    else if(game_over && lost_game_gdp)
+    {
+        cout<<"YOUR PEOPLE NOW LIVE IN ABSOLUTE POVERTY"<<endl;
+    }
+    else if(game_over && game_won_gdp)
+    {
+        cout<<"YOU HAVE WON THE GAME!"<<endl;
+        cout<<"======================"<<endl;
+        cout<<"Your final score is = "<<cumulative_score;
+    }
+
+
 
 }
