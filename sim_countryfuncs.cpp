@@ -1014,6 +1014,7 @@ void protest (int& military, int& commerce, int& happiness, int& population, dou
     commerce = commerce *0.7;
     cout << "Your Military count is now: " << military << endl;
     cout << "Your Commerce is now: " << commerce << endl;
+    system("pause");
     if (happiness < 31 )
     {
         cout << endl << endl;
