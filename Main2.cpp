@@ -930,6 +930,7 @@ int main()
         if (gdp > 499)
         {
             cout << "YOU WIN THE GAME! \n";
+            cout << "Your GDP is: " << gdp <<endl;
             game_over = true;
         }
 
