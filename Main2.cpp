@@ -923,7 +923,7 @@ int main()
 
         if (gdp < 10)
         {
-            cout << "GDP PER CAPITA TOO LOW\n"
+            cout << "GDP PER CAPITA TOO LOW\n";
             cout << "GAME OVER" << endl;
             game_over=true;
         }
