@@ -46,6 +46,9 @@ int main()
     int population, air_military, infantry_military, commerce, military_factory, land, food,
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, check, check_war_room, total_mili;
+    int const FOOD_MAX = 100000000; //Max food to prevent stack overflow
+
+
     population = 100000;
     air_military = 100;
     infantry_military = 1000;
@@ -57,6 +60,7 @@ int main()
     ospy = 0; // Offensive Spy
     cspy = 0; // Counter Spy
     undercover_spy =0;
+    //undercover spies in different countries
     ucs_north = 0;
     ucs_south = 0;
     ucs_east = 0;
@@ -151,6 +155,15 @@ int main()
     double west_commerce_growth = 1.20;
     double west_military_growth = military_factory*25;
 
+    //win conditions:
+    bool game_won_gdp = false;
+
+    //lose conditions:
+    bool game_lost_city=false;
+    bool game_lost_overthrown=false;
+    bool game_lost_gdp=false;
+    bool game_quit=false;
+
     srand(time(0)); // RANDOM INTIALISATION
 
 
@@ -203,7 +216,7 @@ int main()
         //output
         cout<<"CURRENT YEAR:                         "<<year<<endl<<endl;
         cout<<"Current population:                   "<<population<<endl;
-        cout<<"Current food stocks:                  "<<food_stores<<endl;
+        cout<<"Current food stocks:                  "<<food_stores<<"/"<<FOOD_MAX<<endl;
         cout<<"Current owned land:                   "<<land<<endl;
         cout<<"Current Military might:               "<<air_military+infantry_military<<endl;
         cout<<"Current Military factories            "<<military_factory;
@@ -227,11 +240,15 @@ int main()
         //growth
         pop_grow = 1+ city*((double)food/population)/100;
         cout<<pop_grow<<endl;
+
         food_grow = land*100;
         mili_grow = military_factory*100;
 
 
-        food_stores = (food_stores - population*2) + (food_grow*city);// Food growth increases with city count CHANGED 4th DEC, muliplied by 2
+        if(food_stores<FOOD_MAX)
+        {
+            food_stores = (food_stores - population*2) + (food_grow*city);// Food growth increases with city count CHANGED 4th DEC, muliplied by 2
+        }
         population = population*pop_grow;
         air_military = air_military+mili_grow;
         infantry_military = infantry_military+(2*mili_grow);
@@ -245,7 +262,7 @@ int main()
 
         }
 
-        //game time BASIC OPTIONS. Persistent for now, plans to be randomised
+        //game time options
         if (ospy == 0)
         {cout<<"1) Engage in a skirmish\n"
               "2) Build military factory\n"
