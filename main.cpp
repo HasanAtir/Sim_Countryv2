@@ -210,6 +210,7 @@ int main()
     {
 
         //resetting AI values
+        //These values were added to help simplify war functions
         north_land = 13000;
         south_land = 13000;
         east_land  = 13000;
@@ -229,7 +230,7 @@ int main()
         cout<<"Current owned land:                   "<<land<<endl;
         cout<<"Current Military might:               "<<air_military+infantry_military<<endl;
         cout<<"Current Military factories            "<<military_factory;
-        if(building_factory){cout<<"(1)"<<endl;}
+        if(building_factory){cout<<"(1)"<<endl;}//The number in brackets indicate whether a factory or city is under construction
         else {cout<<endl;}
         cout<<"City Count:                           "<< city;
         if(building_city){cout <<"(1)"<<endl;}
@@ -238,7 +239,7 @@ int main()
         cout<<"Current GDP/Capita:                   $"<<gdp<<endl;
         cout<<"Current Available Spy Count:          " << ospy << endl;
         cout<<"Current Available Counter Spy Count:  " << cspy << endl;
-        cout<<"Spys who are undercover:              " << undercover_spy << endl;
+        cout<<"Spies who are undercover:              " << undercover_spy << endl;
         cout<<"Total number of wars:                 "<<number_of_wars<<endl;
         cout<<"Total wars won:                       "<<number_of_wars_won<<endl;
         cout<<"Happiness Level of Population:        "<< happiness_factor<<"%"<<endl;
@@ -704,25 +705,43 @@ int main()
         int enemy_name_choice = d4_Random_Roll();
         string attacking_enemy = enemy_names[enemy_name_choice]; // Random Country name given
 
-        //Neighbour 1 simulation
+        //North growth simulation
         north_population=north_population*north_population_growth;
-        north_infantry_military = north_infantry_military + (2*north_military_growth);
+        north_infantry_military = north_infantry_military + north_military_growth;
         north_air_military = north_air_military + north_military_growth;
         north_commerce=north_commerce*north_commerce_growth;
-        gdp = north_commerce/north_population;
-        /*available options that should be available
-         * 1) war
-         * 2) build military factory
-         * 3) do nothing
-         * 4)
-         * */
+        north_gdp = north_commerce/north_population;
+
+        //South growth simulation
+        south_population = south_population*south_population_growth;
+        south_infantry_military = south_infantry_military + south_military_growth;
+        south_air_military = south_air_military + south_military_growth;
+        south_commerce = south_commerce*south_commerce_growth;
+        south_gdp = south_commerce/south_population;
+
+        //East growth simulation
+        east_population = east_population*east_population_growth;
+        east_infantry_military = east_infantry_military + east_military_growth;
+        east_air_military = east_air_military + east_military_growth;
+        east_commerce = east_commerce*east_commerce_growth;
+        east_gdp = east_commerce/east_population;
+
+        //West growth simulation
+        west_population = west_population*west_population_growth;
+        west_infantry_military = west_infantry_military + west_military_growth;
+        west_air_military = west_air_military + west_military_growth;
+        west_commerce = west_commerce*west_commerce_growth;
+        west_gdp = west_commerce/west_population;
+
+
         int north_random_options = d50_Random_Roll();
         int south_random_options = d50_Random_Roll();
         int east_random_options = d50_Random_Roll();
         int west_random_options = d50_Random_Roll();
+        //The following functions determine if an ai declares war on the player.
 
         if(north_random_options<=7)
-            //Northern neighbour declares skirmish war on player
+
         {   bool player_defends = false;
             cout<<"\n"<<north_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
@@ -763,7 +782,6 @@ int main()
         }
 
         if(west_random_options<=7)
-            //Northern neighbour declares skirmish war on player
         {   bool player_defends = false;
             cout<<"\n"<<west_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
@@ -804,7 +822,6 @@ int main()
         }
 
         if(south_random_options<=7)
-            //Northern neighbour declares skirmish war on player
         {   bool player_defends = false;
             cout<<"\n"<<south_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
@@ -845,7 +862,6 @@ int main()
         }
 
         if(east_random_options<=7)
-            //Northern neighbour declares skirmish war on player
         {   bool player_defends = false;
             cout<<"\n"<<east_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
@@ -884,6 +900,7 @@ int main()
 
             }
         }
+
         //If random choice happens to be greater than 45, the countries build a new military factory
         if(north_random_options>44)
         {
@@ -982,7 +999,7 @@ int main()
             {
 
                 number_of_wars_won++;
-                // Happiness Effects
+                // Happiness Effects of winning the war
                 if (happiness_factor < 100)
                     happiness_factor = happiness_factor +10;
                 else
@@ -1012,12 +1029,9 @@ int main()
         system("pause");
         if(happiness_factor < 21)
             {
-                cout << "Your people are only " << happiness_factor << "% happy!" << endl;
-                cout << "Your people have revolted!" << endl;
-                cout << "GAME OVER!" << endl;
                 game_over= true;
                 lost_game_overthrown = true;
-
+                continue;
             }
 
 
@@ -1025,10 +1039,9 @@ int main()
 
         if (city < 1)
             {
-            cout << "You have lost all your cities!" << endl;
-            cout << "GAME OVER" << endl;
             game_over = true;
             lost_game_city = true;
+            continue;
             }
 
         if( happiness_factor < 41 )
@@ -1043,16 +1056,15 @@ int main()
 
         if (gdp < 10)
         {
-            cout << "GDP PER CAPITA TOO LOW\n";
-            cout << "GAME OVER" << endl;
+            lost_game_gdp = true;
             game_over=true;
+            continue;
         }
         if (gdp > 499)
         {
-            cout << "YOU WIN THE GAME! \n";
-            cout << "Your GDP is: " << gdp <<endl;
             game_over = true;
             game_won_gdp = true;
+            continue;
         }
 
 
@@ -1072,10 +1084,14 @@ int main()
     if(game_over && lost_game_quit)
     {
         cout<<"YOU QUIT THE GAME"<<endl;
+        cout<<"Couldn't handle the heat, could you, "<<player_name<<"?\n";
+        cout<<"Having a nation depend upon you isn't everyone's cup of tea after all";
     }
     else if(game_over && lost_game_city)
     {
         cout<<"YOU'VE LOST ALL YOUR CITIES"<<endl;
+        cout<<player_name<<", how can you expect to run a nation without a city to run it from?\n";
+        cout<<"Your nation lays in rubble, it's dreams of a prosperous future turned to ashes!\n";
     }
     else if(game_over && lost_game_overthrown)
     {
@@ -1083,13 +1099,16 @@ int main()
     }
     else if(game_over && lost_game_gdp)
     {
-        cout<<"YOUR PEOPLE NOW LIVE IN ABSOLUTE POVERTY"<<endl;
+        cout<<"WITH A GDP OF "<<gdp<<" YOUR PEOPLE NOW LIVE IN ABSOLUTE POVERTY"<<endl;
+        cout<<player_name<<", you have lost the game, and with that, the promise of a brighter future for your nation"<<endl;
     }
     else if(game_over && game_won_gdp)
     {
+        cout<<"Congratulations "<<player_name<<". You have done something truly remarkable and turned your nation into a super power\n";
         cout<<"YOU HAVE WON THE GAME!"<<endl;
         cout<<"======================"<<endl;
-        cout<<"Your final score is = "<<cumulative_score;
+        cout<<"Your final score is = "<<cumulative_score<<endl;
+        cout<<"Your GDP was "<<gdp<<" at the end of the game!\n";
     }
 
 
