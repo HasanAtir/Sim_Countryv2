@@ -53,7 +53,7 @@ int d4_Random_Roll() // For enemy country selection
     @param population, the players population. land, the player land.
     @return a bool that identifies if the player won the skirmish
 */
-bool win_war_Skirmish(int& population, int& land, int& military, int& money, int& city,
+bool win_war_Skirmish(int& population, int& land, int& military, long& money, int& city,
                       string& enemy, int& ucs, int& e_af, int& e_inf, int&ospy, int& check)
 {
     int chance = d100_Random_Roll();
@@ -226,7 +226,7 @@ bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&
 
 }
 
-void player_Surrender(int& pop, int& land, int& inf_military, int& air_military, int& money)
+void player_Surrender(int& pop, int& land, int& inf_military, int& air_military, long& money)
 {
     //Results if the player surrenders after AI initiates skirmish
     double poploss = 0.95, landloss=0.80, milloss=0.80;
@@ -289,7 +289,7 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d)
 }
 
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
-               int& infantry_computer, string &name, int &year, int& money, int& city, int& m_factory, int& check)
+               int& infantry_computer, string &name, int &year, long& money, int& city, int& m_factory, int& check)
 {
 
     int hp_enemy = 10;
@@ -1052,7 +1052,7 @@ void instructions(string& name)
 
 }
 
-void protest (int& military, int& commerce, int& happiness, int& population)
+void protest (int& military, long& commerce, int& happiness, int& population)
 {
     cout << "Your people are revolting! Their happiness is dwindling, they have engaged in country wide protests! \n";
     cout << "Your Economy is leaking money and automatic emergency measures have been put in place to control the protests! \n";
