@@ -863,7 +863,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
 
     if (input == 1)
     {
-        if (p_s_chance < 150)
+        if (p_s_chance < 60)
         {
             cout << "Your Spy has successfully infiltrated " << n_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
