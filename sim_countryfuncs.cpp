@@ -48,7 +48,11 @@ int d4_Random_Roll() // For enemy country selection
     return output;
 }
 
-
+/**
+    Function for skirmishes
+    @param population the players population
+    @return a bool that identifies if the player won the skirmish
+*/
 bool win_war_Skirmish(int& population, int& land, int& military, int& money, int& city,
                       string& enemy, int& ucs, int& e_af, int& e_inf, int&ospy, int& check)
 {
@@ -161,10 +165,14 @@ bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&
     //Affect multipliers
     double win_pop = 0.90, win_land = 1.15, win_mil = 0.85;
     double loss_pop= 0.75, loss_land= 0.90, loss_mil= 0.70;
+    int total_milli = player_infmili + player_airmili;
+    int enemy_total_milli = neighbour_airmili + neighbour_infmili;
+    float player_chance = ((float(total_milli)/ float(total_milli+enemy_total_milli)) *100) ;
+    float enemy_chance = ((float(enemy_total_milli)/ float(total_milli+enemy_total_milli)) *100) ;
 
-
-
-    if(chance>50)   //Player has won the war
+    if (player_chance > enemy_chance)
+    {
+        if(chance < player_chance)   //Player has won the war
     {
         player_pop      =player_pop         *win_pop;
         player_land     =player_land        *win_land;
@@ -187,13 +195,42 @@ bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&
         return false;
         //Note AI's land is not included because it is inherently inconsequential
     }
+    }
+    else if (enemy_chance > player_chance)
+    {
+        if(chance > enemy_chance)   //Player has won the war
+    {
+        player_pop      =player_pop         *win_pop;
+        player_land     =player_land        *win_land;
+        player_infmili     =player_infmili  *win_mil;
+        player_airmili  =player_airmili     *win_mil;
+        neighbour_pop   =neighbour_pop      *loss_pop;
+        neighbour_infmili  =neighbour_infmili     *loss_mil;
+        neighbour_airmili = neighbour_airmili   *loss_mil;
+        return true;
+    }
+    else        //Player has lost the war
+    {
+        player_pop      =player_pop         *loss_pop;
+        player_land     =player_land        *loss_land;
+        player_infmili     =player_infmili  *loss_mil;
+        player_airmili  =player_airmili     *loss_mil;
+        neighbour_pop   =neighbour_pop      *win_pop;
+        neighbour_infmili  =neighbour_infmili     *win_pop;
+        neighbour_airmili = neighbour_airmili   *win_pop;
+        return false;
+        //Note AI's land is not included because it is inherently inconsequential
+    }
+    }
+
+
 }
 
 void player_Surrender(int& pop, int& land, int& inf_military, int& air_military, int& money)
 {
     //Results if the player surrenders after AI initiates skirmish
     double poploss = 0.95, landloss=0.80, milloss=0.80;
-    money = money =0.9; // Surrendering costs 10% of budget
+    money = money * 0.9; // Surrendering costs 10% of budget
     pop = pop*poploss;
     land = land*landloss;
     inf_military = inf_military*milloss;
