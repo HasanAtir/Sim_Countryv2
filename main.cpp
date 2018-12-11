@@ -21,7 +21,7 @@ int main()
     int population, air_military, infantry_military, military_factory, land, food,
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, check, check_war_room, total_mili;
-    int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 500; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
+    int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 800; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
     //winning GDP
     int const GDP_WIN = 650;
     struct Endscore //data type for final score;
