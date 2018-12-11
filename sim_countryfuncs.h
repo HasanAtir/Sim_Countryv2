@@ -24,13 +24,8 @@ void starvationFactor(int& population, int food_stores);
 int spy (int &ospy, int &cspy);
 void enemyspyattack(int &s_chance, std::string& e_s_country, int& cspy, int& af, int& inf );
 void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_name,
-                        std::string &w_name,   int &ospy, int &undercoverspy , int&ucs_north, int& ucs_south,
+                        std::string &w_name,   int &ospy , int&ucs_north, int& ucs_south,
                         int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af, int& s_inf, int& e_af, int& e_inf ,int& w_af, int& w_inf );
-bool happiness_loss (int &happy);
-void instructions (std::string& name);
-void protest (int& military, int& commerce, int& happiness, int& population, double& gdp);
 
-// protest( miltary, commerce, happiness, population)
-// Genocide, 50% pop loss, with 20% happiness increase
-// 25% miltary increase
-// commerce drop by 10% as long as happiness < 40 && > 20
+void instructions (std::string& name);
+void protest (int& military, int& commerce, int& happiness, int& population);

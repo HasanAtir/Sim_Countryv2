@@ -612,7 +612,7 @@ int main()
         else if (next_year_option==6)
         {
             year++;
-            player_attack_spy(north_name, south_name, east_name, west_name,  ospy, undercover_spy,ucs_north,ucs_south,ucs_east,ucs_west, north_air_military, north_infantry_military, south_air_military, south_infantry_military, east_air_military, east_infantry_military, west_air_military, west_infantry_military);
+            player_attack_spy(north_name, south_name, east_name, west_name,  ospy,ucs_north,ucs_south,ucs_east,ucs_west, north_air_military, north_infantry_military, south_air_military, south_infantry_military, east_air_military, east_infantry_military, west_air_military, west_infantry_military);
         }
          else if(next_year_option==7)
         {
@@ -1073,11 +1073,11 @@ int main()
 
         if( happiness_factor < 41 )
         {
-            protest(total_mili,commerce,happiness_factor,population, gdp);
+            protest(total_mili,commerce,happiness_factor,population);
         }
 
 
-        cout << gdp << endl;
+
         if (gdp > 499)
         {
 

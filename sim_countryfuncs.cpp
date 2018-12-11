@@ -50,7 +50,7 @@ int d4_Random_Roll() // For enemy country selection
 
 /**
     Function for skirmishes
-    @param population the players population
+    @param population, the players population. land, the player land.
     @return a bool that identifies if the player won the skirmish
 */
 bool win_war_Skirmish(int& population, int& land, int& military, int& money, int& city,
@@ -318,12 +318,31 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
 
     int turns=1;
 
+    cout << "Do you wish to read the instructions? \n";
+    cout << "1 for yes. 0 for no \n";
+    int input;
+    sentinelFunction(0,1,input);
+    if (input == 1)
+    {
+        cout << endl
+             << "*The War Room has five options \n"
+             << "*1 and 2, dictate if you want to attack with your Air Force or your Infantry \n"
+             << "*3 allows you to attack with both options together \n"
+             << "*Option 4 allows you to surrender, which will be accepted \n"
+             << "*Option 5 is the white flag option which essentially means a ceasefire. \n"
+             << " The war ends with whatever loss and gains you have made \n"
+             << "*Every battle can gain on a loss or gain of a city, be careful to not lose them all \n"
+             << "*Let the War begin \n" << endl;
+             system("pause");
+    }
 
     cout << "WELCOME TO THE WAR ROOM" << endl;
     cout << "AIRFORCE = JETS. ANTI PLANE GUNS EXIST EXCLUSIVE OF AIRFORCE AND CANNOT BE DESTROYED" << endl;
     cout << "INFANTRY = FOOTSOLDIERS. TANKS EXIST EXCLUSIVE OF INFANTRY AND CANNOT BE DESTROYED" << endl;
     cout << "KEEP A LOOK OUT FOR ENEMY INTEL. IT MAY JUST SWAY THE TIDE OF WAR. GOOD LUCK " << toUpper(name) << "!" << endl;
-    cout << "MAY THE BEST COUNTRY WIN" << endl;
+    cout << "MAY THE BEST COUNTRY WIN " << endl;
+
+
 
 
 
@@ -368,8 +387,8 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
             if( chance_intel <=5)
             {
                 cout << "You just received Enemy Intel!" << endl;
-                cout << "Enemy Airforce: " <<air_computer << endl;;
-                cout << "Enemy Infantry: "<<infantry_computer << endl;
+                cout << "Enemy Air Force: " <<air_computer << endl;;
+                cout << "Enemy Infantry : "<<infantry_computer << endl;
             }
             else
             {
@@ -379,7 +398,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         cout << "Do you choose to attack with infantry or air force or both? \n" ;
         cout << "1: Air force \n" ;
         cout << "2: Infantry \n" ;
-        cout<< "3: Both \n" ;
+        cout << "3: Both \n" ;
         cout << "4: Surrender \n";
         cout << "5: Send White Flag \n" << endl;
         int choice;
@@ -639,7 +658,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                     if( x ==1)
                     {
                         cout << "The enemy has accepted your surrender" << endl;
-                        cout << "You will now lose 50% of your land and cities but keep your airforce and infantry intact" << endl;
+                        cout << "You will now lose 50% of your land and cities but keep your Air Force and infantry intact" << endl;
                         land = land * 0.5;
                         city = city * 0.5;
                         cout << "You now have: " << land << " land" << endl;
@@ -675,7 +694,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                     {
 
                         cout << "The Enemy has raised a white flag" << endl;
-                        cout << "If you accept you will receive a 25% increment in land and 10% increase in city" << endl;
+                        cout << "If you accept you will receive a 25% increment in land and gain 2 cities" << endl;
                         int decision;
                         cout << "Press 1 to accept, 0 to deny" << endl;
                         sentinelFunction(0,1,decision);
@@ -684,7 +703,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
                             cout << "You have accepted the white flag" << endl;
                             land = land * 1.25;
                             cout << "You now have: " << land << " land" << endl;
-                            city = city *1.1;
+                            city = city + 2;
                             cout << "New City Count: " << city << endl;
                             int year_passed = turns/10;
                             year = year + year_passed;
@@ -714,7 +733,6 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         int af_pop_lost = afplayer *0.2;
         int inf_pop_lost = ifplayer *0.25;
         money = money * 0.9;
-        city = city *1.2;
         cout << "YOU WON THE WAR!" << endl;
         cout << "Since you won, you gain resources as reparations." << endl;;
         cout << "Total land is now      : " << land << " acres" << endl;
@@ -738,7 +756,6 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         int af_pop_lost = afplayer *0.7; // No. of people lost from AF
         int inf_pop_lost = ifplayer *0.75; // No. of people lost from inf
         money = money * 0.4;
-        city = city *0.4;
         cout << "YOU LOST THE WAR!" << endl;
         cout << "Since you lost, you lose resources as reparations." << endl;;
         cout << "Total land is now      : " << land << " acres" << endl;
@@ -881,7 +898,7 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 }
 
 void player_attack_spy(string &n_name,string &s_name,  string &e_name,
-                        string &w_name,   int &ospy, int &undercoverspy , int&ucs_north, int& ucs_south,
+                        string &w_name,   int &ospy,  int&ucs_north, int& ucs_south,
                         int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af,
                         int& s_inf, int& e_af, int& e_inf ,int& w_af, int& w_inf )
 
@@ -913,7 +930,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             n_af= n_af*0.95;
             n_inf = n_inf*0.95;
-            undercoverspy++;
+
             ospy--;
             ucs_north++;
 
@@ -941,7 +958,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             s_af= s_af*0.95;
             s_inf = s_inf*0.95;
-            undercoverspy++;
+
             ospy--;
             ucs_south++;
         }
@@ -967,7 +984,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             w_af= w_af*0.95;
             w_inf = w_inf*0.95;
-            undercoverspy ++;
+
             ospy--;
             ucs_west++;
         }
@@ -993,7 +1010,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
             cout << "Your Spy has also successfully poisoned between " << lower_inf << " and " << upper_inf<< " soldiers" << endl;
             e_af= e_af*0.95;
             e_inf = e_inf*0.95;
-            undercoverspy++;
+
             ospy--;
             ucs_east++;
         }
@@ -1005,20 +1022,11 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
 
     }
 }
-bool happiness_loss(int &happy)
-{
-    if (happy > 40 )
-    {
-        return false;
-    }
-    else
-        return true;
 
-}
 
 void instructions(string& name)
 {
-    cout << "*Hello " << name<< " the objective of this game is to get your GDP to x per Capita." << endl << endl;
+    cout << "*Hello " << name<< " the objective of this game is to get your GDP to 500 per Capita." << endl << endl;
     Sleep(250);
     cout<< "*You are landlocked by 4 other countries who can attack you at anytime with spies or their armies." << endl << endl;
     Sleep(250);
@@ -1044,7 +1052,7 @@ void instructions(string& name)
 
 }
 
-void protest (int& military, int& commerce, int& happiness, int& population, double& gdp)
+void protest (int& military, int& commerce, int& happiness, int& population)
 {
     cout << "Your people are revolting! Their happiness is dwindling, they have engaged in country wide protests! \n";
     cout << "Your Economy is leaking money and automatic emergency measures have been put in place to control the protests! \n";
@@ -1097,9 +1105,9 @@ void protest (int& military, int& commerce, int& happiness, int& population, dou
             happiness = happiness + 40;
             cout << "It is done.\n";
             Sleep(180);
-            cout << "Your new population count is  : " << population << endl;
+            cout << "Your new Population count is  : " << population << endl;
             Sleep(180);
-            cout << "Your new military count is    : " << military << endl;
+            cout << "Your new Military might is    : " << military << endl;
             Sleep(180);
             cout << "Happiness levels are not full quite yet Supreme Leader \n" ;
             Sleep(180);
@@ -1114,65 +1122,5 @@ void protest (int& military, int& commerce, int& happiness, int& population, dou
             system("pause");
         }}
 
-      /*  else if (gdp < 50)
-        {
-            cout << endl << endl;
-            cout << "*Supreme Leader, times are dire. Your council is advising you to commit genocide against the people \n";
-            cout << "*If you choose to commit genocide you will lose 50% of your population, silencing protests \n";
-            cout << "*Yet, this genocide will also result in a loss of 60% of your military \n";
-            cout << "*A preventative measure your COAS assures you will ensure no military revolt \n";
-            cout << "*The remaining population will be happy for only your loyal supporters will be left alive \n";
-            cout << "*Do you choose to commit genocide?\n";
-            int choice;
-            cout << "Press 1 to engage in genocide, 0 to continue as you are \n";
-            sentinelFunction(0,1,choice);
-            if (choice == 1)
-            {
-                cout << "\"History is rarely made by reasonable men\" \n";
-
-                cout << "   _.-^^---....,,--                \n";
-                Sleep(180);
-                cout << " _--                  --_          \n";
-                Sleep(180);
-                cout << "<                        >)        \n";
-                Sleep(180);
-                cout << "|                         |        \n";
-                Sleep(180);
-                cout << "\\._                   _.//          \n";
-                Sleep(180);
-                cout << "    ```--. . , ; .--'''            \n";
-                Sleep(180);
-                cout << "         | |   |                   \n";
-                Sleep(180);
-                cout << "      .-=||  | |=-.                \n";
-                Sleep(180);
-                cout << "       `-=#$%&%$#=-'               \n";
-                Sleep(180);
-                cout << "         | ;  :|                   \n";
-                Sleep(180);
-                cout << "_____.,-#%&$@%#&#~,._____          \n";
-                Sleep(180);
-                cout << endl << endl;
-                population = population *0.5;
-                military = military *0.4;
-                cout << "It is done.\n";
-                Sleep(180);
-                cout << "Your new population count is  : " << population << endl;
-                Sleep(180);
-                cout << "Your new military count is    : " << military << endl;
-                Sleep(180);
-                cout << "GDP levels have not been restored quite yet Supreme Leader \n" ;
-                Sleep(180);
-                cout << "GDP level: " << gdp << endl;
-
-                system("pause");
-
-            }
-            else
-            {
-                cout << "Very well Supreme Leader. As you wish \n";
-                system("pause");
-            }
-        }*/
 
 }
