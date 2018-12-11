@@ -1083,7 +1083,7 @@ int main()
 
 
 
-    cumulative_score = (gdp*population)/(1921-year);
+    cumulative_score = (gdp*population)/(year-1921);
     Endscore score;
     score.name = player_name;
     score.score = cumulative_score;
