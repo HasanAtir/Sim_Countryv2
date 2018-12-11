@@ -185,7 +185,7 @@ int main()
     cout<<"West : "<<west_name<<endl<<endl;
 
 
-    instructions(player_name);
+    instructions(player_name, GDP_WIN);
     system("pause");
 
 
@@ -399,9 +399,17 @@ int main()
         }
          else if(next_year_option==6)
         {
-            game_over = true;
-            lost_game_quit = true;
-            continue;
+            cout << "Are you sure you want to quit?\n";
+            cout << "Press 1 to continue. 0 to quit\n";
+            int choice;
+            sentinelFunction(0,1,choice);
+            if (choice == 0)
+            {
+                game_over = true;
+                lost_game_quit = true;
+                continue;
+            }
+
 
         }
         else if(next_year_option == 7)
@@ -604,9 +612,16 @@ int main()
         }
          else if(next_year_option==7)
         {
-            game_over = true;
-            lost_game_quit = true;
-            continue;
+            cout << "Are you sure you want to quit?\n";
+            cout << "Press 1 to continue. 0 to quit\n";
+            int choice;
+            sentinelFunction(0,1,choice);
+            if (choice == 0)
+            {
+                game_over = true;
+                lost_game_quit = true;
+                continue;
+            }
         }
         else if(next_year_option == 8)
         {

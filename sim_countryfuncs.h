@@ -27,5 +27,5 @@ void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_
                         std::string &w_name,   int &ospy , int&ucs_north, int& ucs_south,
                         int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af, int& s_inf, int& e_af, int& e_inf ,int& w_af, int& w_inf );
 
-void instructions (std::string& name);
+void instructions (std::string& name, int gdp);
 void protest (int& military, long& commerce, int& happiness, int& population);
