@@ -7,17 +7,17 @@
 
 bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&player_airmili, int& neighbour_pop,
                      int& neighbour_infmili, int& neighbour_airmili);
-bool win_war_Skirmish(int& population, int& land, int& military, int& money,
+bool win_war_Skirmish(int& population, int& land, int& military, long& money,
                        int& city, int& ucs, int& e_af, int& e_inf, int& ospy, int& check); //stub. Must be replaced!!!
 int d100_Random_Roll();
 int d50_Random_Roll();
 int d10_Random_Roll();
 int d4_Random_Roll();
-void player_Surrender(int& pop, int& land, int& inf_military, int& air_military, int& money);
+void player_Surrender(int& pop, int& land, int& inf_military, int& air_military, long& money);
 void neighbour_Name_Allocation(std::string& nname, std::string& sname, std::string& wname, std::string& ename);
 void name_Index_Allocate(int& a, int& b, int& c, int& d);
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
-               int& infantry_computer, std::string& name, int &year, int& money, int& city, int& m_factory, int& check);
+               int& infantry_computer, std::string& name, int &year, long& money, int& city, int& m_factory, int& check);
 std::string toUpper (std::string &str);
 void sentinelFunction(int from, int to, int& choice);
 void starvationFactor(int& population, int food_stores);
@@ -28,4 +28,4 @@ void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_
                         int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af, int& s_inf, int& e_af, int& e_inf ,int& w_af, int& w_inf );
 
 void instructions (std::string& name);
-void protest (int& military, int& commerce, int& happiness, int& population);
+void protest (int& military, long& commerce, int& happiness, int& population);
