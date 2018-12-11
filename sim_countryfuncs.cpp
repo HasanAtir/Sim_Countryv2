@@ -95,10 +95,10 @@ bool win_war_Skirmish(int& population, int& land, int& military, long& money, in
     int choice;
     int lower_af, lower_inf, upper_af, upper_inf;
     float win_player, win_enemy;
-    lower_af= 0.05* e_af;
-    upper_af = 0.1*e_af;
-    lower_inf = 0.05* e_inf;
-    upper_inf = 0.1*e_inf;
+    lower_af= 0.9* e_af;
+    upper_af = 1.1*e_af;
+    lower_inf = 0.9* e_inf;
+    upper_inf = 1.1*e_inf;
     win_player = (((float(military))/(float(military+e_inf)))*100);
     win_enemy = (((float(e_inf))/(float(military+e_inf)))*100);
 
@@ -172,7 +172,8 @@ bool win_war_Skirmish(int& population, int& land, int& military, long& money, in
     }
     else
         {
-            check++;;
+            check= check++;;
+            return false;
 
         }
 
@@ -1187,9 +1188,8 @@ void protest (int& military, long& commerce, int& happiness, int& population)
 {
     cout << "Your people are revolting! Their happiness is dwindling, they have engaged in country wide protests! \n";
     cout << "Your Economy is leaking money and automatic emergency measures have been put in place to control the protests! \n";
-    int const MILL_INC = 1.25, COMM_DEC = 0.7;
-    military = military*MILL_INC;
-    commerce = commerce *COMM_DEC;
+    military = military*1.25;
+    commerce = commerce *0.7;
     cout << "Your Military count is now: " << military << endl;
     cout << "Your Commerce is now: " << commerce << endl;
     system("pause");

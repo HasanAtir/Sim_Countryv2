@@ -170,12 +170,14 @@ int main()
     cout << "|     @@@ @@, @@ @@@ %@,    @@      ,@@  ,@@ @@%  @@  @@ @@@@   @@    @@ @@     @@    |\n";
     Sleep(150);
     cout << "| @@  #@@ @@, @@  @@ %@,    @@   @@ ,@@  %@@ @@%  @@  @@  @@@   @@    @@  @@    @@    |\n";
-    Sleep(100);
+    Sleep(125);
     cout << "| @@@@@@  @@, @@     %@,     @@@@@   @@@@@@   @@@@@   @@   @@   @@    @@  @@@   @@    |\n";
-    Sleep(50);
+    Sleep(100);
     cout << "|                                                                                     |\n";
+    Sleep(75);
     cout << "=======================================================================================\n\n\n";
-    cout << "Welcome to Sim Country player. Please enter your name: ";
+    Sleep(100);
+    cout << "Welcome to Sim Country Player. \n" << "Please enter your name: ";
     getline(cin, player_name);
     //Prints the name of the opponents;
     cout<<"Opponent Countries: \n";
@@ -309,7 +311,7 @@ int main()
                 else
                     {happiness_factor;}
             }
-            else
+            else if (!war_win)
             {
                 if(check == 0)
                 {  happiness_factor = happiness_factor -10;}
