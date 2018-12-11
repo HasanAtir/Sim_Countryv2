@@ -21,6 +21,8 @@ int main()
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, check, check_war_room, total_mili;
     int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 1000; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
+    //winning GDP
+    int const GDP_WIN = 1500;
     struct Endscore //data type for final score;
     {
         string name;
@@ -230,6 +232,11 @@ int main()
 
         //growth
         pop_grow = 1+ city*((double)food/population)/100;
+        //Prevents ludicrous population growth from happening
+        if(pop_grow>1.4)
+        {
+            pop_grow = 1.400;
+        }
         cout<<pop_grow<<endl;
         food_grow = land*100;
         mili_grow = military_factory*100;
@@ -393,6 +400,7 @@ int main()
         {
             game_over = true;
             lost_game_quit = true;
+            continue;
 
         }
         else if(next_year_option == 7)
@@ -596,6 +604,8 @@ int main()
          else if(next_year_option==7)
         {
             game_over = true;
+            lost_game_quit = true;
+            continue;
         }
         else if(next_year_option == 8)
         {
@@ -1057,7 +1067,7 @@ int main()
 
 
 
-        if (gdp > 499)
+        if (gdp > GDP_WIN)
         {
 
             game_over = true;
