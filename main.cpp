@@ -17,7 +17,8 @@ int main()
 
     //initial conditions;
     int cumulative_score=0;//Final score to when winning the game
-    int population, air_military, infantry_military, commerce, military_factory, land, food,
+    long commerce;
+    int population, air_military, infantry_military, military_factory, land, food,
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, check, check_war_room, total_mili;
     int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 1000; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
