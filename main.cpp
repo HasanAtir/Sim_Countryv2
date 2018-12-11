@@ -68,7 +68,7 @@ int main()
     happiness_factor = 100; // Happiness Level
     ospy = 0; // Offensive Spy
     cspy = 0; // Counter Spy
-    undercover_spy =0;
+
     //undercover spies in different countries
     ucs_north = 0;
     ucs_south = 0;
@@ -198,8 +198,8 @@ int main()
     cout<<"Opponent Countries: \n";
     cout<<"North: "<<north_name<<endl;
     cout<<"South: "<<south_name<<endl;
-    cout<<"East: "<<east_name<<endl;
-    cout<<"West: "<<west_name<<endl<<endl;
+    cout<<"East : "<<east_name<<endl;
+    cout<<"West : "<<west_name<<endl<<endl;
 
 
     instructions(player_name);
@@ -219,7 +219,8 @@ int main()
 
         //growth factors:
         gdp = (commerce)/population;
-
+        //Undercover spy count
+        undercover_spy = ucs_east + ucs_north +ucs_south + ucs_west;
 
         cout << player_name << ", these are your current country stats" << endl;
 
@@ -239,7 +240,7 @@ int main()
         cout<<"Current GDP/Capita:                   $"<<gdp<<endl;
         cout<<"Current Available Spy Count:          " << ospy << endl;
         cout<<"Current Available Counter Spy Count:  " << cspy << endl;
-        cout<<"Spies who are undercover:              " << undercover_spy << endl;
+        cout<<"Spies who are undercover:             " << undercover_spy << endl;
         cout<<"Total number of wars:                 "<<number_of_wars<<endl;
         cout<<"Total wars won:                       "<<number_of_wars_won<<endl;
         cout<<"Happiness Level of Population:        "<< happiness_factor<<"%"<<endl;
@@ -419,12 +420,12 @@ int main()
         {
             int testoptions;
             cout<<"TESTING ONLY!"<<endl;
-            cout<<"1)Happiness\n"
-                    "2) population\n"
-                    "3) military facotries\n"
-                    "4) cities\n"
-                    "5)commerce\n"
-                    "6) win game\n";
+            cout<<"1) Happiness\n"
+                    "2) Population\n"
+                    "3) Military Factories\n"
+                    "4) Cities\n"
+                    "5) Commerce\n"
+                    "6) Win Game\n";
             cin>>testoptions;
             if(testoptions == 1)
             {
@@ -621,12 +622,12 @@ int main()
         {
             int testoptions = 0;
             cout<<"TESTING ONLY!"<<endl;
-            cout<<"1)Happiness\n"
-                    "2) population\n"
-                    "3) military facotries\n"
-                    "4) cities\n"
-                    "5)commerce\n"
-                    "6) win game\n";
+            cout<<"1) Happiness\n"
+                    "2) Population\n"
+                    "3) Military Factories\n"
+                    "4) Cities\n"
+                    "5) Commerce\n"
+                    "6) Win Game\n";
             cin>>testoptions;
             if(testoptions == 1)
             {
@@ -745,7 +746,12 @@ int main()
         {   bool player_defends = false;
             cout<<"\n"<<north_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
-            cin>>player_defends;
+            int choice;
+            sentinelFunction(0,1,choice);
+            if (choice == 1)
+            {
+                player_defends= true;
+            }
             number_of_wars++;
             if(player_defends)
             {
@@ -785,7 +791,12 @@ int main()
         {   bool player_defends = false;
             cout<<"\n"<<west_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
-            cin>>player_defends;
+            int choice;
+            sentinelFunction(0,1,choice);
+            if (choice == 1)
+            {
+                player_defends= true;
+            }
             number_of_wars++;
             if(player_defends)
             {
@@ -825,7 +836,12 @@ int main()
         {   bool player_defends = false;
             cout<<"\n"<<south_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
-            cin>>player_defends;
+            int choice;
+            sentinelFunction(0,1,choice);
+            if (choice == 1)
+            {
+                player_defends= true;
+            }
             number_of_wars++;
             if(player_defends)
             {
@@ -865,7 +881,12 @@ int main()
         {   bool player_defends = false;
             cout<<"\n"<<east_name<<" has declared war on you!\n";
             cout<<"Press 1 to defend, or 0 to concede:\n";
-            cin>>player_defends;
+            int choice;
+            sentinelFunction(0,1,choice);
+            if (choice == 1)
+            {
+                player_defends= true;
+            }
             number_of_wars++;
             if(player_defends)
             {
@@ -1035,7 +1056,7 @@ int main()
             }
 
 
-        commerce = commerce + (2000*city) -(500*military_factory); // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
+        commerce = commerce + (8000*city) -(250*military_factory); // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
 
         if (city < 1)
             {
@@ -1043,25 +1064,23 @@ int main()
             lost_game_city = true;
             continue;
             }
+        if (gdp < 10)
+        {
+            cout << endl << "YOUR GDP IS RUNNING LOW. THE PEOPLE ARE GETTING ANGRY! \n";
+            happiness_factor = happiness_factor -20;
+            system("pause");
+        }
 
         if( happiness_factor < 41 )
         {
             protest(total_mili,commerce,happiness_factor,population, gdp);
         }
 
-        if (gdp < 30)
-        {
-            protest(total_mili,commerce,happiness_factor,population, gdp);
-        }
 
-        if (gdp < 10)
-        {
-            lost_game_gdp = true;
-            game_over=true;
-            continue;
-        }
+        cout << gdp << endl;
         if (gdp > 499)
         {
+
             game_over = true;
             game_won_gdp = true;
             continue;
@@ -1095,7 +1114,7 @@ int main()
     }
     else if(game_over && lost_game_overthrown)
     {
-        cout<<"YOU'VE BEEN OVERTHROWN BECAUSE YOU'RE PEOPLE WERE TOO UNHAPPY"<<endl;
+        cout<<"YOU'VE BEEN OVERTHROWN BECAUSE YOUR PEOPLE WERE TOO UNHAPPY"<<endl;
     }
     else if(game_over && lost_game_gdp)
     {
