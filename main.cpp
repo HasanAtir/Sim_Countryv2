@@ -10,32 +10,6 @@
 //Workdate/time 6:30 pm, 19-Nov-2018
 
 using namespace std;
-/*Options that should be available:
- *
- * 1) Go to war
- * 1a)with who?
- *
- * 2) Build military factory
- *
- * 3) Refocus military
- *
- * 4) random invention (Time span = 10years)
- *
- *  Starting work on neigbhours
- *
- *
- *
- * */
-/**To do list:
- * 1) Fix random name generator array
- * 2) Add description of the game(low prior)
- * 3) Implement war room
- *
- * */
-
-//Function prototypes. Called now to prevent 'not declared' errors.
-
-
 
 int main()
 {
@@ -46,7 +20,7 @@ int main()
     int population, air_military, infantry_military, commerce, military_factory, land, food,
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, check, check_war_room, total_mili;
-    int const FOOD_MAX = 100000000, city_comm_gain = 10000, factory_cost = 200, land_comm_gain = 1000; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
+    int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 1000; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
     struct Endscore //data type for final score;
     {
         string name;
@@ -948,7 +922,7 @@ int main()
             cout<<"It seems "<<west_name<<" may have invested in their military, perhaps we should too?\n";
             west_military_factory= west_military_factory+1;
         }
-//Theres a 2% chance that a nation will declare all out war on the player
+        //Theres a 2% chance that a nation will declare all out war on the player
         if(north_random_options==25)
         {
             number_of_wars++;
@@ -1061,7 +1035,7 @@ int main()
             }
 
         //Added land revenue from commerce
-        commerce = commerce + (city_comm_gain*city) -(factory_cost*military_factory) + (land * land_comm_gain) ; // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
+        commerce = commerce + (CITY_COMMERCE_GAIN*city) -(FACTORY_UPKEEP*military_factory) + (land * LAND_COMMERCE_GAIN) ; // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
 
         if (city < 1)
             {
