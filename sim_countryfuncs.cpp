@@ -72,15 +72,15 @@ int d4_Random_Roll() // For enemy country selection
     Function for skirmishes
     @param population the players population.
     @param land the player's land
-    @param military the player's military strenght
+    @param military the player's military strength
     @param money the player's commerce
     @param city the player's city count
     @param enemy the enemy's name
     @param ucs the spies that are undercover in that nation
-    @param e_af enemy's airforce
+    @param e_af enemy's air force
     @param e_inf enemy's infantry
     @param ospy player's available offensive spies
-    @param check
+    @param check a counter to ensure ceasefire option is enacted properly in main
     @return a bool that identifies if the player won the skirmish
 */
 bool win_war_Skirmish(int& population, int& land, int& military, long& money, int& city,
@@ -361,7 +361,7 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d)
     @param money the player's commerce
     @param city the player's city count
     @param m_factory the player's military factories
-    @param check
+    @param check to ensure that incase of cease
     @return a bool indicating if the player won the war
 */
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
@@ -950,7 +950,7 @@ int spy (int &ospy, int& cspy)
 
 /**
     Function that handles enemy spy attacks
-    @param s_chance //needed
+    @param s_chance chance of enemy spy attacking
     @param e_s_country name of attacking country
     @param cspy player's counter spies
     @param af player's airforce
@@ -1175,12 +1175,21 @@ void instructions(string& name, int gdp)
 
 }
 
+/**
+    Function that passes values which indicate reductions in commerce and increases military if people are unhappy, also allows the initiation of Genocide
+    @param military the player's military
+    @param commerce the player's commerce
+    @param happiness player's populations happiness
+    @param population player's population
+*/
+
 void protest (int& military, long& commerce, int& happiness, int& population)
 {
     cout << "Your people are revolting! Their happiness is dwindling, they have engaged in country wide protests! \n";
     cout << "Your Economy is leaking money and automatic emergency measures have been put in place to control the protests! \n";
-    military = military*1.25;
-    commerce = commerce *0.7;
+    int const MILL_INC = 1.25, COMM_DEC = 0.7;
+    military = military*MILL_INC;
+    commerce = commerce *COMM_DEC;
     cout << "Your Military count is now: " << military << endl;
     cout << "Your Commerce is now: " << commerce << endl;
     system("pause");
