@@ -858,7 +858,7 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
     int input;
     sentinelFunction(1,4, input);
     int p_s_chance = d100_Random_Roll(); // Player spy odds
-    cout << p_s_chance << endl;
+
     int e_s_chance = d100_Random_Roll(); // Enemy spy odds
 
     if (input == 1)
