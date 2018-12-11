@@ -122,7 +122,7 @@ int main()
     //growth
     double north_population_growth = 1.05;
     double north_commerce_growth = 1.15;
-    double north_military_growth = military_factory*25;
+    double north_military_growth = military_factory*95;
 
     //Other neighbours
     int south_id=2;
@@ -134,9 +134,9 @@ int main()
     int south_military_factory=1;
     int south_land=1543;
     //growth
-    double south_population_growth = 1.07;
-    double south_commerce_growth = 1.20;
-    double south_military_growth = military_factory*25;
+    double south_population_growth = 1.13;
+    double south_commerce_growth = 1.22;
+    double south_military_growth = military_factory*95;
 
     int east_id =3;
     int east_population=100000;
@@ -147,9 +147,9 @@ int main()
     int east_military_factory=1;
     int east_land=1543;
     //growth
-    double east_population_growth = 1.07;
-    double east_commerce_growth = 1.20;
-    double east_military_growth = military_factory*25;
+    double east_population_growth = 1.17;
+    double east_commerce_growth = 1.07;
+    double east_military_growth = military_factory*95;
 
     int west_id =4;
     int west_population=100000;
@@ -160,9 +160,9 @@ int main()
     int west_military_factory=1;
     int west_land=1543;
     //growth
-    double west_population_growth = 1.07;
-    double west_commerce_growth = 1.20;
-    double west_military_growth = military_factory*25;
+    double west_population_growth = 1.09;
+    double west_commerce_growth = 1.10;
+    double west_military_growth = military_factory*95;
 
     //win conditions:
     bool game_won_gdp = false;
@@ -257,7 +257,6 @@ int main()
         //growth
         pop_grow = 1+ city*((double)food/population)/100;
         cout<<pop_grow<<endl;
-
         food_grow = land*100;
         mili_grow = military_factory*100;
 
@@ -1061,8 +1060,8 @@ int main()
                 continue;
             }
 
-
-        commerce = commerce + (8000*city) -(250*military_factory); // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
+        //Added land revenue from commerce
+        commerce = commerce + (10000*city) -(200*military_factory) + land; // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
 
         if (city < 1)
             {
