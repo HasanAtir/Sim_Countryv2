@@ -46,7 +46,7 @@ int main()
     int population, air_military, infantry_military, commerce, military_factory, land, food,
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, check, check_war_room, total_mili;
-    int const FOOD_MAX = 100000000; //Max food to prevent stack overflow
+    int const FOOD_MAX = 100000000, city_comm_gain = 10000, factory_cost = 200, land_comm_gain = 1000; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
     struct Endscore //data type for final score;
     {
         string name;
@@ -1061,7 +1061,7 @@ int main()
             }
 
         //Added land revenue from commerce
-        commerce = commerce + (10000*city) -(200*military_factory) + land; // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
+        commerce = commerce + (city_comm_gain*city) -(factory_cost*military_factory) + (land * land_comm_gain) ; // Every city will add 2000 units of commerce and military factories reduce commerce due to maintenance
 
         if (city < 1)
             {
