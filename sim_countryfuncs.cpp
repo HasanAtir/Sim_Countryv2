@@ -11,12 +11,20 @@
 //using namespace N;
 using namespace std;
 
-
+/**
+    Function to be called when food is 0
+    @param population the player's current population
+    @param food_stores the player's current food stores
+*/
 void starvationFactor(int& population, int food_stores)
 {
     population = population*0.50;
 }
 
+/**
+    Function to generate a random value between 0 and 99
+    @return a random value between 0 and 99
+*/
 int d100_Random_Roll()
 {
 
@@ -25,6 +33,10 @@ int d100_Random_Roll()
     return output;
 }
 
+/**
+    Function to generate a random value between 0 and 49
+    @return a random value between 0 and 49
+*/
 int d50_Random_Roll()
 {
     int random = rand();
@@ -32,6 +44,10 @@ int d50_Random_Roll()
     return output;
 }
 
+/**
+    Function to generate a random value between 0 and 9
+    @return a random value between 0 and 9
+*/
 int d10_Random_Roll()
 {
 
@@ -40,6 +56,10 @@ int d10_Random_Roll()
     return output;
 }
 
+/**
+    Function to generate a random value between 0 and 3
+    @return a random value between 0 and 3
+*/
 int d4_Random_Roll() // For enemy country selection
 {
 
@@ -50,7 +70,17 @@ int d4_Random_Roll() // For enemy country selection
 
 /**
     Function for skirmishes
-    @param population, the players population. land, the player land.
+    @param population the players population.
+    @param land the player's land
+    @param military the player's military strenght
+    @param money the player's commerce
+    @param city the player's city count
+    @param enemy the enemy's name
+    @param ucs the spies that are undercover in that nation
+    @param e_af enemy's airforce
+    @param e_inf enemy's infantry
+    @param ospy player's available offensive spies
+    @param check
     @return a bool that identifies if the player won the skirmish
 */
 bool win_war_Skirmish(int& population, int& land, int& military, long& money, int& city,
@@ -155,9 +185,17 @@ bool win_war_Skirmish(int& population, int& land, int& military, long& money, in
 
 }
 
-/**Definite(?) version of the skirmish function which also takes into account the AI's stats
- * @@PARAM: player's population, military, and land; AI's population, and military
- * @Return: Boolean value indicating whether Player has won the war or not and edits parameters through reference*/
+/**
+    function that determines if player wins skirmish
+    @param player_pop
+    @param player_land
+    @param player_infmili
+    @param player_airmili
+    @param neighbour_pop
+    @param neighbour_infmili
+    @param neighbour_airmili
+    @return a bool value that indicates whether player won the war
+*/
 bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&player_airmili, int& neighbour_pop,
                      int& neighbour_infmili, int& neighbour_airmili)
 {
@@ -226,6 +264,14 @@ bool player_wins_war(int& player_pop, int& player_land, int& player_infmili,int&
 
 }
 
+/**
+    Function that passes values incase player surrenders
+    @param pop the player's population
+    @param land the player's land
+    @param inf_military the player's infantry
+    @param air_military the player's airforce
+    @param money the player's commerce
+*/
 void player_Surrender(int& pop, int& land, int& inf_military, int& air_military, long& money)
 {
     //Results if the player surrenders after AI initiates skirmish
@@ -237,6 +283,13 @@ void player_Surrender(int& pop, int& land, int& inf_military, int& air_military,
     air_military = air_military*milloss;
 }
 
+/**
+    Function that allocates names from text file to enemy nations
+    @param nname the northern opponent's name
+    @param sname the southern opponent's name
+    @param wname the western opponent's name
+    @param ename the eastern opponent's name
+*/
 void neighbour_Name_Allocation(string& nname, string& sname, string& wname, string& ename)
 {
     string line;
@@ -265,6 +318,13 @@ void neighbour_Name_Allocation(string& nname, string& sname, string& wname, stri
     ename = name_array[n4];
 }
 
+/**
+    Allocates an index by generating 4 different random numbers for the name allocater
+    @param a a random number
+    @param b a random number
+    @param c a random number
+    @param d a random number
+*/
 void name_Index_Allocate(int& a, int& b, int& c, int& d)
 {
     bool is_different = false;
@@ -288,6 +348,22 @@ void name_Index_Allocate(int& a, int& b, int& c, int& d)
 
 }
 
+/**
+    The war function that sends the player to a warroom
+    @param air_player the player's airforce
+    @param infantry_player the player's infantry
+    @param land the player's land
+    @param population the player's population
+    @param air_computer the computer's airforce
+    @param infantry_computer the computer's infantry
+    @param name the player's name
+    @param year the year the game is currently in
+    @param money the player's commerce
+    @param city the player's city count
+    @param m_factory the player's military factories
+    @param check
+    @return a bool indicating if the player won the war
+*/
 bool war_Room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
                int& infantry_computer, string &name, int &year, long& money, int& city, int& m_factory, int& check)
 {
@@ -774,7 +850,12 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
 
 }
 
-
+/**
+    A function that verifies that the input lies withing an acceptable range
+    @param from the lower bound of the range(inclusive)
+    @param to the upper bound of the range(inclusive)
+    @param choice the variable to pass the correct input to
+*/
 void sentinelFunction(int from, int to, int& choice)
 {
     string dummy;
@@ -799,6 +880,11 @@ void sentinelFunction(int from, int to, int& choice)
     }
 }
 
+/**
+    A function to capitalise the player's name
+    @param str a string of characters
+    @return a string of characters in capitalised letters
+*/
 string toUpper(string &str) // Needs to be implemented
 {
     int a;
@@ -822,6 +908,11 @@ string toUpper(string &str) // Needs to be implemented
     return d;
 }
 
+/**
+    Function that handles espionage
+    @param ospy current number of offensive spies
+    @param cspy current number of defensive spies
+*/
 int spy (int &ospy, int& cspy)
 {
     cout << "Do you want to train \n"
@@ -857,6 +948,14 @@ int spy (int &ospy, int& cspy)
 
 }
 
+/**
+    Function that handles enemy spy attacks
+    @param s_chance //needed
+    @param e_s_country name of attacking country
+    @param cspy player's counter spies
+    @param af player's airforce
+    @param inf player's infantry
+*/
 void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int& inf )
 {
     float const afloss = 0.05, infloss = 0.1;
@@ -897,6 +996,26 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 
 }
 
+/**
+    function that handles what happens when the player initites an espionage attack
+    @param n_name the northern opponent's name
+    @param s_name the southern opponent's name
+    @param e_name the eastern opponent's name
+    @param w_name the western opponent's name
+    @param ospy the offensive spies a player has
+    @param ucs_north undercover spies in north
+    @param ucs_south undercover spies in south
+    @param ucs_east undercover spies in east
+    @param ucs_west undercover spies in west
+    @param n_af northern opponent's airforce
+    @param n_inf northern opponent's infantry
+    @param s_af southern opponent's airforce
+    @param s_inf southern opponent's infantry
+    @param e_af eastern opponent's airforce
+    @param e_inf eastern opponent's infantry
+    @param w_af western opponent's airforce
+    @param w_inf western opponent's infantry
+*/
 void player_attack_spy(string &n_name,string &s_name,  string &e_name,
                         string &w_name,   int &ospy,  int&ucs_north, int& ucs_south,
                         int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af,
@@ -1023,7 +1142,11 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
     }
 }
 
-
+/**
+    Function that displays the instructions of the game
+    @param name the player's name
+    @param gdp the winning gdp of the game
+*/
 void instructions(string& name, int gdp)
 {
     cout << "*Hello " << name<< " the objective of this game is to get your GDP to " << gdp << " per Capita." << endl << endl;
