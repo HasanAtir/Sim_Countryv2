@@ -118,7 +118,7 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
                 land        =land       * loss_land;
                 military    =military   * loss_mil;
                 money = money * 0.85; // Commerce Loss
-                city = city--;;
+                city--;;;
                 cout << "You have lost the battle!" << endl;
                 return false;
             }
@@ -128,7 +128,7 @@ bool win_war_Skirmish(int& population, int& land, int& military, int& money, int
                 land        = land      * win_land;
                 military    = military  * win_mil;
                 money = money *0.95; // Commerce loss
-                city = city++;;
+                city++;;
                 cout << "You have won the battle!" << endl;
                 return true;
             }
@@ -304,17 +304,17 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
         if (city < 2)
         {
             cout << "Your city count is too low, if you continue, you risk losing your country altogether!" << endl;
-            cout << "Do you wish to surrender? You will retain ONE city and ONE Military Factory, and lose 80% of your land" << endl;
+            cout << "Do you wish to surrender? You will retain ONE city and ONE Military Factory, and lose 50% of your land" << endl;
             int x;
             cout << "Press 1 to quit, 0 to continue" << endl;
             sentinelFunction(0,1,x);
             if (x ==1)
             {
-                land = land * 0.2;
+                land = land * 0.5;
                 city =1;
                 m_factory =1;
-                cout << "Current Land: " << land << endl;
-                cout << "City: " << city << endl;
+                cout << "Current Land   : " << land << endl;
+                cout << "City           : " << city << endl;
                 cout << "Miltary Factory: " << m_factory << endl;
                 break;
             }
@@ -807,7 +807,7 @@ void enemyspyattack(int &s_chance, string& e_s_country, int& cspy, int& af, int&
 {
     float const afloss = 0.05, infloss = 0.1;
     int def_chance = d100_Random_Roll();
-    if (s_chance < 89) // 60% chance of spy attack
+    if (s_chance < 39) // 40% chance of spy attack
     {
         if (def_chance < 81 && cspy > 0 )
         {
@@ -858,11 +858,12 @@ void player_attack_spy(string &n_name,string &s_name,  string &e_name,
     int input;
     sentinelFunction(1,4, input);
     int p_s_chance = d100_Random_Roll(); // Player spy odds
+    cout << p_s_chance << endl;
     int e_s_chance = d100_Random_Roll(); // Enemy spy odds
 
     if (input == 1)
     {
-        if (p_s_chance > 60)
+        if (p_s_chance < 150)
         {
             cout << "Your Spy has successfully infiltrated " << n_name
             << " HQ! You will receive Intel on them before the next battle!" << endl;
@@ -1076,65 +1077,65 @@ void protest (int& military, int& commerce, int& happiness, int& population, dou
             system("pause");
         }}
 
-        if (gdp < 15)
+      /*  else if (gdp < 50)
         {
-             cout << endl << endl;
-        cout << "*Supreme Leader, times are dire. Your council is advising you to commit genocide against the people \n";
-        cout << "*If you choose to commit genocide you will lose 50% of your population, silencing protests \n";
-        cout << "*Yet, this genocide will also result in a loss of 60% of your military \n";
-        cout << "*A preventative measure your COAS assures you will ensure no military revolt \n";
-        cout << "*The remaining population will be happy for only your loyal supporters will be left alive \n";
-        cout << "*Do you choose to commit genocide?\n";
-        int choice;
-        cout << "Press 1 to engage in genocide, 0 to continue as you are \n";
-        sentinelFunction(0,1,choice);
-        if (choice == 1)
-        {
-            cout << "\"History is rarely made by reasonable men\" \n";
-
-            cout << "   _.-^^---....,,--                \n";
-            Sleep(180);
-            cout << " _--                  --_          \n";
-            Sleep(180);
-            cout << "<                        >)        \n";
-            Sleep(180);
-            cout << "|                         |        \n";
-            Sleep(180);
-            cout << "\\._                   _.//          \n";
-            Sleep(180);
-            cout << "    ```--. . , ; .--'''            \n";
-            Sleep(180);
-            cout << "         | |   |                   \n";
-            Sleep(180);
-            cout << "      .-=||  | |=-.                \n";
-            Sleep(180);
-            cout << "       `-=#$%&%$#=-'               \n";
-            Sleep(180);
-            cout << "         | ;  :|                   \n";
-            Sleep(180);
-            cout << "_____.,-#%&$@%#&#~,._____          \n";
-            Sleep(180);
             cout << endl << endl;
-            population = population *0.5;
-            military = military *0.4;
-            cout << "It is done.\n";
-            Sleep(180);
-            cout << "Your new population count is  : " << population << endl;
-            Sleep(180);
-            cout << "Your new military count is    : " << military << endl;
-            Sleep(180);
-            cout << "GDP levels have not been restored quite yet Supreme Leader \n" ;
-            Sleep(180);
-            cout << "GDP level: " << gdp << endl;
+            cout << "*Supreme Leader, times are dire. Your council is advising you to commit genocide against the people \n";
+            cout << "*If you choose to commit genocide you will lose 50% of your population, silencing protests \n";
+            cout << "*Yet, this genocide will also result in a loss of 60% of your military \n";
+            cout << "*A preventative measure your COAS assures you will ensure no military revolt \n";
+            cout << "*The remaining population will be happy for only your loyal supporters will be left alive \n";
+            cout << "*Do you choose to commit genocide?\n";
+            int choice;
+            cout << "Press 1 to engage in genocide, 0 to continue as you are \n";
+            sentinelFunction(0,1,choice);
+            if (choice == 1)
+            {
+                cout << "\"History is rarely made by reasonable men\" \n";
 
-            system("pause");
+                cout << "   _.-^^---....,,--                \n";
+                Sleep(180);
+                cout << " _--                  --_          \n";
+                Sleep(180);
+                cout << "<                        >)        \n";
+                Sleep(180);
+                cout << "|                         |        \n";
+                Sleep(180);
+                cout << "\\._                   _.//          \n";
+                Sleep(180);
+                cout << "    ```--. . , ; .--'''            \n";
+                Sleep(180);
+                cout << "         | |   |                   \n";
+                Sleep(180);
+                cout << "      .-=||  | |=-.                \n";
+                Sleep(180);
+                cout << "       `-=#$%&%$#=-'               \n";
+                Sleep(180);
+                cout << "         | ;  :|                   \n";
+                Sleep(180);
+                cout << "_____.,-#%&$@%#&#~,._____          \n";
+                Sleep(180);
+                cout << endl << endl;
+                population = population *0.5;
+                military = military *0.4;
+                cout << "It is done.\n";
+                Sleep(180);
+                cout << "Your new population count is  : " << population << endl;
+                Sleep(180);
+                cout << "Your new military count is    : " << military << endl;
+                Sleep(180);
+                cout << "GDP levels have not been restored quite yet Supreme Leader \n" ;
+                Sleep(180);
+                cout << "GDP level: " << gdp << endl;
 
-        }
-        else
-        {
-            cout << "Very well Supreme Leader. As you wish \n";
-            system("pause");
-        }
-        }
+                system("pause");
+
+            }
+            else
+            {
+                cout << "Very well Supreme Leader. As you wish \n";
+                system("pause");
+            }
+        }*/
 
 }

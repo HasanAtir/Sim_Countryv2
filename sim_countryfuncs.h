@@ -28,12 +28,6 @@ void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_
                         int& ucs_east, int& ucs_west, int& n_af, int& n_inf , int& s_af, int& s_inf, int& e_af, int& e_inf ,int& w_af, int& w_inf );
 bool happiness_loss (int &happy);
 void instructions (std::string& name);
-void cities(int &money);
-void country_war_room (int &air_player, int &infantry_player,  int &land, int& population, int& air_computer,
-               int& infantry_computer, std::string& name, int &year, int& n_af, int& n_inf, int& s_af, int& s_inf,
-               int& e_af, int& e_inf, int& w_af, int& w_inf,std::string &n_name,std::string &s_name,  std::string &e_name,
-                        std::string &w_name);
-
 void protest (int& military, int& commerce, int& happiness, int& population, double& gdp);
 
 // protest( miltary, commerce, happiness, population)
