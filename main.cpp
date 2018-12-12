@@ -34,6 +34,7 @@ int main()
     bool population_overflow_triggered_check = false;
     bool land_overflow_triggered_check = false;
     bool military_overflow_triggered_check = false;
+    bool cheated = false;
     int const LAND_MAX = 1210065408;
     int const MILI_MAX = 1210065408;
     //winning GDP
@@ -496,6 +497,7 @@ int main()
             {
             //Options used for development
                 int testoptions;
+                cheated = true;
                 cout<<"TESTING ONLY!"<<endl;
                 cout<<"1) Happiness\n"
                     "2) Population\n"
@@ -707,6 +709,7 @@ int main()
         else if(next_year_option == 8)
         {
             int testoptions = 0;
+            cheated = true;
             cout<<"TESTING ONLY!"<<endl;
             cout<<"1) Happiness\n"
                     "2) Population\n"
@@ -1221,12 +1224,22 @@ int main()
         cout<<"========="<<endl<<endl<<endl;
 
     }
-    else if(game_over && game_won_gdp)
+    else if(game_over && game_won_gdp && !cheated)
     {
         cout<<"Congratulations "<<player_name<<". You have done something truly remarkable and turned your nation into a super power\n";
         cout<<"YOU HAVE WON THE GAME!"<<endl;
         cout<<"===================================================="<<endl;
         cout<<"Your final score is = "<<cumulative_score<<endl;
+        cout<<"Your GDP was "<<gdp<<" at the end of the game!\n";
+        cout<<"===================================================="<<endl<<endl<<endl;
+    }
+    else if(game_over && game_won_gdp && cheated)
+    {
+        cout<<"Congratulations "<<player_name<<". You have done something truly remarkable and turned your nation into a super power\n";
+        cout<<"YOU HAVE WON THE GAME!"<<endl;
+        cout<<"Yes, you cheated, but atleast your people are happy!"<<endl;
+        cout<<"===================================================="<<endl;
+        cout<<"Your final score is = "<<cumulative_score/100000<<endl; // if you won through dev options, you'll suffer
         cout<<"Your GDP was "<<gdp<<" at the end of the game!\n";
         cout<<"===================================================="<<endl<<endl<<endl;
     }
