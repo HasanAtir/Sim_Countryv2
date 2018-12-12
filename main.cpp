@@ -1248,7 +1248,5 @@ int main()
         cout<<"Your GDP was "<<gdp<<" at the end of the game!\n";
         cout<<"===================================================="<<endl<<endl<<endl;
     }
-
-
-
+    return 0;
 }

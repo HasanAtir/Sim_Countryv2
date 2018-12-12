@@ -407,7 +407,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
              << "*3 allows you to attack with both options together \n"
              << "*Option 4 allows you to surrender, which will be accepted \n"
              << "*Option 5 is the white flag option which essentially means a ceasefire. \n"
-             << " The war ends with whatever loss and gains you have made \n"
+             << "*The war ends with whatever loss and gains you have made \n"
              << "*Every battle can gain on a loss or gain of a city, be careful to not lose them all \n"
              << "*Let the War begin \n" << endl;
              system("pause");
