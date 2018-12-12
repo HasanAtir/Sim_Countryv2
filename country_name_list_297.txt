@@ -44,8 +44,8 @@ Buenaventura
 Buranda
 Calbia
 Caledonia
-Carbombya, Socialist Democratic Federated Republic of
-Carjackistan
+Carbombya 
+Socialist Democratic Federated Republic of Carjackistan
 Carpania
 Carpathia
 Centopia
@@ -62,8 +62,8 @@ Datlof
 Dawsbergen
 Deltora
 Dinotopia
-Draka, The Domination of
-Drusselstein
+Draka 
+The Domination of Drusselstein
 Durkadurkastan
 Eastasia
 East Hun Chiu
@@ -87,7 +87,7 @@ Franchia
 Freedonia
 Genosha
 Genovia
-GÃ©rolstein
+Gérolstein
 Gilead
 Glovania
 Glubbdubdrib
@@ -108,7 +108,7 @@ Holy Alliance
 Holy Britannian Empire
 Horizon Islands
 Idris
-IllÃ©a
+Illéa
 Illyria
 Impor
 Islandia
@@ -157,7 +157,7 @@ Medici
 Mendorra
 Meropis
 Metrofulus
-MolvanÃ®a
+Molvanîa
 Moldavia
 Moldovakia
 Moronika
@@ -201,7 +201,7 @@ Parador
 Patusan
 Penguina
 Petoria
-Phaic TÄƒn
+Phaic T?n
 Poictesme
 Pokolistan
 Polrugaria
@@ -228,11 +228,11 @@ Sangala
 San Lorenzo
 San Salvador
 San Serriffe
-San SombrÃ¨ro
+San Sombrèro
 San Theodoros
 Santa Prisca
 Santo Marco
-SÃ£o Rico
+São Rico
 Sardovia
 Sarkhan
 Sauville
