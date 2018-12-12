@@ -1,3 +1,7 @@
+/*Sim Country is a country simulation and strategy game
+created by Hassan Atir (2019-02-0464) and 
+Taabish Naqvi () for the CS100 project
+*/
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -8,7 +12,6 @@
 #include <string>
 #include "Windows.h"
 #include "sim_countryfuncs.cpp"
-//Workdate/time 6:30 pm, 19-Nov-2018
 
 using namespace std;
 
