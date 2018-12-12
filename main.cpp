@@ -261,22 +261,22 @@ int main()
         //output
         cout<<"CURRENT YEAR:                         "<<year<<endl<<endl;
         //displays if an overflow error has been corrected. The checks ensure the condition runs once
-        if(commerce_overflow_triggered && !commerce_overflow_triggered_check)
+        if(commerce_overflow_triggered==1 && commerce_overflow_triggered_check==0)
         {
             cout<<"WARNING: Our banks can't hold anymore funds, "<<player_name<<endl<<endl;
             commerce_overflow_triggered_check = true;
         }
-        if(population_overflow_triggered && !population_overflow_triggered_check)
+        if(population_overflow_triggered==1 && !population_overflow_triggered_check==0)
         {
             cout<<"WARNING: Our administration cannot take care of more people, "<<player_name<<endl<<endl;
             population_overflow_triggered_check = true;
         }
-        if(land_overflow_triggered && !land_overflow_triggered_check)
+        if(land_overflow_triggered==1 && land_overflow_triggered_check==0)
         {
             cout<<"WARNING: Our administration cannot take care of more land, "<<player_name<<endl<<endl;
             land_overflow_triggered_check = true;
         }
-        if(military_overflow_triggered && !military_overflow_triggered_check)
+        if(military_overflow_triggered==1 && military_overflow_triggered_check==0)
         {
             cout<<"WARNING: Our administration cannot handle more military personnel, "<<player_name<<endl<<endl;
             military_overflow_triggered_check = true;
@@ -305,25 +305,30 @@ int main()
 
         //growth
         pop_grow = 1+ city*((double)food/population)/100;
+
         //Prevents ludicrous population growth from happening
         if(pop_grow>1.4)
         {
             pop_grow = 1.400;
         }
-
+        //food growth is proportional to land
         food_grow = land*100;
+
+        //Military factories contribute to the growth
         mili_grow = military_factory*100;
 
-
+        //Only grows food if there is space
         if(food_stores<FOOD_MAX)
         {
             food_stores = (food_stores - population*2) + (food_grow*city);// Food growth increases with city count CHANGED 4th DEC, muliplied by 2
         }
+
+        //Actual values changing
         population = population*pop_grow;
         air_military = air_military+mili_grow;
         infantry_military = infantry_military+(2*mili_grow);
 
-        cout<<"\nPopulation growth: "<<pop_grow<<endl;
+        cout<<"Population growth:                    "<<setw(11)<<pop_grow<<endl<<endl;
 
         if(food_stores<0)
         {
@@ -332,206 +337,208 @@ int main()
 
         }
 
-        //game time options
+        //Options if there is no offensive spies available
         if (ospy == 0)
-        {cout<<"1) Engage in a skirmish\n"
-              "2) Build military factory\n"
-              "3) Build a city\n"
-              "4) Go to all out war\n"
-              "5) Train a type of Spy \n"
-              "6) Quit simulation\n";
-        sentinelFunction(1, 7, next_year_option);
-
-                if(next_year_option==1)
         {
-            year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
-            int skirmish_choice;
-            cout<<"Who do you want to go to skirmish against?\n";
-            cout<<"1) "<<north_name<<endl;
-            cout<<"2) "<<south_name<<endl;
-            cout<<"3) "<<east_name<<endl;
-            cout<<"4) "<<west_name<<endl;
-            sentinelFunction(1,4,skirmish_choice);
-            number_of_wars++;
-            bool war_win = false;
-            if (skirmish_choice ==1)
+            cout<<  "1) Engage in a skirmish\n"
+                    "2) Build military factory\n"
+                    "3) Build a city\n"
+                    "4) Go to all out war\n"
+                    "5) Train a type of Spy \n"
+                    "6) Quit simulation\n";
+            sentinelFunction(1, 7, next_year_option);
+
+            if(next_year_option==1)
             {
-                war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, no_war_check);
-            }
-            else if (skirmish_choice ==2)
-            {
+                year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
+                int skirmish_choice;
+                cout<<"Who do you want to go to skirmish against?\n";
+                cout<<"1) "<<north_name<<endl;
+                cout<<"2) "<<south_name<<endl;
+                cout<<"3) "<<east_name<<endl;
+                cout<<"4) "<<west_name<<endl;
+                sentinelFunction(1,4,skirmish_choice);
+                number_of_wars++;
+                bool war_win = false;
+                if (skirmish_choice ==1)
+                {
+                    war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, north_name, ucs_north, north_air_military, north_infantry_military, ospy, no_war_check);
+                }
+                else if (skirmish_choice ==2)
+                {
                 war_win =win_war_Skirmish(population, land, infantry_military, commerce, city, south_name, ucs_south, south_air_military, south_infantry_military, ospy, no_war_check);
-            }
-            else if (skirmish_choice ==3)
-            {
-                war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, no_war_check);
-            }
-            else if (skirmish_choice ==4)
-            {
+                }
+                else if (skirmish_choice ==3)
+                {
+                    war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, east_name, ucs_east, east_air_military, east_infantry_military, ospy, no_war_check);
+                }
+                else if (skirmish_choice ==4)
+                {
                 war_win = win_war_Skirmish(population, land, infantry_military, commerce, city, west_name, ucs_west, west_air_military, west_infantry_military, ospy, no_war_check);
-            }
-            if(war_win)
-            {
-
+                }
+                if(war_win)
+                {
                 number_of_wars_won++;
-
                 // Happiness Effects
-                if (happiness_factor < 100)
-                    {happiness_factor = happiness_factor +10;}
+                    if (happiness_factor < 100)
+                    {
+                        happiness_factor = happiness_factor +10;
+                    }
+                    else
+                    {
+                        happiness_factor;
+                    }
+                }
                 else
-                    {happiness_factor;}
+                {
+                    if(no_war_check == 0)
+                    {
+                        happiness_factor = happiness_factor -10;
+                    }
+                    else
+                    {
+                        no_war_check--;
+                        number_of_wars--;
+                        year--;
+                    }
+                }
             }
-            else
+            else if(next_year_option==2)
             {
-                if(no_war_check == 0)
-                {  happiness_factor = happiness_factor -10;}
+                year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
+                building_factory = true;        //Boolean that starts construction of factory
+                commerce = commerce - 5000;
+                remaining_construction_time = 3;//Estimated time until factory finishes construction
+            }
+            else if (next_year_option ==3)
+            {
+                year++;
+                building_city = true;
+                commerce = commerce - 15000; // City building takes 15000 units of commerce
+                remaining_time_city_construction = 5;
+            }
+
+            else if (next_year_option==4)
+            {
+                int all_out_war_choice;
+                cout<<"Who do you want to go to war against?\n";
+                cout<<"1) "<<north_name<<endl;
+                cout<<"2) "<<south_name<<endl;
+                cout<<"3) "<<east_name<<endl;
+                cout<<"4) "<<west_name<<endl;
+
+                sentinelFunction(1,4,all_out_war_choice);
+
+                number_of_wars++;
+
+                bool war_win = false;
+
+                if(all_out_war_choice==1)
+                {
+                    war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
+                                    north_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
+                }
+                else if(all_out_war_choice==2)
+                {
+                    war_win = war_Room(air_military,infantry_military,land,population,south_air_military,
+                                    south_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
+                }
+                else if(all_out_war_choice==3)
+                {
+                    war_win = war_Room(air_military,infantry_military,land,population,east_air_military,
+                                    east_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
+                }
+                else if(all_out_war_choice==4)
+                {
+                    war_win = war_Room(air_military,infantry_military,land,population,west_air_military,
+                                        west_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
+                }
+
+                if(war_win)
+                {
+
+                    if (check_war_room == 0)
+                    {number_of_wars_won++;
+                    // Happiness Effects
+                    if (happiness_factor < 100)
+                        {happiness_factor = happiness_factor +10;}
+                    else
+                        {happiness_factor;}}
+                    else{check_war_room--;}
+                }
                 else
                 {
 
-                    no_war_check--;
-
-                    number_of_wars--;
-                    year--;
+                    happiness_factor = happiness_factor -10;
+                }
+            }
+            else if(next_year_option==5)
+            {
+                year++;
+                spy(ospy,cspy);
+            }
+            else if(next_year_option==6)
+            {
+                cout << "Are you sure you want to quit?\n";
+                cout << "Press 1 to continue. 0 to quit\n";
+                int choice;
+                sentinelFunction(0,1,choice);
+                if (choice == 0)
+                {
+                    game_over = true;
+                    lost_game_quit = true;
+                    continue;
                 }
 
 
             }
-        }
-        else if(next_year_option==2)
-        {
-            year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
-            building_factory = true;        //Boolean that starts construction of factory
-            commerce = commerce - 5000;
-            remaining_construction_time = 3;//Estimated time until factory finishes construction
-        }
-        else if (next_year_option ==3)
-        {
-            year++;
-            building_city = true;
-            commerce = commerce - 15000; // City building takes 15000 units of commerce
-            remaining_time_city_construction = 5;
-        }
-
-        else if (next_year_option==4)
-        {
-            int all_out_war_choice;
-            cout<<"Who do you want to go to war against?\n";
-            cout<<"1) "<<north_name<<endl;
-            cout<<"2) "<<south_name<<endl;
-            cout<<"3) "<<east_name<<endl;
-            cout<<"4) "<<west_name<<endl;
-
-            sentinelFunction(1,4,all_out_war_choice);
-
-            number_of_wars++;
-
-            bool war_win = false;
-
-            if(all_out_war_choice==1)
+            else if(next_year_option == 7)
             {
-                war_win = war_Room(air_military,infantry_military,land,population,north_air_military,
-                                    north_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
-            }
-            else if(all_out_war_choice==2)
-            {
-                war_win = war_Room(air_military,infantry_military,land,population,south_air_military,
-                                    south_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
-            }
-            else if(all_out_war_choice==3)
-            {
-                war_win = war_Room(air_military,infantry_military,land,population,east_air_military,
-                                    east_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
-            }
-            else if(all_out_war_choice==4)
-            {
-                war_win = war_Room(air_military,infantry_military,land,population,west_air_military,
-                                    west_infantry_military,player_name, year, commerce, city, military_factory, check_war_room);
-            }
-
-            if(war_win)
-            {
-
-                if (check_war_room == 0)
-                {number_of_wars_won++;
-                // Happiness Effects
-                if (happiness_factor < 100)
-                    {happiness_factor = happiness_factor +10;}
-                else
-                    {happiness_factor;}}
-                else{check_war_room--;}
-            }
-            else
-            {
-
-                happiness_factor = happiness_factor -10;
-            }
-        }
-        else if(next_year_option==5)
-        {
-            year++;
-            spy(ospy,cspy);
-        }
-         else if(next_year_option==6)
-        {
-            cout << "Are you sure you want to quit?\n";
-            cout << "Press 1 to continue. 0 to quit\n";
-            int choice;
-            sentinelFunction(0,1,choice);
-            if (choice == 0)
-            {
-                game_over = true;
-                lost_game_quit = true;
-                continue;
-            }
-
-
-        }
-        else if(next_year_option == 7)
-        {
-            int testoptions;
-            cout<<"TESTING ONLY!"<<endl;
-            cout<<"1) Happiness\n"
+            //Options used for development
+                int testoptions;
+                cout<<"TESTING ONLY!"<<endl;
+                cout<<"1) Happiness\n"
                     "2) Population\n"
                     "3) Military Factories\n"
                     "4) Cities\n"
                     "5) Commerce\n"
                     "6) Win Game\n";
-            cin>>testoptions;
-            if(testoptions == 1)
-            {
-                cout<<"Happiness = ";
-                cin>>happiness_factor;
-            }
-            else if(testoptions == 2)
-            {
-                cout<<"population = ";
-                cin>>population;
-            }
-            else if(testoptions == 3)
-            {
-                cout<<"Military factories = ";
-                cin>>military_factory;
-            }
-            else if(testoptions == 4)
-            {
-                cout<<"Cities = ";
-                cin>>city;
-            }
-            else if(testoptions = 5)
-            {
-                cout<<"commerce =";
-                cin>>commerce;
-            }
-            else if(testoptions = 6)
-            {
-                cout<<"Game won";
-                game_over = true;
-                game_won_gdp = true;
-                continue;
-            }
+                cin>>testoptions;
+                if(testoptions == 1)
+                {
+                    cout<<"Happiness = ";
+                    cin>>happiness_factor;
+                }
+                else if(testoptions == 2)
+                {
+                    cout<<"population = ";
+                    cin>>population;
+                }
+                else if(testoptions == 3)
+                {
+                    cout<<"Military factories = ";
+                    cin>>military_factory;
+                }
+                else if(testoptions == 4)
+                {
+                    cout<<"Cities = ";
+                    cin>>city;
+                }
+                else if(testoptions = 5)
+                {
+                    cout<<"commerce =";
+                    cin>>commerce;
+                }
+                else if(testoptions = 6)
+                {
+                    cout<<"Game won";
+                    game_over = true;
+                    game_won_gdp = true;
+                    continue;
+                }
 
 
-        }
+            }
         }
         else
         {cout<<"1) Engage in a skirmish\n"
