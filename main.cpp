@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <cmath>
 #include <ctime>
 #include <cstdio>
@@ -192,6 +193,11 @@ int main()
     Sleep(100);
     cout << "Welcome to Sim Country Player. \n" << "Please enter your name: ";
     getline(cin, player_name);
+    if(player_name=="" || player_name==" " || player_name=="  ")
+    {
+        cout<<"Given you have refused to reveal your name, you shall be termed 'Anonymous leader'\n";
+        player_name="Anonymous leader";
+    }
     //Prints the name of the opponents;
     cout<<"Opponent Countries: \n";
     cout<<"North: "<<north_name<<endl;
@@ -275,24 +281,24 @@ int main()
             cout<<"WARNING: Our administration cannot handle more military personnel, "<<player_name<<endl<<endl;
             military_overflow_triggered_check = true;
         }
-        cout<<"Current population:                   "<<population<<"/"<<POP_MAX<<endl;
-        cout<<"Current food stocks:                  "<<food_stores<<"/"<<FOOD_MAX<<endl;
-        cout<<"Current owned land:                   "<<land<<endl;
-        cout<<"Current Military might:               "<<air_military+infantry_military<<endl;
-        cout<<"Current Military factories            "<<military_factory;
+        cout<<"Current population:                   "<<setw(11)<<population<<"/"<<setw(11)<<POP_MAX<<endl;
+        cout<<"Current food stocks:                  "<<setw(11)<<food_stores<<"/"<<setw(11)<<FOOD_MAX<<endl;
+        cout<<"Current owned land:                   "<<setw(11)<<land<<endl;
+        cout<<"Current Military might:               "<<setw(11)<<air_military+infantry_military<<endl;
+        cout<<"Current Military factories            "<<setw(11)<<military_factory;
         if(building_factory){cout<<"(1)"<<endl;}//The number in brackets indicate whether a factory or city is under construction
         else {cout<<endl;}
-        cout<<"City Count:                           "<< city;
+        cout<<"City Count:                           "<< setw(11)<<city;
         if(building_city){cout <<"(1)"<<endl;}
         else {cout<<endl;}
-        cout<<"Current Commercial prowess:           "<<commerce<<"/"<<COMMERCE_MAX<<endl;
-        cout<<"Current GDP/Capita:                   $"<<gdp<<endl;
-        cout<<"Current Available Spy Count:          " << ospy << endl;
-        cout<<"Current Available Counter Spy Count:  " << cspy << endl;
-        cout<<"Spies who are undercover:             " << undercover_spy << endl;
-        cout<<"Total number of wars:                 "<<number_of_wars<<endl;
-        cout<<"Total wars won:                       "<<number_of_wars_won<<endl;
-        cout<<"Happiness Level of Population:        "<< happiness_factor<<"%"<<endl;
+        cout<<"Current Commercial prowess:           "<<setw(11)<<commerce<<"/"<<setw(11)<<COMMERCE_MAX<<endl;
+        cout<<"Current GDP/Capita:                   "<<setw(8)<<"$"<<gdp<<"/"<<setw(8)<<"$"<<GDP_WIN<<endl;
+        cout<<"Current Available Spy Count:          " << setw(11)<<ospy << endl;
+        cout<<"Current Available Counter Spy Count:  " << setw(11)<<cspy << endl;
+        cout<<"Spies who are undercover:             " << setw(11)<<undercover_spy << endl;
+        cout<<"Total number of wars:                 "<<setw(11)<<number_of_wars<<endl;
+        cout<<"Total wars won:                       "<<setw(11)<<number_of_wars_won<<endl;
+        cout<<"Happiness Level of Population:        "<< setw(10)<<happiness_factor<<"%"<<endl;
 
 
 
@@ -1177,30 +1183,45 @@ int main()
     {
         cout<<"YOU QUIT THE GAME"<<endl;
         cout<<"Couldn't handle the heat, could you, "<<player_name<<"?\n";
-        cout<<"Having a nation depend upon you isn't everyone's cup of tea after all";
+        cout<<"Having a nation depend upon you isn't everyone's cup of tea after all"<<endl;
+        cout<<"========="<<endl;
+        cout<<"GAME QUIT"<<endl;
+        cout<<"========="<<endl<<endl<<endl;
     }
     else if(game_over && lost_game_city)
     {
         cout<<"YOU'VE LOST ALL YOUR CITIES"<<endl;
         cout<<player_name<<", how can you expect to run a nation without a city to run it from?\n";
         cout<<"Your nation lays in rubble, it's dreams of a prosperous future turned to ashes!\n";
+        cout<<"========="<<endl;
+        cout<<"GAME OVER"<<endl;
+        cout<<"========="<<endl<<endl<<endl;
     }
     else if(game_over && lost_game_overthrown)
     {
         cout<<"YOU'VE BEEN OVERTHROWN BECAUSE YOUR PEOPLE WERE TOO UNHAPPY"<<endl;
+        cout<<"========="<<endl;
+        cout<<"GAME OVER"<<endl;
+        cout<<"========="<<endl<<endl<<endl;
     }
     else if(game_over && lost_game_gdp)
     {
+        cout<<"===================================================="<<endl;
         cout<<"WITH A GDP OF "<<gdp<<" YOUR PEOPLE NOW LIVE IN ABSOLUTE POVERTY"<<endl;
         cout<<player_name<<", you have lost the game, and with that, the promise of a brighter future for your nation"<<endl;
+        cout<<"========="<<endl;
+        cout<<"GAME OVER"<<endl;
+        cout<<"========="<<endl<<endl<<endl;
+
     }
     else if(game_over && game_won_gdp)
     {
         cout<<"Congratulations "<<player_name<<". You have done something truly remarkable and turned your nation into a super power\n";
         cout<<"YOU HAVE WON THE GAME!"<<endl;
-        cout<<"======================"<<endl;
+        cout<<"===================================================="<<endl;
         cout<<"Your final score is = "<<cumulative_score<<endl;
         cout<<"Your GDP was "<<gdp<<" at the end of the game!\n";
+        cout<<"===================================================="<<endl<<endl<<endl;
     }
 
 
