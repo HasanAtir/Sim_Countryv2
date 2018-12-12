@@ -172,7 +172,7 @@ bool win_war_Skirmish(int& population, int& land, int& military, long& money, in
     }
     else
         {
-            check= check++;;
+            check= check+1;;
             return false;
 
         }
