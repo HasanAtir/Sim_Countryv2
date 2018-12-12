@@ -22,6 +22,8 @@ int main()
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, no_war_check, check_war_room, total_mili;
     int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 800; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
+    int const POP_MAX = 800000;
+    int const COMMERCE_MAX = 1210065408;
     //winning GDP
     int const GDP_WIN = 650;
     struct Endscore //data type for final score;
@@ -200,6 +202,16 @@ int main()
         south_land = 13000;
         east_land  = 13000;
         west_land  = 13000;
+        //Resetting player values to prevent errors
+        //These values have been locked to prevent overflow errors
+        if(population>POP_MAX)
+        {
+            population = POP_MAX;
+        }
+        if(commerce>COMMERCE_MAX && commerce<0)
+        {
+            commerce = COMMERCE_MAX;
+        }
 
 
         //growth factors:
@@ -211,7 +223,7 @@ int main()
 
         //output
         cout<<"CURRENT YEAR:                         "<<year<<endl<<endl;
-        cout<<"Current population:                   "<<population<<endl;
+        cout<<"Current population:                   "<<population<<"/"<<POP_MAX<<endl;
         cout<<"Current food stocks:                  "<<food_stores<<"/"<<FOOD_MAX<<endl;
         cout<<"Current owned land:                   "<<land<<endl;
         cout<<"Current Military might:               "<<air_military+infantry_military<<endl;
@@ -221,7 +233,7 @@ int main()
         cout<<"City Count:                           "<< city;
         if(building_city){cout <<"(1)"<<endl;}
         else {cout<<endl;}
-        cout<<"Current Commercial prowess:           "<<commerce<<endl;
+        cout<<"Current Commercial prowess:           "<<commerce<<"/"<<COMMERCE_MAX<<endl;
         cout<<"Current GDP/Capita:                   $"<<gdp<<endl;
         cout<<"Current Available Spy Count:          " << ospy << endl;
         cout<<"Current Available Counter Spy Count:  " << cspy << endl;
