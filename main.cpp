@@ -22,8 +22,19 @@ int main()
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, no_war_check, check_war_room, total_mili;
     int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 800; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
+    //These constants help prevent overflow errors
     int const POP_MAX = 800000;
     int const COMMERCE_MAX = 1210065408;
+    bool commerce_overflow_triggered = false;
+    bool population_overflow_triggered = false;
+    bool land_overflow_triggered = false;
+    bool military_overflow_triggered = false;
+    bool commerce_overflow_triggered_check = false;
+    bool population_overflow_triggered_check = false;
+    bool land_overflow_triggered_check = false;
+    bool military_overflow_triggered_check = false;
+    int const LAND_MAX = 1210065408;
+    int const MILI_MAX = 1210065408;
     //winning GDP
     int const GDP_WIN = 650;
     struct Endscore //data type for final score;
@@ -207,11 +218,31 @@ int main()
         if(population>POP_MAX)
         {
             population = POP_MAX;
+            bool population_overflow_triggered = true;
         }
-        if(commerce>COMMERCE_MAX && commerce<0)
+        if(commerce>COMMERCE_MAX || commerce<0)
         {
             commerce = COMMERCE_MAX;
+            bool commerce_overflow_triggered = true;
         }
+        if(land>LAND_MAX || land<0)
+        {
+            land = LAND_MAX;
+            bool land_overflow_triggered = true;
+        }
+        if(infantry_military>MILI_MAX || infantry_military<0)
+        {
+            infantry_military = MILI_MAX;
+            bool military_overflow_triggered = true;
+        }
+        if(air_military>MILI_MAX || air_military<0)
+        {
+            air_military = MILI_MAX;
+            bool military_overflow_triggered = true;
+        }
+
+
+
 
 
         //growth factors:
@@ -223,6 +254,27 @@ int main()
 
         //output
         cout<<"CURRENT YEAR:                         "<<year<<endl<<endl;
+        //displays if an overflow error has been corrected. The checks ensure the condition runs once
+        if(commerce_overflow_triggered && !commerce_overflow_triggered_check)
+        {
+            cout<<"WARNING: Our banks can't hold anymore funds, "<<player_name<<endl<<endl;
+            commerce_overflow_triggered_check = true;
+        }
+        if(population_overflow_triggered && !population_overflow_triggered_check)
+        {
+            cout<<"WARNING: Our administration cannot take care of more people, "<<player_name<<endl<<endl;
+            population_overflow_triggered_check = true;
+        }
+        if(land_overflow_triggered && !land_overflow_triggered_check)
+        {
+            cout<<"WARNING: Our administration cannot take care of more land, "<<player_name<<endl<<endl;
+            land_overflow_triggered_check = true;
+        }
+        if(military_overflow_triggered && !military_overflow_triggered_check)
+        {
+            cout<<"WARNING: Our administration cannot handle more military personnel, "<<player_name<<endl<<endl;
+            military_overflow_triggered_check = true;
+        }
         cout<<"Current population:                   "<<population<<"/"<<POP_MAX<<endl;
         cout<<"Current food stocks:                  "<<food_stores<<"/"<<FOOD_MAX<<endl;
         cout<<"Current owned land:                   "<<land<<endl;
