@@ -17,15 +17,22 @@ int main()
 
 
     //initial conditions;
-    int cumulative_score=0;//Final score to when winning the game
+    int cumulative_score=0;//Final score when winning the game
     long commerce;
     int population, air_military, infantry_military, military_factory, land, food,
             happiness_factor, ospy, cspy, undercover_spy, ucs_north, ucs_south, ucs_east, ucs_west,
              city, no_war_check, check_war_room, total_mili;
-    int const FOOD_MAX = 100000000, CITY_COMMERCE_GAIN = 10000, FACTORY_UPKEEP = 200, LAND_COMMERCE_GAIN = 800; //Max food to prevent stack commerce gain via land and cities, as well as cost of factories
+
     //These constants help prevent overflow errors
+    int const FOOD_MAX = 100000000;
+    int const CITY_COMMERCE_GAIN = 10000;
+    int const FACTORY_UPKEEP = 200;
+    int const LAND_COMMERCE_GAIN = 800;
     int const POP_MAX = 800000;
     int const COMMERCE_MAX = 1210065408;
+    int const LAND_MAX = 1210065408;
+    int const MILI_MAX = 1210065408;
+
     bool commerce_overflow_triggered = false;
     bool population_overflow_triggered = false;
     bool land_overflow_triggered = false;
@@ -35,8 +42,7 @@ int main()
     bool land_overflow_triggered_check = false;
     bool military_overflow_triggered_check = false;
     bool cheated = false;
-    int const LAND_MAX = 1210065408;
-    int const MILI_MAX = 1210065408;
+
     //winning GDP
     int const GDP_WIN = 650;
     struct Endscore //data type for final score;
@@ -49,7 +55,7 @@ int main()
     };
 
 
-
+    //Setting initial conditions
     population = 100000;
     air_military = 100;
     infantry_military = 1000;
@@ -71,7 +77,7 @@ int main()
     check_war_room = 0;
     total_mili = air_military+ infantry_military;
 
-
+    //initial year
     int year = 1921;
     int food_stores=food;
     double gdp;
@@ -80,14 +86,11 @@ int main()
     int remaining_construction_time = 0;
     int remaining_time_city_construction = 0;
 
-
-
+    //growth variables
     double pop_grow, comm_grow, mili_grow, gdp_grow, food_grow;
 
     //bools
-    bool game_over = false;
-    bool building_factory = false;
-    bool building_city = false;
+
 
     //temp variable
     int next_year_option;
@@ -156,6 +159,10 @@ int main()
     double west_commerce_growth = 1.10;
     double west_military_growth = military_factory*95;
 
+    //Game based bools
+    bool game_over = false;
+    bool building_factory = false;
+    bool building_city = false;
     //win conditions:
     bool game_won_gdp = false;
 
@@ -221,6 +228,7 @@ int main()
         east_land  = 13000;
         west_land  = 13000;
         //Resetting player values to prevent errors
+
         //These values have been locked to prevent overflow errors
         if(population>POP_MAX)
         {
@@ -301,9 +309,6 @@ int main()
         cout<<"Total wars won:                       "<<setw(11)<<number_of_wars_won<<endl;
         cout<<"Happiness Level of Population:        "<< setw(10)<<happiness_factor<<"%"<<endl;
 
-
-
-
         //growth
         pop_grow = 1+ city*((double)food/population)/100;
 
@@ -380,7 +385,7 @@ int main()
                 if(war_win)
                 {
                 number_of_wars_won++;
-                // Happiness Effects
+                    // Happiness Effects
                     if (happiness_factor < 100)
                     {
                         happiness_factor = happiness_factor +10;
@@ -406,7 +411,7 @@ int main()
             }
             else if(next_year_option==2)
             {
-                year++;//Increments year (Added here because if we go to war room it adds an extra year on top)
+                year++;                         //Increments year (Added here because if we go to war room it adds an extra year on top)
                 building_factory = true;        //Boolean that starts construction of factory
                 commerce = commerce - 5000;
                 remaining_construction_time = 3;//Estimated time until factory finishes construction
