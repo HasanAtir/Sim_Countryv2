@@ -29,3 +29,4 @@ void player_attack_spy(std::string &n_name,std::string &s_name,  std::string &e_
 
 void instructions (std::string& name, int gdp);
 void protest (int& military, long& commerce, int& happiness, int& population);
+

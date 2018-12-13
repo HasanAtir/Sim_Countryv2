@@ -1,6 +1,6 @@
 /*Sim Country is a country simulation and strategy game
-created by Hassan Atir (2019-02-0464) and 
-Taabish Naqvi () for the CS100 project
+created by Hassan Atir (2019-02-0464) and
+Syed Taabish Ali Naqvi (2019-02-0225) for the CS100 project
 */
 #include <iostream>
 #include <iomanip>
@@ -271,7 +271,7 @@ int main()
         cout << player_name << ", these are your current country stats" << endl;
 
         //output
-        cout<<"CURRENT YEAR:                         "<<year<<endl<<endl;
+        cout<<"CURRENT YEAR:                         "<< setw(11) <<year<<endl<<endl;
         //displays if an overflow error has been corrected. The checks ensure the condition runs once
         if(commerce_overflow_triggered==1 && commerce_overflow_triggered_check==0)
         {
@@ -513,7 +513,7 @@ int main()
                     "4) Cities\n"
                     "5) Commerce\n"
                     "6) Win Game\n";
-                cin>>testoptions;
+                sentinelFunction(1,6,testoptions);
                 if(testoptions == 1)
                 {
                     cout<<"Happiness = ";
@@ -725,7 +725,7 @@ int main()
                     "4) Cities\n"
                     "5) Commerce\n"
                     "6) Win Game\n";
-            cin>>testoptions;
+            sentinelFunction(1,6,testoptions);
             if(testoptions == 1)
             {
                 cout<<"Happiness = ";

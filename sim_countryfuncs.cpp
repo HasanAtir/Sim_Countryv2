@@ -407,7 +407,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
              << "*3 allows you to attack with both options together \n"
              << "*Option 4 allows you to surrender, which will be accepted \n"
              << "*Option 5 is the white flag option which essentially means a ceasefire. \n"
-             << "*The war ends with whatever loss and gains you have made \n"
+             << " The war ends with whatever loss and gains you have made \n"
              << "*Every battle can gain on a loss or gain of a city, be careful to not lose them all \n"
              << "*Let the War begin \n" << endl;
              system("pause");
@@ -1152,23 +1152,32 @@ void instructions(string& name, int gdp)
 {
     cout << "*Hello " << name<< " the objective of this game is to get your GDP to " << gdp << " per Capita." << endl << endl;
     Sleep(250);
+    cout << "*Small reminder: GDP Per Capita = Commerce / Population \n\n";
+    Sleep(250);
     cout<< "*You are landlocked by 4 other countries who can attack you at anytime with spies or their armies." << endl << endl;
     Sleep(250);
     cout << "*You have a dedicated Military and Air force dedicated to protecting your border " << endl ;;
     Sleep(250);
     cout << " which you must grow through the use of Military factories" << endl << endl;
     Sleep(250);
-    cout << "*Cities will add to your commerce,  and help grow your population \n\n";
+    cout << "*Cities will add to your commerce, and help grow your population \n\n";
+    Sleep(250);
+    cout << "*Cities will cost you 15000 units to build, Factories will cost 5000 units \n\n";
+    Sleep(250);
+    cout << "*Factories also have a negligible maintenance cost of 200 units per turn. Your City will add 10000 units\n";
+    cout << " to your commerce at every turn \n\n";
+    Sleep(250);
+    cout << "*Gain more Land and you will have more commerce and food stocks\n\n";
+    Sleep(250);
+    cout << "*Keep an eye on your population count and food stocks, you do not want your people to starve!" << endl << endl;
     Sleep(250);
     cout << "*Train Spys to gain intel, poison your enemies and defend yourself against espionage!" << endl<< endl;
-    Sleep(250);
-    cout << "*You must also continue gaining land in order to grow food to accommodate your ever increasing population." << endl << endl;;
-    Sleep(250);
-    cout << "*Keep an eye on your population count and food stocks, you do not want them to starve!" << endl << endl;
     Sleep(250);
     cout << "*Keep your cities intact, lose them all, and you lose the country! \n\n";
     Sleep(250);
     cout << "*Every Skirmish will help you gain cities, but lose a skirmish, and you lose a city! \n\n";
+    Sleep(250);
+    cout << "*Make sure your people remain happy, if they get too unhappy they may remove you as their leader\n\n";
     Sleep(250);
     cout << "*Take caution in entering the War Room, the rewards are great, but so are the punishments." <<endl << endl;
     Sleep(250);
