@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
 #include <windows.h>
 #include "sim_countryfuncs.h"
 
@@ -172,7 +173,7 @@ bool win_war_Skirmish(int& population, int& land, int& military, long& money, in
     }
     else
         {
-            check= check+1;;
+            ++check;;
             return false;
 
         }
@@ -407,7 +408,7 @@ bool war_Room (int &air_player, int &infantry_player,  int &land, int& populatio
              << "*3 allows you to attack with both options together \n"
              << "*Option 4 allows you to surrender, which will be accepted \n"
              << "*Option 5 is the white flag option which essentially means a ceasefire. \n"
-             << " The war ends with whatever loss and gains you have made \n"
+             << "*The war ends with whatever loss and gains you have made \n"
              << "*Every battle can gain on a loss or gain of a city, be careful to not lose them all \n"
              << "*Let the War begin \n" << endl;
              system("pause");
@@ -1217,6 +1218,12 @@ void protest (int& military, long& commerce, int& happiness, int& population)
         if (choice == 1)
         {
             cout << "\"History is rarely made by reasonable men\" \n";
+            HANDLE  hConsole;
+            hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            int col=(4);//+(15*16));
+
+            FlushConsoleInputBuffer(hConsole);
+            SetConsoleTextAttribute(hConsole, col);
 
             cout << "   _.-^^---....,,--                \n";
             Sleep(180);
@@ -1246,6 +1253,10 @@ void protest (int& military, long& commerce, int& happiness, int& population)
             happiness = happiness + 40;
             cout << "It is done.\n";
             Sleep(180);
+            col=(15);//+(15*16));
+
+            FlushConsoleInputBuffer(hConsole);
+            SetConsoleTextAttribute(hConsole, col);
             cout << "Your new Population count is  : " << population << endl;
             Sleep(180);
             cout << "Your new Military might is    : " << military << endl;

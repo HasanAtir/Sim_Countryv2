@@ -10,6 +10,7 @@ Syed Taabish Ali Naqvi (2019-02-0225) for the CS100 project
 #include <cstdlib>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
 #include "Windows.h"
 #include "sim_countryfuncs.cpp"
 
@@ -18,6 +19,14 @@ using namespace std;
 int main()
 {
 
+
+
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    int col=(15);//+(15*16));
+
+    FlushConsoleInputBuffer(hConsole);
+    SetConsoleTextAttribute(hConsole, col);
 
     //initial conditions;
     int cumulative_score=0;//Final score when winning the game
